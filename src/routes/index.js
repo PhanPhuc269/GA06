@@ -1,4 +1,4 @@
-const siteRouter=require('./sites');
+const authRouter=require('./auth');
 const productRouter=require('./product');
 const blogRouter=require('./blog');
 const pagesRouter=require('./pages');
@@ -8,7 +8,7 @@ const aboutRouter=require('./about');
 
 function router(app)
 {
-   app.use('/', siteRouter);
+   app.use('/', authRouter);
    app.use('/product', productRouter);
    app.use('/blog', blogRouter);
    app.use('/pages', pagesRouter);

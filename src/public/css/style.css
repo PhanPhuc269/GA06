@@ -5807,6 +5807,17 @@ label {
 .register_box_area .register_box_img {
   margin-right: -30px;
   position: relative;
+
+}
+.register_box_area .register_box_img:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  content: "";
+  background: #000;
+  opacity: 0.5;
 }
 .register_box_area .register_box_img img {
   width: 100%;
