@@ -4,8 +4,11 @@ const morgan = require('morgan');
 const path = require('path');
 const handlebars = require('express-handlebars');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 
 const session = require('express-session');
+const passport = require('passport');
+require('./config/passportConfig');
 
 
 //nodemon --inspect src/index.js
@@ -18,7 +21,7 @@ const port = process.env.PORT || 3000;
 const route = require('./routes');  
 
 sessionMiddleware=session({
-    secret: 'mySecret',
+    secret: process.env.MY_SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -29,6 +32,19 @@ sessionMiddleware=session({
     }
 })
 app.use(sessionMiddleware);
+// Khởi tạo Passport và session
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+// Make flash messages available in templates
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
 app.use(express.urlencoded({
   extended: true
 }));
