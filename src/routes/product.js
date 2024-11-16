@@ -9,6 +9,6 @@ router.get('/product-details/:id',productController.ViewProductDetails);
 router.get('/checkout', ensureAuthenticated,productController.ViewProductCheckout);
 router.get('/cart', ensureAuthenticated,productController.ViewShoppingCart);
 router.get('/confirmation', ensureAuthenticated,productController.ViewOrderConfirmation);
-
+router.get('/filter', productController.getFilteredProducts);
 
 module.exports = router;
