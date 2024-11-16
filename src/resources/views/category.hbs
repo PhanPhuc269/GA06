@@ -1,95 +1,171 @@
 <body id="category">
     <!-- Start Banner Area -->
-	<section class="banner-area organic-breadcrumb">
-		<div class="container">
-			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-				
-			</div>
-		</div>
-	</section>
-	<!-- End Banner Area -->
-	<div class="container">
-		<div class="row">
-			<div class="col-xl-3 col-lg-4 col-md-5">
-				<div class="sidebar-categories">
-					<div class="head">Categories</div>
-					<ul class="main-categories">
-						<li class="main-nav-list"><a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable"><span
-								 class="lnr lnr-arrow-right"></span>Sports Shoes<span class="number">(53)</span></a>
-							<ul class="collapse" id="fruitsVegetable" data-toggle="collapse" aria-expanded="false" aria-controls="fruitsVegetable">
-								<li class="main-nav-list child"><a href="#">Running Shoes<span class="number">(13)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Basketball Shoes<span class="number">(09)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Tennis Shoes<span class="number">(17)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Gym Training Shoes<span class="number">(01)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Walking Shoes<span class="number">(11)</span></a></li>
-							</ul>
-						</li>
-
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <!-- Content here -->
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <div class="sidebar-categories">
+                    <div class="head">Categories</div>
+                    <ul class="main-categories">
+                        <li class="main-nav-list">
+                            <a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable">
+                                <span class="lnr lnr-arrow-right"></span>Sports Shoes<span class="number">(53)</span>
+                            </a>
+                            <ul class="collapse" id="fruitsVegetable" data-toggle="collapse" aria-expanded="false" aria-controls="fruitsVegetable">
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('running')">Running Shoes<span class="number">(13)</span></a>
+                                </li>
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('basketball')">Basketball Shoes<span class="number">(09)</span></a>
+                                </li>
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('tennis')">Tennis Shoes<span class="number">(17)</span></a>
+                                </li>
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('walking')">Walking Shoes<span class="number">(11)</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Other categories go here -->
 						<li class="main-nav-list"><a data-toggle="collapse" href="#meatFish" aria-expanded="false" aria-controls="meatFish"><span
 								 class="lnr lnr-arrow-right"></span>Leather Shoes<span class="number">(53)</span></a>
 							<ul class="collapse" id="meatFish" data-toggle="collapse" aria-expanded="false" aria-controls="meatFish">
-								<li class="main-nav-list child"><a href="#">Men’s Dress Shoes<span class="number">(13)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Loafers<span class="number">(09)</span></a></li>
-								<li class="main-nav-list child"><a href="#">High-Top Shoes<span class="number">(17)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Boots<span class="number">(01)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Women’s Leather Shoes<span class="number">(11)</span></a></li>
-							</ul>
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('mens-dress')">Men’s Dress Shoes<span class="number">(13)</span></a>
+                                </li>
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('loafers')">Loafers<span class="number">(09)</span></a>
+                                </li>
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('high-top')">High-Top Shoes<span class="number">(17)</span></a>
+                                </li>
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('boots')">Boots<span class="number">(01)</span></a>
+                                </li>
+                                <li class="main-nav-list child">
+                                    <a href="javascript:void(0);" onclick="filterProducts('womens-leather')">Women’s Leather Shoes<span class="number">(11)</span></a>
+                                </li>
+                         </ul>
+
+						
 						</li>
 						<li class="main-nav-list"><a data-toggle="collapse" href="#cooking" aria-expanded="false" aria-controls="cooking"><span
 								 class="lnr lnr-arrow-right"></span>Sneakers<span class="number">(53)</span></a>
-							<ul class="collapse" id="cooking" data-toggle="collapse" aria-expanded="false" aria-controls="cooking">
-								<li class="main-nav-list child"><a href="#">Sports Sneakers<span class="number">(13)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Fashion Sneakers<span class="number">(09)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Classic Sneakers<span class="number">(17)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Special Edition Sneakers<span class="number">(01)</span></a></li>
-							</ul>
+						<ul class="collapse" id="cooking" data-toggle="collapse" aria-expanded="false" aria-controls="cooking">
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('sports-sneakers')">Sports Sneakers<span class="number">(13)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('fashion-sneakers')">Fashion Sneakers<span class="number">(09)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('classic-sneakers')">Classic Sneakers<span class="number">(17)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('special-edition-sneakers')">Special Edition Sneakers<span class="number">(01)</span></a>
+                            </li>
+                        </ul>
+
 						</li>
+					
 						<li class="main-nav-list"><a data-toggle="collapse" href="#beverages" aria-expanded="false" aria-controls="beverages"><span
 								 class="lnr lnr-arrow-right"></span>Women’s Shoes<span class="number">(24)</span></a>
-							<ul class="collapse" id="beverages" data-toggle="collapse" aria-expanded="false" aria-controls="beverages">
-								<li class="main-nav-list child"><a href="#">High Heels<span class="number">(13)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Flats<span class="number">(09)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Sandals<span class="number">(17)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Women’s Boots<span class="number">(01)</span></a></li>
-							</ul>
+						<ul class="collapse" id="beverages" data-toggle="collapse" aria-expanded="false" aria-controls="beverages">
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('high-heels')">High Heels<span class="number">(13)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('flats')">Flats<span class="number">(09)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('sandals')">Sandals<span class="number">(17)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('womens-boots')">Women’s Boots<span class="number">(01)</span></a>
+                            </li>
+                        </ul>
+
 						</li>
 						<li class="main-nav-list"><a data-toggle="collapse" href="#homeClean" aria-expanded="false" aria-controls="homeClean"><span
 								 class="lnr lnr-arrow-right"></span>Kids’ Shoes<span class="number">(53)</span></a>
-							<ul class="collapse" id="homeClean" data-toggle="collapse" aria-expanded="false" aria-controls="homeClean">
-								<li class="main-nav-list child"><a href="#">Boys’ Shoes<span class="number">(13)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Girls’ Shoes<span class="number">(09)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Kids’ Sports Shoes<span class="number">(17)</span></a></li>
-								<li class="main-nav-list child"><a href="#">Kids’ Sandals<span class="number">(01)</span></a></li>
-							</ul>
+						<ul class="collapse" id="homeClean" data-toggle="collapse" aria-expanded="false" aria-controls="homeClean">
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('boys-shoes')">Boys’ Shoes<span class="number">(13)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('girls-shoes')">Girls’ Shoes<span class="number">(09)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('kids-sports-shoes')">Kids’ Sports Shoes<span class="number">(17)</span></a>
+                            </li>
+                            <li class="main-nav-list child">
+                                <a href="javascript:void(0);" onclick="filterProducts('kids-sandals')">Kids’ Sandals<span class="number">(01)</span></a>
+                            </li>
+                        </ul>
+
 						</li>
 					</ul>
-				</div>
+						</div>
 				<div class="sidebar-filter mt-50">
 					<div class="top-filter-head">Product Filters</div>
 					<div class="common-filter">
-						<div class="head">Brands</div>
-						<form action="#">
-							<ul>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label for="apple">Addidas<span>(29)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand"><label for="asus">Ananas<span>(29)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand"><label for="gionee">Nike<span>(19)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="micromax" name="brand"><label for="micromax">Convert<span>(19)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="samsung" name="brand"><label for="samsung">Puma<span>(19)</span></label></li>
-							</ul>
-						</form>
-					</div>
+						 <div class="head">Brands</div>
+                        <ul>
+                            <li class="filter-list">
+                                <input class="pixel-radio" type="radio" id="addidas" name="brand" onclick="filterByBrand('Addidas')">
+                                <label for="addidas">Addidas<span>(29)</span></label>
+                            </li>
+                            <li class="filter-list">
+                                <input class="pixel-radio" type="radio" id="ananas" name="brand" onclick="filterByBrand('Ananas')">
+                                <label for="ananas">Ananas<span>(29)</span></label>
+                            </li>
+                            <li class="filter-list">
+                                <input class="pixel-radio" type="radio" id="nike" name="brand" onclick="filterByBrand('Nike')">
+                                <label for="nike">Nike<span>(19)</span></label>
+                            </li>
+                            <li class="filter-list">
+                                <input class="pixel-radio" type="radio" id="convert" name="brand" onclick="filterByBrand('Convert')">
+                                <label for="convert">Convert<span>(19)</span></label>
+                            </li>
+                            <li class="filter-list">
+                                <input class="pixel-radio" type="radio" id="puma" name="brand" onclick="filterByBrand('Puma')">
+                                <label for="puma">Puma<span>(19)</span></label>
+                            </li>
+                        </ul>
+                </div>
 					<div class="common-filter">
 						<div class="head">Color</div>
 						<form action="#">
-							<ul>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label for="black">Black<span>(29)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather" name="color"><label for="balckleather">Black
-										Leather<span>(29)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label for="blackred">Black
-										with red<span>(19)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label for="gold">Gold<span>(19)</span></label></li>
-								<li class="filter-list"><input class="pixel-radio" type="radio" id="spacegrey" name="color"><label for="spacegrey">Spacegrey<span>(19)</span></label></li>
-							</ul>
+						    <ul>
+                                <li class="filter-list">
+                                    <input class="pixel-radio" type="radio" id="black" name="color" onclick="filterByColor('Black')">
+                                    <label for="black">Black<span>(29)</span></label>
+                                </li>
+                                <li class="filter-list">
+                                    <input class="pixel-radio" type="radio" id="blackleather" name="color" onclick="filterByColor('Black Leather')">
+                                    <label for="blackleather">Black Leather<span>(29)</span></label>
+                                </li>
+                                <li class="filter-list">
+                                    <input class="pixel-radio" type="radio" id="blackred" name="color" onclick="filterByColor('Black with Red')">
+                                    <label for="blackred">Black with Red<span>(19)</span></label>
+                                </li>
+                                <li class="filter-list">
+                                    <input class="pixel-radio" type="radio" id="gold" name="color" onclick="filterByColor('Gold')">
+                                    <label for="gold">Gold<span>(19)</span></label>
+                                </li>
+                                <li class="filter-list">
+                                    <input class="pixel-radio" type="radio" id="spacegrey" name="color" onclick="filterByColor('Spacegrey')">
+                                    <label for="spacegrey">Spacegrey<span>(19)</span></label>
+                                </li>
+                            </ul>
+
 						</form>
 					</div>
 					<div class="common-filter">
@@ -107,236 +183,273 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-xl-9 col-lg-8 col-md-7">
-				<!-- Start Filter Bar -->
-				<div class="filter-bar d-flex flex-wrap align-items-center">
-					<div class="sorting">
-						<select>
-							<option value="1">Default sorting</option>
-							<option value="1">Default sorting</option>
-							<option value="1">Default sorting</option>
-						</select>
-					</div>
-					<div class="sorting mr-auto">
-						<select>
-							<option value="1">Show 12</option>
-							<option value="1">Show 12</option>
-							<option value="1">Show 12</option>
-						</select>
-					</div>
-					<div class="pagination">
-						<a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
-						<a href="#" class="active">1</a>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-						<a href="#">6</a>
-						<a href="#" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-					</div>
-				</div>
-				<!-- End Filter Bar -->
-				<!-- Start Best Seller -->
-				<section class="lattest-product-area pb-40 category-list">
-					<div class="row">
+			
+
+               
+                <!-- Additional filters go here -->
+            </div>
+
+            <div class="col-xl-9 col-lg-8 col-md-7">
+                <!-- Start Filter Bar -->
+                <div class="filter-bar d-flex flex-wrap align-items-center">
+                    <div class="sorting">
+                        <select>
+                            <option value="1">Default sorting</option>
+                            <option value="2">Price</option>
+                            <option value="3">Popularity</option>
+                        </select>
+                    </div>
+                    <div class="sorting mr-auto">
+                        <select>
+                            <option value="1">Show 12</option>
+                            <option value="2">Show 24</option>
+                            <option value="3">Show 36</option>
+                        </select>
+                    </div>
+                    <div class="pagination">
+                        <a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                        <a href="#">6</a>
+                        <a href="#" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- End Filter Bar -->
+
+                <!-- Start Product List -->
+                <section class="lattest-product-area pb-40 category-list">
+                    <div class="row" id="product-list">
                         {{#each products}}
-						<!-- single product -->
-						<div class="col-lg-4 col-md-6">
-							<div class="single-product">
-								<a href="/product/product-details/{{this._id}}" >
-									<img class="img-fluid" src="/{{this.image}}" alt="{{this.name}}">
-								</a>
-								<div class="product-details">
-									<a href="/product/product-details/{{this._id}}" >
-										<h6>{{this.name}}</h6>
-									</a>
-									<div class="price">
-										<h6>${{this.price}}</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-									<div class="prd-bottom">
-
-										<a href="" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to bag</p>
-										</a>
-										<a href="" class="social-info">
-											<span class="lnr lnr-heart"></span>
-											<p class="hover-text">Wishlist</p>
-										</a>
-										<a href="" class="social-info">
-											<span class="lnr lnr-sync"></span>
-											<p class="hover-text">compare</p>
-										</a>
-										<a href="/product/product-details/{{this._id}}" class="social-info">
-											<span class="lnr lnr-move"></span>
-											<p class="hover-text">view more</p>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="single-product">
+                                <a href="/product/product-details/{{this._id}}">
+                                    <img class="img-fluid" src="/{{this.image}}" alt="{{this.name}}">
+                                </a>
+                                <div class="product-details">
+                                    <a href="/product/product-details/{{this._id}}">
+                                        <h6>{{this.name}}</h6>
+                                    </a>
+                                    <div class="price">
+                                        <h6>${{this.price}}</h6>
+                                        <h6 class="l-through">$210.00</h6>
+                                        <h6>${{this.type}}</h6>
+                                    </div>
+                                    <div class="prd-bottom">
+                                        <a href="" class="social-info">
+                                            <span class="ti-bag"></span>
+                                            <p class="hover-text">add to bag</p>
+                                        </a>
+                                        <a href="" class="social-info">
+                                            <span class="lnr lnr-heart"></span>
+                                            <p class="hover-text">Wishlist</p>
+                                        </a>
+                                        <a href="" class="social-info">
+                                            <span class="lnr lnr-sync"></span>
+                                            <p class="hover-text">compare</p>
+                                        </a>
+                                        <a href="/product/product-details/{{this._id}}" class="social-info">
+                                            <span class="lnr lnr-move"></span>
+                                            <p class="hover-text">view more</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {{/each}}
-					</div>
-				</section>
-				<!-- End Best Seller -->
-				<!-- Start Filter Bar -->
-				<div class="filter-bar d-flex flex-wrap align-items-center">
-					<div class="sorting mr-auto">
-						<select>
-							<option value="1">Show 12</option>
-							<option value="1">Show 12</option>
-							<option value="1">Show 12</option>
-						</select>
-					</div>
-					<div class="pagination">
-						<a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
-						<a href="#" class="active">1</a>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-						<a href="#">6</a>
-						<a href="#" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-					</div>
-				</div>
-				<!-- End Filter Bar -->
-			</div>
-		</div>
-	</div>
+                    </div>
+                </section>
+                <!-- End Product List -->
 
-	<!-- Start related-product Area -->
-	<section class="related-product-area section_gap">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-6 text-center">
-					<div class="section-title">
-						<h1>Deals of the Week</h1>
-						<p>Our exclusive deal that helps you enjoy life to the fullest and in style!</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-9">
-					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r1.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r2.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r3.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r5.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r6.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r7.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r9.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r10.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="/img/r11.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="ctg-right">
-						<a href="#" target="_blank">
-							<img class="img-fluid d-block mx-auto" src="/img/category/c5.jpg" alt="">
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End related-product Area -->
+                <!-- Start Filter Bar -->
+                <div class="filter-bar d-flex flex-wrap align-items-center">
+                    <div class="sorting mr-auto">
+                        <select>
+                            <option value="1">Show 12</option>
+                            <option value="2">Show 24</option>
+                            <option value="3">Show 36</option>
+                        </select>
+                    </div>
+                    <div class="pagination">
+                        <a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                        <a href="#">6</a>
+                        <a href="#" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- End Filter Bar -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Start related-product Area -->
+    <section class="related-product-area section_gap">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="section-title">
+                        <h1>Deals of the Week</h1>
+                        <p>Our exclusive deal that helps you enjoy life to the fullest and in style!</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Additional content here -->
+        </div>
+    </section>
+    <!-- End related-product Area -->
+
+   <script >
+	function filterProducts(filter) {
+    fetch(`/product/filter?type=${filter}`)
+        .then(response => response.json())
+        .then(data => {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = ''; // Clear existing products
+
+            // Add filtered products
+            data.products.forEach(product => {
+                productList.innerHTML += `
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-product">
+                            <a href="/product/product-details/${product._id}">
+                                <img class="img-fluid" src="/${product.image}" alt="${product.name}">
+                            </a>
+                            <div class="product-details">
+                                <a href="/product/product-details/${product._id}">
+                                    <h6>${product.name}</h6>
+                                </a>
+                                <div class="price">
+                                    <h6>$${product.price}</h6>
+                                </div>
+                                <div class="prd-bottom">
+                                    <a href="" class="social-info">
+                                        <span class="ti-bag"></span>
+                                        <p class="hover-text">add to bag</p>
+                                    </a>
+                                    <a href="" class="social-info">
+                                        <span class="lnr lnr-heart"></span>
+                                        <p class="hover-text">Wishlist</p>
+                                    </a>
+                                    <a href="" class="social-info">
+                                        <span class="lnr lnr-sync"></span>
+                                        <p class="hover-text">compare</p>
+                                    </a>
+                                    <a href="/product/product-details/${product._id}" class="social-info">
+                                        <span class="lnr lnr-move"></span>
+                                        <p class="hover-text">view more</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function filterByBrand(brand) {
+    fetch(`/product/filter?brand=${brand}`)
+        .then(response => response.json())
+        .then(data => {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = ''; // Clear existing products
+
+            // Add filtered products
+            data.products.forEach(product => {
+                productList.innerHTML += `
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-product">
+                            <a href="/product/product-details/${product._id}">
+                                <img class="img-fluid" src="/${product.image}" alt="${product.name}">
+                            </a>
+                            <div class="product-details">
+                                <a href="/product/product-details/${product._id}">
+                                    <h6>${product.name}</h6>
+                                </a>
+                                <div class="price">
+                                    <h6>$${product.price}</h6>
+                                </div>
+                                <div class="prd-bottom">
+                                    <a href="" class="social-info">
+                                        <span class="ti-bag"></span>
+                                        <p class="hover-text">add to bag</p>
+                                    </a>
+                                    <a href="" class="social-info">
+                                        <span class="lnr lnr-heart"></span>
+                                        <p class="hover-text">Wishlist</p>
+                                    </a>
+                                    <a href="" class="social-info">
+                                        <span class="lnr lnr-sync"></span>
+                                        <p class="hover-text">compare</p>
+                                    </a>
+                                    <a href="/product/product-details/${product._id}" class="social-info">
+                                        <span class="lnr lnr-move"></span>
+                                        <p class="hover-text">view more</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+function filterByColor(color) {
+    fetch(`/product/filter?color=${color}`)
+        .then(response => response.json())
+        .then(data => {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = ''; // Clear existing products
+
+            // Render filtered products
+            data.products.forEach(product => {
+                productList.innerHTML += `
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-product">
+                            <a href="/product/product-details/${product._id}">
+                                <img class="img-fluid" src="/${product.image}" alt="${product.name}">
+                            </a>
+                            <div class="product-details">
+                                <a href="/product/product-details/${product._id}">
+                                    <h6>${product.name}</h6>
+                                </a>
+                                <div class="price">
+                                    <h6>$${product.price}</h6>
+                                </div>
+                                <div class="prd-bottom">
+                                    <a href="" class="social-info">
+                                        <span class="ti-bag"></span>
+                                        <p class="hover-text">add to bag</p>
+                                    </a>
+                                    <a href="" class="social-info">
+                                        <span class="lnr lnr-heart"></span>
+                                        <p class="hover-text">Wishlist</p>
+                                    </a>
+                                    <a href="" class="social-info">
+                                        <span class="lnr lnr-sync"></span>
+                                        <p class="hover-text">compare</p>
+                                    </a>
+                                    <a href="/product/product-details/${product._id}" class="social-info">
+                                        <span class="lnr lnr-move"></span>
+                                        <p class="hover-text">view more</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+   </script>
+
 </body>
