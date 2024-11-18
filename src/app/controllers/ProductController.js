@@ -16,8 +16,7 @@ class ProductController {
 
     async ViewProductDetails(req, res, next) {
         try {
-            const product = await Product.findById(req.params.id);
-            res.render('product-details', { product: mongooseToObject(product) });
+            res.render('product-details');
         } catch (error) {
             next(error);
         }
@@ -38,8 +37,8 @@ class ProductController {
     // Hàm lọc sản phẩm
     async getFilteredProducts(req, res, next) {
         try {
-            const { type: productType, brand: productBrand, color: productColor, minPrice, maxPrice } = req.query;
-    
+            const { type: productType, brand: productBrand, color: productColor, minPrice, maxPrice, page = 1, limit = 5 } = req.query;
+            console.log('Filters:', req.query);
             // Xây dựng bộ lọc linh hoạt
             const filters = {};
     
@@ -67,11 +66,21 @@ class ProductController {
                 if (minPrice) filters.price.$gte = parseFloat(minPrice);
                 if (maxPrice) filters.price.$lte = parseFloat(maxPrice);
             }    
+            const skip = (parseInt(page) - 1) * parseInt(limit);
+            const total = await Product.countDocuments(filters); // Tổng số sản phẩm sau khi lọc
             // Tìm các sản phẩm dựa trên bộ lọc
-            const products = await Product.find(filters);
-    
+            const products = await Product.find(filters)
+            .skip(skip)
+            .limit(parseInt(limit));
             // Trả về danh sách sản phẩm đã lọc
-            res.json({ products: mutipleMongooseToObject(products) });
+            res.json({
+                products: mutipleMongooseToObject(products),
+                total,
+                currentPage: parseInt(page),
+                totalPages: Math.ceil(total / limit),
+            });
+            console.log('Total products:', total);
+            console.log('Total pages:', Math.ceil(total / limit));
         } catch (error) {
             console.error('Error filtering products:', error);
             res.status(500).json({ message: 'Error filtering products', error });
