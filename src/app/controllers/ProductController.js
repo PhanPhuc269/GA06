@@ -36,7 +36,6 @@ class ProductController {
     async getFilteredProducts(req, res, next) {
         try {
             const { type: productType, brand: productBrand, color: productColor, minPrice, maxPrice, page = 1, limit = 5 } = req.query;
-            console.log('Filters:', req.query);
             // Xây dựng bộ lọc linh hoạt
             const filters = {};
     
@@ -77,8 +76,6 @@ class ProductController {
                 currentPage: parseInt(page),
                 totalPages: Math.ceil(total / limit),
             });
-            console.log('Total products:', total);
-            console.log('Total pages:', Math.ceil(total / limit));
         } catch (error) {
             console.error('Error filtering products:', error);
             res.status(500).json({ message: 'Error filtering products', error });
