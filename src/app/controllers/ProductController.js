@@ -5,10 +5,7 @@ const Product = require("../models/Product");
 class ProductController {
     async ViewProductListings(req, res, next) {
         try {
-            const products = await Product.find();
-            res.render('category', {
-                products: mutipleMongooseToObject(products)
-            });
+            res.render('category');
         } catch (error) {
             next(error);
         }
@@ -16,7 +13,8 @@ class ProductController {
 
     async ViewProductDetails(req, res, next) {
         try {
-            res.render('product-details');
+            const product = await Product.findById(req.params.id);
+            res.render('product-details', { product: mongooseToObject(product) });
         } catch (error) {
             next(error);
         }
