@@ -60,7 +60,7 @@
 								 class="lnr lnr-arrow-right"></span>Sneakers<span class="number">(53)</span></a>
 						<ul class="collapse" id="cooking" data-toggle="collapse" aria-expanded="false" aria-controls="cooking">
                             <li class="main-nav-list child">
-                                <a href="javascript:void(0);" onclick="setTypeFilter('sports-sneakers')>Sports Sneakers<span class="number">(13)</span></a>
+                                <a href="javascript:void(0);" onclick="setTypeFilter('sports-sneakers')">Sports Sneakers<span class="number">(13)</span></a>
                             </li>
                             <li class="main-nav-list child">
                                 <a href="javascript:void(0);" onclick="setTypeFilter('fashion-sneakers')>Fashion Sneakers<span class="number">(09)</span></a>
@@ -207,6 +207,19 @@
                         </select>
                     </div>
                     <div class="pagination">
+                        {{#if totalPages}}
+                            {{#if (gt currentPage 1)}}
+                                <a href="#" onclick="changePage({{sub currentPage 1}})" class="prev-arrow">Previous</a>
+                            {{/if}}
+
+                            {{#each (createPagination currentPage totalPages)}}
+                                <a href="#" class="{{#ifEquals this ../currentPage}}active{{/ifEquals}}" onclick="changePage({{this}})" >{{this}}</a>
+                            {{/each}}
+
+                            {{#if (lt currentPage totalPages)}}
+                                <a href="#" class="next-arrow" onclick="changePage({{add currentPage 1}})">Next</a>
+                            {{/if}}
+                        {{/if}}
                     </div>
                 </div>
                 <!-- End Filter Bar -->
@@ -265,6 +278,19 @@
                         </select>
                     </div>
                     <div class="pagination">
+                        {{#if totalPages}}
+                            {{#if (gt currentPage 1)}}
+                                <a href="#" onclick="changePage({{sub currentPage 1}})" class="prev-arrow">Previous</a>
+                            {{/if}}
+
+                            {{#each (createPagination currentPage totalPages)}}
+                                <a href="#" class="{{#ifEquals this ../currentPage}}active{{/ifEquals}}" onclick="changePage({{this}})" >{{this}}</a>
+                            {{/each}}
+
+                            {{#if (lt currentPage totalPages)}}
+                                <a href="#" class="next-arrow" onclick="changePage({{add currentPage 1}})">Next</a>
+                            {{/if}}
+                        {{/if}}
                     </div>
                 </div>
                 <!-- End Filter Bar -->
@@ -411,11 +437,18 @@
 <script>
     let filters = {};
 
+    // Kiểm tra xem URL có trường keyword hay không
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyword = urlParams.get('keyword');
+
+    if (keyword) {
+        filters.keyword = keyword;
+    }
+
     function setTypeFilter(type) {
-        filters.type = [type]; // Gán type mới
+        filters.type = type; // Gán type mới
         applyFilters(); // Áp dụng tất cả bộ lọc
         setActiveCategory(type);
-        filterProducts(type);
     }
     function setActiveCategory(type) {
         
@@ -434,6 +467,13 @@
     }
 
     function applyFilters() {
+        // Kiểm tra xem URL có trường keyword hay không
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyword = urlParams.get('keyword');
+
+        if (keyword) {
+            filters.keyword = keyword;
+        }
         
         // Thu thập giá trị cho từng loại lọc
         filters.brand = getCheckedValues('brand');
@@ -458,6 +498,7 @@
     // Hàm gửi request với tất cả các bộ lọc
     function filterProducts(filters) {
         const query = new URLSearchParams(filters).toString();
+        //history.pushState(null, '', `?${query}`);
         fetch(`/product/filter?${query}`)
             .then(response => response.json())
             .then(data => {
@@ -487,9 +528,12 @@
     }
 
     function changePage(page) {
-        filters.page = page; // Thay đổi trang hiện tại
-        applyFilters(); // Áp dụng lại bộ lọc
+        filters.page = page; 
+        const query = new URLSearchParams(filters).toString();
+        //history.pushState(null, '', `?${query}`);
+        applyFilters(); 
     }
+
     // Hàm để cập nhật danh sách sản phẩm
     function updateProductList(products) {
         const productList = document.getElementById('product-list');
@@ -538,14 +582,30 @@
         filters.limit = parseInt(limit); // Cập nhật số lượng sản phẩm mỗi trang
         filters.page = 1; // Reset về trang đầu tiên khi thay đổi số lượng
         
-        // Đồng bộ cả hai dropdown
-        document.querySelector('#items-per-page').value = limit;
-        document.querySelector('#items-per-page-bottom').value = limit;
+        // Đồng bộ giá trị dropdown trên giao diện
+        const selectTop = document.querySelector('#items-per-page');
+        const selectBottom = document.querySelector('#items-per-page-bottom');
+
+        selectTop.value = limit; 
+        selectBottom.value = limit;
+
+         // Cập nhật giao diện tùy chỉnh của nice-select
+        const niceSelectCurrent = selectTop.nextElementSibling.querySelector('.current');
+        if (niceSelectCurrent) {
+            niceSelectCurrent.textContent = `Show ${limit}`;
+        }
+         // Cập nhật giao diện tùy chỉnh của nice-select
+        niceSelectCurrentBottom = selectBottom.nextElementSibling.querySelector('.current');
+        if (niceSelectCurrentBottom) {
+            niceSelectCurrentBottom.textContent = `Show ${limit}`;
+        }
 
         applyFilters(); // Gọi lại bộ lọc để tải dữ liệu mới
     }
     // Gắn sự kiện tự động gọi applyFilters khi có thay đổi
     document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+
         const selectLimitTop = document.querySelector('#items-per-page');
         const selectLimitBottom = document.querySelector('#items-per-page-bottom');
 
@@ -557,7 +617,7 @@
         selectLimitTop.addEventListener('change', (e) => updateItemsPerPage(e.target.value));
         selectLimitBottom.addEventListener('change', (e) => updateItemsPerPage(e.target.value));
 
-        updateItemsPerPage(document.getElementById('items-per-page').value);
+        //updateItemsPerPage(document.getElementById('items-per-page').value);
         document.querySelectorAll('input[name="type"], input[name="brand"], input[name="color"]').forEach(input => {
             input.addEventListener('change', applyFilters);
         });

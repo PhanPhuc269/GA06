@@ -5,7 +5,28 @@ const Product = require("../models/Product");
 class ProductController {
     async ViewProductListings(req, res, next) {
         try {
-            res.render('category');
+            const keyword = req.query.keyword || '';
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 12;
+            const skip = (page - 1) * limit;
+    
+            // Tạo bộ lọc tìm kiếm
+            const filters = {
+                name: { $regex: keyword, $options: 'i' } // Tìm kiếm không phân biệt chữ hoa chữ thường
+            };
+    
+            // Đếm tổng số sản phẩm phù hợp
+            const total = await Product.countDocuments(filters);
+    
+            // Tìm các sản phẩm dựa trên bộ lọc và phân trang
+            const products = await Product.find(filters).skip(skip).limit(limit);
+            console.log(page, Math.ceil(total / limit));
+            // Trả về danh sách sản phẩm đã tìm kiếm
+            res.render('category', {
+                products: mutipleMongooseToObject(products),
+                currentPage: page,
+                totalPages: Math.ceil(total / limit)
+            });
         } catch (error) {
             next(error);
         }
@@ -31,14 +52,44 @@ class ProductController {
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
     }
-
+    async SearchProduct(req, res, next) {
+        try {
+            const keyword = req.query.keyword || '';
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 12;
+            const skip = (page - 1) * limit;
+    
+            // Tạo bộ lọc tìm kiếm
+            const filters = {
+                name: { $regex: keyword, $options: 'i' } // Tìm kiếm không phân biệt chữ hoa chữ thường
+            };
+    
+            // Đếm tổng số sản phẩm phù hợp
+            const total = await Product.countDocuments(filters);
+    
+            // Tìm các sản phẩm dựa trên bộ lọc và phân trang
+            const products = await Product.find(filters).skip(skip).limit(limit);
+            console.log(page, Math.ceil(total / limit));
+            // Trả về danh sách sản phẩm đã tìm kiếm
+            res.render('category', {
+                products: mutipleMongooseToObject(products),
+                currentPage: page,
+                totalPages: Math.ceil(total / limit)
+            });
+        } catch (error) {
+            console.error('Error searching products:', error);
+            res.status(500).json({ message: 'Error searching products', error });
+        }
+    }
     // Hàm lọc sản phẩm
     async getFilteredProducts(req, res, next) {
         try {
-            const { type: productType, brand: productBrand, color: productColor, minPrice, maxPrice, page = 1, limit = 5 } = req.query;
+            const { type: productType, brand: productBrand, color: productColor, minPrice, maxPrice, page = 1, limit = 12, keyword } = req.query;
             // Xây dựng bộ lọc linh hoạt
             const filters = {};
-    
+            if (keyword) {
+                filters.name = { $regex: keyword, $options: 'i' }; // Tìm kiếm không phân biệt chữ hoa chữ thường
+            }
             // Xử lý lọc theo type (chuỗi hoặc mảng giá trị)
             if (productType) {
                 const typeArray = productType.includes(',') ? productType.split(',') : [productType];
