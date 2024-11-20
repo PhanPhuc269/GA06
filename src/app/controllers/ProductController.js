@@ -2,7 +2,9 @@ const { mutipleMongooseToObject } = require('../../util/mongoose');
 const { mongooseToObject } = require('../../util/mongoose');
 const Product = require("../models/Product");
 
+
 class ProductController {
+
     async ViewProductListings(req, res, next) {
         try {
             const keyword = req.query.keyword || '';
@@ -32,10 +34,24 @@ class ProductController {
         }
     }
 
+    
     async ViewProductDetails(req, res, next) {
         try {
             const product = await Product.findById(req.params.id);
-            res.render('product-details', { product: mongooseToObject(product) });
+
+            const relevantProducts = await Product.find({ category: product.category }).limit(9);
+            
+            // Log the relevant products to check the returned data
+            console.log('Relevant Products:', relevantProducts);
+
+            res.render('product-details', { 
+                product: mongooseToObject(product),
+                relevantProducts: mutipleMongooseToObject(relevantProducts),
+
+             });
+
+
+          
         } catch (error) {
             next(error);
         }
@@ -132,6 +148,7 @@ class ProductController {
             res.status(500).json({ message: 'Error filtering products', error });
         }
     }
+
     
     
 }
