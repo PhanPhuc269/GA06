@@ -10,7 +10,7 @@ const Product = new Schema({
     availibility: {type: String},
     brand: {type: String},
     type:{type: String},
-    color:{type: String},
+    color:{type: String}
 
 });
 
