@@ -52,11 +52,21 @@ class AuthController{
     }
     // [POST] /login
     async login(req, res, next) {
-        passport.authenticate('local', {
-            successRedirect: '/',  // Chuyển hướng khi đăng nhập thành công
-            failureRedirect: '/login', // Chuyển hướng khi đăng nhập thất bại
-            failureFlash: true // Kích hoạt thông báo lỗi
-          })(req, res, next);
+        passport.authenticate('local', (err, user, info) => {
+            if (err) {
+                return next(err);
+            }
+            if (!user) {
+                req.flash('error_msg', 'Sai tên đăng nhập hoặc mật khẩu');
+                return res.redirect('/login');
+            }
+            req.logIn(user, (err) => {
+                if (err) {
+                    return next(err);
+                }
+                return res.redirect('/');
+            });
+        })(req, res, next);
     }
 }
 
