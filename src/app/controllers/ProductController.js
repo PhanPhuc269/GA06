@@ -22,10 +22,16 @@ class ProductController {
     
             // Tìm các sản phẩm dựa trên bộ lọc và phân trang
             const products = await Product.find(filters).skip(skip).limit(limit);
+    
+            // Lấy danh sách sản phẩm đang giảm giá (onsale = 1)
+            const dealProducts = await Product.find({ availibility: 'On Sale' });
+    
             console.log(page, Math.ceil(total / limit));
-            // Trả về danh sách sản phẩm đã tìm kiếm
+    
+            // Trả về danh sách sản phẩm đã tìm kiếm và sản phẩm giảm giá
             res.render('category', {
                 products: mutipleMongooseToObject(products),
+                dealProducts: mutipleMongooseToObject(dealProducts),
                 currentPage: page,
                 totalPages: Math.ceil(total / limit)
             });
@@ -33,6 +39,7 @@ class ProductController {
             next(error);
         }
     }
+    
 
     
     async ViewProductDetails(req, res, next) {
