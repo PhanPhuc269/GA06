@@ -447,6 +447,7 @@
 
     function setTypeFilter(type) {
         filters.type = type; // Gán type mới
+        filters.page = 1; // Reset về trang đầu tiên khi thay đổi loại
         applyFilters(); // Áp dụng tất cả bộ lọc
         setActiveCategory(type);
     }
