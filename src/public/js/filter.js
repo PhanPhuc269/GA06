@@ -1,3 +1,12 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search); // Lấy tham số từ URL
+    const keyword = urlParams.get('keyword'); // Lấy giá trị của tham số 'keyword'
+    const searchInput = document.getElementById('search_input'); // Tìm trường input của ô tìm kiếm
+
+    if (keyword && searchInput) {
+        searchInput.value = keyword; // Gán giá trị từ URL vào trường input
+    }
+});
 let filters = {};
 
 // Kiểm tra xem URL có trường keyword hay không
