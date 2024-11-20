@@ -182,7 +182,7 @@
 					</div>
 				</div>
 				<div class="row">
-                    {{#each products}}
+                    {{#each notOnSaleProducts}}
 					<!-- single product -->
 					<div class="col-lg-3 col-md-6">
 						<div class="single-product">
@@ -238,40 +238,41 @@
 					</div>
 				</div>
 				<div class="row">
-					{{#each products}}
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="{{this.image}}" alt="">
-							<div class="product-details">
+					{{#each notOnSaleProducts}}
+						
+							<!-- single product -->
+							<div class="col-lg-3 col-md-6">
+							<div class="single-product">
+								<img class="img-fluid" src="{{this.image}}" alt="{{this.name}}">
+								<div class="product-details">
 								<h6>{{this.name}}</h6>
 								<div class="price">
 									<h6>${{this.price}}</h6>
 									<h6 class="l-through">$210.00</h6>
 								</div>
 								<div class="prd-bottom">
-
 									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
+									<span class="ti-bag"></span>
+									<p class="hover-text">add to bag</p>
 									</a>
 									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
+									<span class="lnr lnr-heart"></span>
+									<p class="hover-text">Wishlist</p>
 									</a>
 									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
+									<span class="lnr lnr-sync"></span>
+									<p class="hover-text">compare</p>
 									</a>
 									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
+									<span class="lnr lnr-move"></span>
+									<p class="hover-text">view more</p>
 									</a>
 								</div>
+								</div>
 							</div>
-						</div>
-					</div>
-                    {{/each}}
+							</div>
+						
+					{{/each}}
 					
 				</div>
 			</div>
@@ -289,18 +290,18 @@
 							<h1>Exclusive Hot Deal Ends Soon!</h1>
 							<p>Who are in extremely love with eco friendly system.</p>
 						</div>
-						<div class="col-lg-12">
+						<div id="clockdiv" class="col-lg-12">
 							<div class="row clock-wrap">
 								<div class="col clockinner1 clockinner">
-									<h1 class="days">150</h1>
+									<h1 class="days">10</h1>
 									<span class="smalltext">Days</span>
 								</div>
 								<div class="col clockinner clockinner1">
-									<h1 class="hours">23</h1>
+									<h1 class="hours">21</h1>
 									<span class="smalltext">Hours</span>
 								</div>
 								<div class="col clockinner clockinner1">
-									<h1 class="minutes">47</h1>
+									<h1 class="minutes">33</h1>
 									<span class="smalltext">Mins</span>
 								</div>
 								<div class="col clockinner clockinner1">
@@ -310,7 +311,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="" class="primary-btn">Shop Now</a>
+					<a href="/product/list" class="primary-btn">Shop Now</a>
 				</div>
 				<div class="col-lg-6 no-padding exclusive-right">
 					<div class="active-exclusive-product-slider">
@@ -392,114 +393,21 @@
 			<div class="row">
 				<div class="col-lg-9">
 					<div class="row">
+						{{#each onSaleProducts}}
 						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
 							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r1.jpg" alt=""></a>
+								<a href="/product/product-details/{{this._id}}"><img src="{{this.image}}" alt="{{this.name}}"></a>
 								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
+									<a href="/product/product-details/{{this._id}}" class="title">{{this.name}}</a>
 									<div class="price">
-										<h6>$189.00</h6>
+										<h6>{{this.price}}</h6>
 										<h6 class="l-through">$210.00</h6>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r2.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r3.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r5.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r6.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r7.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r9.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r10.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r11.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
+						{{/each}}
+						
 					</div>
 				</div>
 				<div class="col-lg-3">

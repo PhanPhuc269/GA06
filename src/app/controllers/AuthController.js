@@ -35,11 +35,13 @@ class AuthController{
 
     async home(req, res, next) {
         try {
-            const products = await Product.find();
+            const onSaleProducts = await Product.find({ availibility: 'On Sale' });
+            const notOnSaleProducts = await Product.find({ availibility: { $ne: 'On Sale' } });
+    
             res.render('home', {
-                products: mutipleMongooseToObject(products)
+                onSaleProducts: mutipleMongooseToObject(onSaleProducts),
+                notOnSaleProducts: mutipleMongooseToObject(notOnSaleProducts)
             });
-            //console.log(products);
         } catch (error) {
             next(error);
         }
