@@ -58,4 +58,16 @@ module.exports={
             const remainingSeconds = seconds % 60;
             return `${hours}h ${minutes}m ${remainingSeconds}s`;
         },
+    gt: (a, b) => a > b,
+    lt: (a, b) => a < b,
+    add: (a, b) => a + b,
+    sub: (a, b) => a - b,
+    ifEquals: (a, b, options) => (a === b ? options.fn(this) : options.inverse(this)),
+    createPagination: (currentPage, totalPages) => {
+      let pages = [];
+      for (let i = 1; i <= totalPages; i++) {
+          pages.push(i);
+      }
+      return pages;
+    }     
 }
