@@ -619,7 +619,10 @@
 
         //updateItemsPerPage(document.getElementById('items-per-page').value);
         document.querySelectorAll('input[name="type"], input[name="brand"], input[name="color"]').forEach(input => {
-            input.addEventListener('change', applyFilters);
+            input.addEventListener('change',() => { 
+                filters.page = 1;
+                applyFilters(); 
+            });
         });
 
     });
