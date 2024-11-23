@@ -1,7 +1,7 @@
 const express = require ('express');
 const router =express.Router();
-const productController= require('../app/controllers/ProductController');
-const {ensureAuthenticated} = require('../app/middlewares/AuthMiddleware');
+const productController= require('./controllers/ProductController');
+const {ensureAuthenticated} = require('../../middlewares/AuthMiddleware');
 
  
 router.get('/list',productController.ViewProductListings);

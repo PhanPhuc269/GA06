@@ -1,9 +1,9 @@
-const authRouter=require('./auth');
-const productRouter=require('./product');
-const blogRouter=require('./blog');
-const pagesRouter=require('./pages');
-const contactRouter=require('./contact');
-const aboutRouter=require('./about');
+const authRouter=require('../auth/auth');
+const productRouter=require('../components/product/productRoutes');
+const blogRouter=require('../components/blog/blogRoute');
+const pagesRouter=require('../components/pages/pagesRoute');
+const contactRouter=require('../components/contact/contactRoute');
+const aboutRouter=require('../components/about/aboutRoute');
 
 
 function router(app)

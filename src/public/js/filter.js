@@ -47,7 +47,9 @@ function applyFilters() {
     if (keyword) {
         filters.keyword = keyword;
     }
-    
+    //Cập nhật URL
+
+
     // Thu thập giá trị cho từng loại lọc
     filters.brand = getCheckedValues('brand');
     filters.color = getCheckedValues('color');
@@ -58,6 +60,9 @@ function applyFilters() {
     if (minPrice) filters.minPrice = minPrice;
     if (maxPrice) filters.maxPrice = maxPrice;
 
+    // Cập nhật URL
+    const query = new URLSearchParams(filters).toString();
+    history.pushState(null, '', `?${query}`);
     // Gọi API lọc
     filterProducts(filters);
 }

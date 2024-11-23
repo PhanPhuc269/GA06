@@ -1,5 +1,5 @@
-const { mutipleMongooseToObject } = require('../../util/mongoose');
-const { mongooseToObject } = require('../../util/mongoose');
+const { mutipleMongooseToObject } = require('../../../utils/mongoose');
+const { mongooseToObject } = require('../../../utils/mongoose');
 const Product = require("../models/Product");
 
 
