@@ -1,9 +1,9 @@
-const { mutipleMongooseToObject } = require('../../util/mongoose');
-const { mongooseToObject } = require('../../util/mongoose');
+const { mutipleMongooseToObject } = require('@utils/mongoose');
+const { mongooseToObject } = require('@utils/mongoose');
 const session = require('express-session');
 const User = require('../models/User');
 const crypto = require('crypto');
-const Product = require("../models/Product");
+const Product = require("@components/product/models/Product");
 const passport = require('passport');
 
 class AuthController{
