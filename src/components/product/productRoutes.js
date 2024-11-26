@@ -5,7 +5,7 @@ const {ensureAuthenticated} = require('../../middlewares/AuthMiddleware');
 
  
 router.get('/list',productController.ViewProductListings);
-router.get('/product-details/:id',productController.ViewProductDetails);
+router.get('/product-details/:slug',productController.ViewProductDetails);
 router.get('/checkout', ensureAuthenticated,productController.ViewProductCheckout);
 router.get('/cart', ensureAuthenticated,productController.ViewShoppingCart);
 router.get('/confirmation', ensureAuthenticated,productController.ViewOrderConfirmation);

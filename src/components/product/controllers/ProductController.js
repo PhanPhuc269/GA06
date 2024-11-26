@@ -44,7 +44,7 @@ class ProductController {
     
     async ViewProductDetails(req, res, next) {
         try {
-            const product = await Product.findById(req.params.id);
+            const product = await Product.findOne({ slug: req.params.slug });
 
             const relevantProducts = await Product.find({ category: product.category }).limit(9);
             
