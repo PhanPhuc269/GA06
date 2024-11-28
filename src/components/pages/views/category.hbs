@@ -192,13 +192,16 @@
             <div class="col-xl-9 col-lg-8 col-md-7">
                 <!-- Start Filter Bar -->
                 <div class="filter-bar d-flex flex-wrap align-items-center">
-                    <div class="sorting">
-                        <select>
-                            <option value="1">Default sorting</option>
-                            <option value="2">Price</option>
-                            <option value="3">Popularity</option>
+                   <div class="sorting">
+                        <select id="sort-criteria" onchange="applySort(this.value)">
+                            <option value="default">Default sorting</option>
+                            <option value="price_asc">Price: Low to High</option>
+                            <option value="price_desc">Price: High to Low</option>
+                            <option value="creation_time_desc">Newest</option>
+                            <option value="rate_desc">Best Rated</option>
                         </select>
                     </div>
+
                     <div class="sorting mr-auto" >
                         <select id="items-per-page" onchange="updateItemsPerPage(this.value)">
                             <option value="12">Show 12</option>

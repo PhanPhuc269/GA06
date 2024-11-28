@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const slugify = require('slugify');
 
 const Product = new Schema({
+
     name: {type: String, require: true},
     description: {type: String},
     price: {type: Number, require: true},
@@ -33,5 +34,6 @@ Product.pre('save', async function (next) {
     }
     next();
 });
+
 
 module.exports = mongoose.model('Product', Product);
