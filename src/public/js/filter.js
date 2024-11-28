@@ -1,82 +1,54 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search); // Lấy tham số từ URL
-    const keyword = urlParams.get('keyword'); // Lấy giá trị của tham số 'keyword'
-    const searchInput = document.getElementById('search_input'); // Tìm trường input của ô tìm kiếm
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyword = urlParams.get('keyword');
+    const searchInput = document.getElementById('search_input');
 
     if (keyword && searchInput) {
-        searchInput.value = keyword; // Gán giá trị từ URL vào trường input
+        searchInput.value = keyword;
+        filters.keyword = keyword;
     }
 });
+
 let filters = {};
 
-// Kiểm tra xem URL có trường keyword hay không
+// Lấy giá trị ban đầu từ URL
 const urlParams = new URLSearchParams(window.location.search);
-const keyword = urlParams.get('keyword');
-
-if (keyword) {
-    filters.keyword = keyword;
-}
+filters.keyword = urlParams.get('keyword') || '';
+filters.type = urlParams.get('type') || '';
+filters.brand = urlParams.getAll('brand') || [];
+filters.color = urlParams.getAll('color') || [];
+filters.minPrice = urlParams.get('minPrice') || '';
+filters.maxPrice = urlParams.get('maxPrice') || '';
+filters.sort = urlParams.get('sort') || 'default';
+filters.page = parseInt(urlParams.get('page')) || 1;
+filters.limit = parseInt(urlParams.get('limit')) || 12;
 
 function setTypeFilter(type) {
-    filters.type = type; // Gán type mới
-    filters.page = 1; // Reset về trang đầu tiên khi thay đổi loại
-    applyFilters(); // Áp dụng tất cả bộ lọc
+    filters.type = type;
+    filters.page = 1;
+    applyFilters();
     setActiveCategory(type);
 }
+
 function setActiveCategory(type) {
-    
-    // Xóa class 'active' từ tất cả danh mục
     const categoryLinks = document.querySelectorAll('.main-nav-list.child a');
     categoryLinks.forEach(link => {
-        if (link.classList.contains('active')) {
-            link.classList.remove('active');
-        }
+        link.classList.remove('active');
     });
-    // Thêm class 'active' vào danh mục được chọn
     const activeLink = document.getElementById(`${type}-link`);
     if (activeLink) {
         activeLink.classList.add('active');
     }
 }
 
-function applyFilters() {
-    // Kiểm tra xem URL có trường keyword hay không
-    const urlParams = new URLSearchParams(window.location.search);
-    const keyword = urlParams.get('keyword');
-
-    if (keyword) {
-        filters.keyword = keyword;
-    }
-    //Cập nhật URL
-
-
-    // Thu thập giá trị cho từng loại lọc
-    filters.brand = getCheckedValues('brand');
-    filters.color = getCheckedValues('color');
-    
-    const minPrice = document.getElementById('lower-value')?.textContent;
-    const maxPrice = document.getElementById('upper-value')?.textContent;
-
-    if (minPrice) filters.minPrice = minPrice;
-    if (maxPrice) filters.maxPrice = maxPrice;
-
-    // Cập nhật URL
-    const query = new URLSearchParams(filters).toString();
-    history.pushState(null, '', `?${query}`);
-    // Gọi API lọc
-    filterProducts(filters);
-}
-
-// Hàm lấy tất cả giá trị được chọn
 function getCheckedValues(name) {
     const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
     return Array.from(checkboxes).map(checkbox => checkbox.value);
 }
 
-// Hàm gửi request với tất cả các bộ lọc
 function filterProducts(filters) {
     const query = new URLSearchParams(filters).toString();
-    //history.pushState(null, '', `?${query}`);
+
     fetch(`/product/filter?${query}`)
         .then(response => response.json())
         .then(data => {
@@ -85,11 +57,11 @@ function filterProducts(filters) {
         })
         .catch(error => console.error('Error:', error));
 }
+
 function updatePagination(currentPage, totalPages) {
-    const paginationContainers = document.querySelectorAll('.pagination'); // Chọn cả hai pagination (trên & dưới)
-    
+    const paginationContainers = document.querySelectorAll('.pagination');
     paginationContainers.forEach(paginationContainer => {
-        paginationContainer.innerHTML = ''; // Xóa nội dung cũ
+        paginationContainer.innerHTML = '';
 
         if (currentPage > 1) {
             paginationContainer.innerHTML += `<a href="#" class="prev-arrow" onclick="changePage(${currentPage - 1})"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>`;
@@ -106,18 +78,14 @@ function updatePagination(currentPage, totalPages) {
 }
 
 function changePage(page) {
-    filters.page = page; 
-    const query = new URLSearchParams(filters).toString();
-    //history.pushState(null, '', `?${query}`);
-    applyFilters(); 
+    filters.page = page;
+    applyFilters();
 }
 
-// Hàm để cập nhật danh sách sản phẩm
 function updateProductList(products) {
     const productList = document.getElementById('product-list');
-    productList.innerHTML = ''; // Xóa các sản phẩm hiện có
+    productList.innerHTML = '';
 
-    // Render sản phẩm được lọc
     products.forEach(product => {
         productList.innerHTML += `
             <div class="col-lg-4 col-md-6">
@@ -133,15 +101,15 @@ function updateProductList(products) {
                             <h6>$${product.price}</h6>
                         </div>
                         <div class="prd-bottom">
-                            <a href="" class="social-info">
+                            <a href="#" class="social-info">
                                 <span class="ti-bag"></span>
                                 <p class="hover-text">add to bag</p>
                             </a>
-                            <a href="" class="social-info">
+                            <a href="#" class="social-info">
                                 <span class="lnr lnr-heart"></span>
                                 <p class="hover-text">Wishlist</p>
                             </a>
-                            <a href="" class="social-info">
+                            <a href="#" class="social-info">
                                 <span class="lnr lnr-sync"></span>
                                 <p class="hover-text">compare</p>
                             </a>
@@ -156,51 +124,55 @@ function updateProductList(products) {
         `;
     });
 }
+
 function updateItemsPerPage(limit) {
-    filters.limit = parseInt(limit); // Cập nhật số lượng sản phẩm mỗi trang
-    filters.page = 1; // Reset về trang đầu tiên khi thay đổi số lượng
-    
-    // Đồng bộ giá trị dropdown trên giao diện
-    const selectTop = document.querySelector('#items-per-page');
-    const selectBottom = document.querySelector('#items-per-page-bottom');
-
-    selectTop.value = limit; 
-    selectBottom.value = limit;
-
-        // Cập nhật giao diện tùy chỉnh của nice-select
-    const niceSelectCurrent = selectTop.nextElementSibling.querySelector('.current');
-    if (niceSelectCurrent) {
-        niceSelectCurrent.textContent = `Show ${limit}`;
-    }
-        // Cập nhật giao diện tùy chỉnh của nice-select
-    niceSelectCurrentBottom = selectBottom.nextElementSibling.querySelector('.current');
-    if (niceSelectCurrentBottom) {
-        niceSelectCurrentBottom.textContent = `Show ${limit}`;
-    }
-
-    applyFilters(); // Gọi lại bộ lọc để tải dữ liệu mới
+    filters.limit = parseInt(limit);
+    filters.page = 1;
+    applyFilters();
 }
-// Gắn sự kiện tự động gọi applyFilters khi có thay đổi
+
+function applySort(sort) {
+    filters.sort = sort;
+    filters.page = 1;
+    applyFilters();
+}
+
+function applyFilters() {
+    filters.brand = getCheckedValues('brand');
+    filters.color = getCheckedValues('color');
+
+    const minPrice = document.getElementById('lower-value')?.textContent;
+    const maxPrice = document.getElementById('upper-value')?.textContent;
+
+    if (minPrice) filters.minPrice = minPrice;
+    if (maxPrice) filters.maxPrice = maxPrice;
+
+    const query = new URLSearchParams(filters).toString();
+    history.pushState(null, '', `?${query}`);
+
+    filterProducts(filters);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
+    const sortSelect = document.querySelector('#sort-criteria');
+    if (sortSelect) {
+        sortSelect.value = filters.sort;
+        sortSelect.addEventListener('change', () => applySort(sortSelect.value));
+    }
 
     const selectLimitTop = document.querySelector('#items-per-page');
     const selectLimitBottom = document.querySelector('#items-per-page-bottom');
 
-    // Thiết lập giá trị ban đầu cho cả hai dropdown
-    selectLimitTop.value = filters.limit || 12;
-    selectLimitBottom.value = filters.limit || 12;
+    selectLimitTop.value = filters.limit;
+    selectLimitBottom.value = filters.limit;
 
-    // Gắn sự kiện onchange cho cả hai
     selectLimitTop.addEventListener('change', (e) => updateItemsPerPage(e.target.value));
     selectLimitBottom.addEventListener('change', (e) => updateItemsPerPage(e.target.value));
 
-    //updateItemsPerPage(document.getElementById('items-per-page').value);
     document.querySelectorAll('input[name="type"], input[name="brand"], input[name="color"]').forEach(input => {
-        input.addEventListener('change',() => { 
+        input.addEventListener('change', () => { 
             filters.page = 1;
-            applyFilters(); 
+            applyFilters();
         });
     });
-
 });
