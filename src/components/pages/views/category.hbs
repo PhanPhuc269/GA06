@@ -233,11 +233,11 @@
                         {{#each products}}
                         <div class="col-lg-4 col-md-6">
                             <div class="single-product">
-                                <a href="/product/product-details/{{this._id}}">
+                                <a href="/product/product-details/{{this.slug}}">
                                     <img class="img-fluid" src="/{{this.image}}" alt="{{this.name}}">
                                 </a>
                                 <div class="product-details">
-                                    <a href="/product/product-details/{{this._id}}">
+                                    <a href="/product/product-details/{{this.slug}}">
                                         <h6>{{this.name}}</h6>
                                     </a>
                                     <div class="price">
@@ -258,7 +258,7 @@
                                             <span class="lnr lnr-sync"></span>
                                             <p class="hover-text">compare</p>
                                         </a>
-                                        <a href="/product/product-details/{{this._id}}" class="social-info">
+                                        <a href="/product/product-details/{{this.slug}}" class="social-info">
                                             <span class="lnr lnr-move"></span>
                                             <p class="hover-text">view more</p>
                                         </a>
@@ -319,11 +319,11 @@
                     {{#each dealProducts}}
                     <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
                         <div class="single-related-product d-flex">
-                            <a href="/product/product-details/{{this._id}}">
+                            <a href="/product/product-details/{{this.slug}}">
                         		<img src="/{{this.image}}" alt="{{this.name}}" style="max-width: 100px; height: auto;">
                     		</a>
                             <div class="desc">
-                                <a href="/product/product-details/{{this._id}}" class="title">{{this.name}}</a>
+                                <a href="/product/product-details/{{this.slug}}" class="title">{{this.name}}</a>
                                 <div class="price">
                                     <h6>${{this.price}}</h6>
                                     <h6 class="l-through">$210.00</h6>
