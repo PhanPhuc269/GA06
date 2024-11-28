@@ -2,64 +2,85 @@ const { mutipleMongooseToObject } = require('../../../utils/mongoose');
 const { mongooseToObject } = require('../../../utils/mongoose');
 const Product = require("../models/Product");
 
-
 class ProductController {
-
+    // Hiển thị danh sách sản phẩm
     async ViewProductListings(req, res, next) {
         try {
-            const keyword = req.query.keyword || '';
+            const keyword = req.query.keyword ? req.query.keyword.trim() : '';
             const page = parseInt(req.query.page) || 1;
             const limit = parseInt(req.query.limit) || 12;
             const skip = (page - 1) * limit;
-    
-            // Tạo bộ lọc tìm kiếm
-            const filters = {
-                name: { $regex: keyword, $options: 'i' } // Tìm kiếm không phân biệt chữ hoa chữ thường
-            };
-    
-            // Đếm tổng số sản phẩm phù hợp
+            const sort = req.query.sort || 'default';
+
+            // Kiểm tra giá trị hợp lệ
+            if (page < 1 || limit < 1) {
+                return res.status(400).json({ error: 'Invalid page or limit value' });
+            }
+
+            // Bộ lọc tìm kiếm
+            const filters = {};
+            if (keyword) {
+                filters.name = { $regex: keyword, $options: 'i' };
+            }
+
+            // Xác định tiêu chí sắp xếp
+            let sortCriteria = {};
+            switch (sort) {
+                case 'price_asc':
+                    sortCriteria = { price: 1 };
+                    break;
+                case 'price_desc':
+                    sortCriteria = { price: -1 };
+                    break;
+                case 'creation_time_desc':
+                    sortCriteria = { createdAt: -1 };
+                    break;
+                case 'rate_desc':
+                    sortCriteria = { rate: -1 };
+                    break;
+                default:
+                    sortCriteria = {};
+            }
+
+            // Tổng số sản phẩm và sản phẩm theo phân trang
             const total = await Product.countDocuments(filters);
-    
-            // Tìm các sản phẩm dựa trên bộ lọc và phân trang
-            const products = await Product.find(filters).skip(skip).limit(limit);
-    
-            // Lấy danh sách sản phẩm đang giảm giá (onsale = 1)
+            const products = await Product.find(filters)
+                .sort(sortCriteria)
+                .skip(skip)
+                .limit(limit);
+
+            // Sản phẩm đang giảm giá
             const dealProducts = await Product.find({ availibility: 'On Sale' });
-    
-            console.log(page, Math.ceil(total / limit));
-    
-            // Trả về danh sách sản phẩm đã tìm kiếm và sản phẩm giảm giá
+
             res.render('category', {
                 products: mutipleMongooseToObject(products),
                 dealProducts: mutipleMongooseToObject(dealProducts),
                 currentPage: page,
-                totalPages: Math.ceil(total / limit)
+                totalPages: Math.ceil(total / limit),
+                keyword,
+                sort,
             });
         } catch (error) {
+            console.error('Error in ViewProductListings:', error);
             next(error);
         }
     }
-    
 
-    
+    // Chi tiết sản phẩm
     async ViewProductDetails(req, res, next) {
         try {
+
             const product = await Product.findOne({ slug: req.params.slug });
 
-            const relevantProducts = await Product.find({ category: product.category }).limit(9);
-            
-            // Log the relevant products to check the returned data
-            console.log('Relevant Products:', relevantProducts);
 
-            res.render('product-details', { 
+            const relevantProducts = await Product.find({ category: product.category }).limit(9);
+
+            res.render('product-details', {
                 product: mongooseToObject(product),
                 relevantProducts: mutipleMongooseToObject(relevantProducts),
-
-             });
-
-
-          
+            });
         } catch (error) {
+            console.error('Error in ViewProductDetails:', error);
             next(error);
         }
     }
@@ -75,78 +96,102 @@ class ProductController {
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
     }
+
+    // Tìm kiếm sản phẩm
     async SearchProduct(req, res, next) {
         try {
             const keyword = req.query.keyword || '';
             const page = parseInt(req.query.page) || 1;
             const limit = parseInt(req.query.limit) || 12;
             const skip = (page - 1) * limit;
-    
-            // Tạo bộ lọc tìm kiếm
+
             const filters = {
-                name: { $regex: keyword, $options: 'i' } // Tìm kiếm không phân biệt chữ hoa chữ thường
+                name: { $regex: keyword, $options: 'i' },
             };
-    
-            // Đếm tổng số sản phẩm phù hợp
+
             const total = await Product.countDocuments(filters);
-    
-            // Tìm các sản phẩm dựa trên bộ lọc và phân trang
             const products = await Product.find(filters).skip(skip).limit(limit);
-            // Lấy danh sách sản phẩm đang giảm giá (onsale = 1)
             const dealProducts = await Product.find({ availibility: 'On Sale' });
 
-            // Trả về danh sách sản phẩm đã tìm kiếm
             res.render('category', {
                 products: mutipleMongooseToObject(products),
                 dealProducts: mutipleMongooseToObject(dealProducts),
                 currentPage: page,
-                totalPages: Math.ceil(total / limit)
+                totalPages: Math.ceil(total / limit),
             });
         } catch (error) {
             console.error('Error searching products:', error);
-            res.status(500).json({ message: 'Error searching products', error });
+            next(error);
         }
     }
-    // Hàm lọc sản phẩm
+
+    // Lọc sản phẩm
     async getFilteredProducts(req, res, next) {
         try {
-            const { type: productType, brand: productBrand, color: productColor, minPrice, maxPrice, page = 1, limit = 12, keyword } = req.query;
-            // Xây dựng bộ lọc linh hoạt
+            const {
+                type: productType,
+                brand: productBrand,
+                color: productColor,
+                minPrice,
+                maxPrice,
+                page = 1,
+                limit = 12,
+                keyword,
+                sort,
+            } = req.query;
+
+            const skip = (parseInt(page) - 1) * parseInt(limit);
             const filters = {};
+
             if (keyword) {
-                filters.name = { $regex: keyword, $options: 'i' }; // Tìm kiếm không phân biệt chữ hoa chữ thường
+                filters.name = { $regex: keyword, $options: 'i' };
             }
-            // Xử lý lọc theo type (chuỗi hoặc mảng giá trị)
+
             if (productType) {
                 const typeArray = productType.includes(',') ? productType.split(',') : [productType];
                 filters.type = { $in: typeArray };
             }
-    
-            // Xử lý lọc theo brand (chuỗi hoặc mảng giá trị)
+
             if (productBrand) {
                 const brandArray = productBrand.includes(',') ? productBrand.split(',') : [productBrand];
                 filters.brand = { $in: brandArray };
             }
-    
-            // Xử lý lọc theo color (chuỗi hoặc mảng giá trị)
+
             if (productColor) {
                 const colorArray = productColor.includes(',') ? productColor.split(',') : [productColor];
                 filters.color = { $in: colorArray };
             }
-    
-            // Xử lý lọc theo khoảng giá
+
             if (minPrice || maxPrice) {
                 filters.price = {};
                 if (minPrice) filters.price.$gte = parseFloat(minPrice);
                 if (maxPrice) filters.price.$lte = parseFloat(maxPrice);
-            }    
-            const skip = (parseInt(page) - 1) * parseInt(limit);
-            const total = await Product.countDocuments(filters); // Tổng số sản phẩm sau khi lọc
-            // Tìm các sản phẩm dựa trên bộ lọc
+            }
+
+            let sortCriteria = {};
+            switch (sort) {
+                case 'price_asc':
+                    sortCriteria = { price: 1 };
+                    break;
+                case 'price_desc':
+                    sortCriteria = { price: -1 };
+                    break;
+                case 'creation_time_desc':
+                    sortCriteria = { createdAt: -1 };
+                    break;
+                case 'rate_desc':
+                    sortCriteria = { rate: -1 };
+                    break;
+                default:
+                    sortCriteria = {};
+            }
+
+            const total = await Product.countDocuments(filters);
             const products = await Product.find(filters)
-            .skip(skip)
-            .limit(parseInt(limit));
-            // Trả về danh sách sản phẩm đã lọc
+                .sort(sortCriteria)
+                .skip(skip)
+                .limit(parseInt(limit));
+
             res.json({
                 products: mutipleMongooseToObject(products),
                 total,
@@ -158,9 +203,6 @@ class ProductController {
             res.status(500).json({ message: 'Error filtering products', error });
         }
     }
-
-    
-    
 }
 
 module.exports = new ProductController();
