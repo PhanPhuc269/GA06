@@ -40,7 +40,7 @@ async function handleRegister(event) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, email, password })
+        body: JSON.stringify({ username, email, password, rePassword })
     });
 
     const result = await response.json();

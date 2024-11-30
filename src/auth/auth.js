@@ -8,6 +8,7 @@ router.get('/registration',AuthController.viewRegistration);
 router.post('/register',AuthController.register);
 router.get('/login',AuthController.viewLogin);
 router.post('/login',AuthController.login);
+router.get('/logout',AuthController.logout);
 
 
 

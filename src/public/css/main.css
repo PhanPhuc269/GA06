@@ -6071,3 +6071,6 @@ textarea {
 
 .animate__fadeInUp {
   animation: fadeInUp 1s ease-out; }
+  .text-normal-case {
+    text-transform: none !important;
+}
