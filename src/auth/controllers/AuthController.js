@@ -11,8 +11,11 @@ class AuthController{
         res.render('registration');
     }
     async register(req, res,next){
-        const { username, email, password } = req.body;
+        const { username, email, password, rePassword } = req.body;
         try {
+            if (password !== rePassword) {
+                return res.status(400).json({ message: 'Passwords do not match' });
+            }
             // Check if the username already exists
             const existingUser = await User.findOne({ username: username });
             if (existingUser) {
@@ -48,7 +51,11 @@ class AuthController{
     }
     // [GET] /login
     viewLogin(req, res, next) {
-        res.render('login');
+        if(req.isAuthenticated()){
+            return res.redirect('/');
+        }
+        const email = req.flash('email')[0] || '';
+        res.render('login', { email });
     }
     // [POST] /login
     async login(req, res, next) {
@@ -57,7 +64,8 @@ class AuthController{
                 return next(err);
             }
             if (!user) {
-                req.flash('error_msg', 'Sai tên đăng nhập hoặc mật khẩu');
+                req.flash('error_msg', 'Sai email hoặc mật khẩu');
+                req.flash('email', req.body.email);
                 return res.redirect('/login');
             }
             req.logIn(user, (err) => {
@@ -68,6 +76,16 @@ class AuthController{
             });
         })(req, res, next);
     }
+    // [GET] /logout
+    logout (req, res,next){
+        req.logout((err) => {
+            if (err) {
+                return res.status(500).send('Error logging out');
+            }
+            res.redirect('/login'); // Chuyển hướng về trang đăng nhập
+        });
+    };
+
 }
 
 module.exports = new AuthController();

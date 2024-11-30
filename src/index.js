@@ -63,6 +63,8 @@ app.use((req, res, next) => {
 });
 app.use((req, res, next) => {
   res.locals.userId = req.session.userId;
+  res.locals.user = req.user; 
+  res.locals.isAuthenticated = req.isAuthenticated();
   next();
 });
 
@@ -96,13 +98,6 @@ viewPaths.push(path.join(__dirname, 'auth', 'views'));
 app.set('views', viewPaths);
 
 route(app);
-
-app.get('/logout', (req, res) => {
-    req.session.destroy(() => {
-        res.clearCookie('connect.sid');
-        res.redirect('/');
-    });
-});
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
