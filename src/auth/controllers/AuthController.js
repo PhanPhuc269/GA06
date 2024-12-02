@@ -1,39 +1,92 @@
-const { mutipleMongooseToObject } = require('@utils/mongoose');
-const { mongooseToObject } = require('@utils/mongoose');
-const session = require('express-session');
-const User = require('../models/User');
+
+const { mutipleMongooseToObject ,mongooseToObject } = require('@utils/mongoose');
 const crypto = require('crypto');
 const Product = require("@components/product/models/Product");
 const passport = require('passport');
+const UserService = require('../services/UserService');
+
 
 class AuthController{
     viewRegistration(req,res,next){
         res.render('registration');
     }
-    async register(req, res,next){
-        const { username, email, password, rePassword } = req.body;
+    async register(req, res, next) {
+        const { username, email, password } = req.body;
         try {
-            if (password !== rePassword) {
-                return res.status(400).json({ message: 'Passwords do not match' });
+            const user = await UserService.registerUser(username, email, password);
+            req.logIn(user, (err) => {
+                if (err) {
+                    return next(err);
+                }
+                return res.status(201).json('Login is successful'); // Redirect về trang chủ sau khi xác thực
+            });
+        } catch (error) {
+            if (error.message === 'Username already exists' || error.message === 'Email already exists'|| error.message === 'Invalid email format') {
+                return res.status(400).json({ message: error.message });
             }
-            // Check if the username already exists
-            const existingUser = await User.findOne({ username: username });
-            if (existingUser) {
-                return res.status(400).json({ message: 'Username already exists' });
+            next(error);
+        }
+    }
+    // [GET] /confirm/:token
+    async confirmAccount(req, res, next) {
+        try {
+            const user = await UserService.confirmAccount(req.params.token);
+            res.redirect('/');
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    }
+    // [GET] /forgot-password
+    viewForgotPassword(req, res, next) {
+        res.render('forgot-password');
+    }
+
+    // [POST] /forgot-password
+    async forgotPassword(req, res, next) {
+        const { email } = req.body;
+        try {
+            const user = await UserService.findUserByEmail(email);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
             }
-            // Check if the email already exists
-            const existingEmail = await User.findOne({ email: email });
-            if (existingEmail) {
-                return res.status(400).json({ message: 'Email already exists' });
-            }
-            const user = new User({ username, password, email});
-            await user.save();
-            req.session.userId = user._id;
-            res.status(201).json({ message: 'User created successfully' });
+            await UserService.sendVerificationCodeWithSendGrid(req, user);
+            res.json({ message: 'Verification code sent to your email' });
         } catch (error) {
             next(error);
         }
     }
+
+    // [POST] /verify-code
+    async verifyCode(req, res, next) {
+        const { email, verificationCode } = req.body;
+        try {
+            const token = await UserService.verifyCode(req, email, verificationCode);
+            res.json({ token });
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    }
+
+    // [GET] /reset-password/:token
+    viewResetPassword(req, res, next) {
+        res.render('reset-password', { token: req.params.token });
+    }
+
+    // [POST] /reset-password/:token
+    async resetPassword(req, res, next) {
+        const { password, confirmPassword } = req.body;
+        if (password !== confirmPassword) {
+            return res.status(400).json({ message: 'Passwords do not match' });
+        }
+        try {
+            const user = await UserService.resetPassword(req.params.token, password);
+            res.redirect('/login');
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    }
+
+
     // [GET] /
 
     async home(req, res, next) {
@@ -48,6 +101,46 @@ class AuthController{
         } catch (error) {
             next(error);
         }
+    }
+    // [GET] /verify
+    async waitingForConfirmation(req, res, next) {
+        const user = mongooseToObject(await UserService.findUserByUserId(req.user._id));
+        UserService.sendConfirmationEmailWithSendGrid(user);
+        res.render('waiting-confirmation', {
+            username: user.username,
+            email: user.email,
+            message: 'A new confirmation email has been sent.',
+        })
+    }
+    // [GET] /check-confirmation
+    async checkConfirmation (req, res,next) {
+        const user = await UserService.findUserByUserId(req.user._id);
+        if (user && user.isConfirmed) {
+             res.json({ isConfirmed: true });
+        } else {
+             res.json({ isConfirmed: false });
+        }
+    }
+    // [POST] /resend-confirmation
+    async reSendConfirmation(req, res, next) {
+        const user = await UserService.findUserByUserId(req.user._id);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        if (user.isConfirmed) {
+            return res.redirect('/');
+        }
+
+        // Gửi lại email xác nhận
+        await UserService.sendConfirmationEmailWithSendGrid(user);
+
+        res.render('waiting-confirmation', {
+            username: user.username,
+            email: user.email,
+            message: 'A new confirmation email has been sent.',
+        })
     }
     // [GET] /login
     viewLogin(req, res, next) {
@@ -71,6 +164,9 @@ class AuthController{
             req.logIn(user, (err) => {
                 if (err) {
                     return next(err);
+                }
+                if (!user.isConfirmed) {
+                    return res.redirect('/verify'); // Redirect đến trang xác thực email
                 }
                 return res.redirect('/');
             });

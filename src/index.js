@@ -28,8 +28,8 @@ sessionMiddleware=session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        //secure: true, // Chỉ dùng với HTTPS
-        sameSite: 'strict', // Bảo vệ chống CSRF
+        secure: false, // Chỉ dùng với HTTPS
+        sameSite: 'lax', // Bảo vệ chống CSRF
         maxAge: 3600000 // Thời gian sống của session cookie
     }
 })
