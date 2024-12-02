@@ -1,4 +1,6 @@
 
+
+
 let filters = {};
 
 // Lấy giá trị ban đầu từ URL
@@ -115,47 +117,136 @@ function changePage(page) {
     filters.page = page;
     applyFilters();
 }
+document.addEventListener("DOMContentLoaded", () => {
+    // Lấy giỏ hàng từ localStorage hoặc tạo mới nếu chưa có
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Lắng nghe sự kiện click thông qua event delegation
+    document.addEventListener("click", (event) => {
+        // Kiểm tra nếu nút bấm có class "add-to-cart"
+        const button = event.target.closest(".add-to-cart");
+        if (!button) return;
+
+        event.preventDefault();
+
+        // Lấy thông tin sản phẩm từ các thuộc tính data
+        const productSlug = button.getAttribute("data-slug");
+        const productName = button.getAttribute("data-name");
+        const productPrice = parseFloat(button.getAttribute("data-price"));
+        const productImage = button.getAttribute("data-image");
+
+        // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng hay chưa
+        const existingProduct = cart.find((item) => item.slug === productSlug);
+
+        if (existingProduct) {
+            // Nếu tồn tại, tăng số lượng
+            existingProduct.quantity += 1;
+        } else {
+            // Nếu chưa tồn tại, thêm sản phẩm mới
+            cart.push({
+                slug: productSlug,
+                name: productName,
+                price: productPrice,
+                image: productImage,
+                quantity: 1,
+            });
+        }
+
+        // Lưu lại giỏ hàng vào localStorage
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        alert(`${productName} đã được thêm vào giỏ hàng!`);
+    });
+});
 
 function updateProductList(products) {
     const productList = document.getElementById('product-list');
-    productList.innerHTML = '';
+    productList.innerHTML = ''; // Xóa danh sách sản phẩm cũ
+
+    // Lấy giỏ hàng từ localStorage
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     products.forEach(product => {
-        productList.innerHTML += `
-            <div class="col-lg-4 col-md-6">
-                <div class="single-product">
-                    <a href="/product/product-details/${product._id}">
-                        <img class="img-fluid" src="/${product.image}" alt="${product.name}">
+        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+        const existingProduct = cart.find(item => item.slug === product.slug);
+
+        const productItem = document.createElement('div');
+        productItem.classList.add('col-lg-4', 'col-md-6');
+        productItem.innerHTML = `
+            <div class="single-product">
+                <a href="/product/product-details/${product.slug}">
+                    <img class="img-fluid" src="/${product.image}" alt="${product.name}">
+                </a>
+                <div class="product-details">
+                    <a href="/product/product-details/${product.slug}">
+                        <h6>${product.name}</h6>
                     </a>
-                    <div class="product-details">
-                        <a href="/product/product-details/${product._id}">
-                            <h6>${product.name}</h6>
+                    <div class="price">
+                        <h6>$${product.price}</h6>
+                          <h6 class="l-through">$210.00</h6>
+                    </div>
+                    <div class="prd-bottom">
+                        <a href="#" class="social-info add-to-cart" data-slug="${product.slug}" data-name="${product.name}" data-price="${product.price}" data-image="${product.image}">
+                            <span class="ti-bag"></span>
+                            <p class="hover-text">${existingProduct ? 'Added' : 'add to bag'}</p>
                         </a>
-                        <div class="price">
-                            <h6>$${product.price}</h6>
-                        </div>
-                        <div class="prd-bottom">
-                            <a href="#" class="social-info">
-                                <span class="ti-bag"></span>
-                                <p class="hover-text">add to bag</p>
-                            </a>
-                            <a href="#" class="social-info">
-                                <span class="lnr lnr-heart"></span>
-                                <p class="hover-text">Wishlist</p>
-                            </a>
-                            <a href="#" class="social-info">
-                                <span class="lnr lnr-sync"></span>
-                                <p class="hover-text">compare</p>
-                            </a>
-                            <a href="/product/product-details/${product._id}" class="social-info">
-                                <span class="lnr lnr-move"></span>
-                                <p class="hover-text">view more</p>
-                            </a>
-                        </div>
+                        <a href="#" class="social-info">
+                            <span class="lnr lnr-heart"></span>
+                            <p class="hover-text">Wishlist</p>
+                        </a>
+                        <a href="#" class="social-info">
+                            <span class="lnr lnr-sync"></span>
+                            <p class="hover-text">compare</p>
+                        </a>
+                        <a href="/product/product-details/${product.slug}" class="social-info">
+                            <span class="lnr lnr-move"></span>
+                            <p class="hover-text">view more</p>
+                        </a>
                     </div>
                 </div>
             </div>
         `;
+
+        productList.appendChild(productItem);
+    });
+
+    // Lắng nghe sự kiện "add-to-cart" cho các sản phẩm mới
+    document.querySelectorAll(".add-to-cart").forEach((button) => {
+        button.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            // Lấy thông tin sản phẩm từ các thuộc tính data
+            const productSlug = button.getAttribute("data-slug");
+            const productName = button.getAttribute("data-name");
+            const productPrice = parseFloat(button.getAttribute("data-price"));
+            const productImage = button.getAttribute("data-image");
+
+            // Lấy giỏ hàng từ localStorage hoặc tạo mới nếu chưa có
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng hay chưa
+            const existingProduct = cart.find((item) => item.slug === productSlug);
+
+            if (existingProduct) {
+                // Nếu sản phẩm đã tồn tại, tăng số lượng
+                existingProduct.quantity += 1;
+            } else {
+                // Nếu chưa có sản phẩm, tạo mới và thêm vào giỏ hàng
+                cart.push({
+                    slug: productSlug, // Dùng slug thay vì id
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    quantity: 1,
+                });
+            }
+
+            // Lưu lại giỏ hàng vào localStorage
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            // Cập nhật lại giao diện giỏ hàng
+            //alert(`${productName} đã được thêm vào giỏ hàng!`);
+        });
     });
 }
 

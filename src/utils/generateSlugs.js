@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const Product = require('../src/components/product/models/Product');
+const Product = require('../components/product/models/Product');
 require('dotenv').config();
 
 mongoose.connect(process.env.MONGODB, {
