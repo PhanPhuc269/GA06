@@ -71,7 +71,9 @@ class ProductController {
         try {
 
             const product = await Product.findOne({ slug: req.params.slug });
-
+            if (!product) {
+                return res.status(404).render('error', { message: 'Sản phẩm không tồn tại' });
+            }
 
             const relevantProducts = await Product.find({ category: product.category }).limit(9);
 
@@ -85,13 +87,9 @@ class ProductController {
         }
     }
 
-    ViewProductCheckout(req, res, next) {
-        res.render('checkout');
-    }
+   
 
-    ViewShoppingCart(req, res, next) {
-        res.render('cart');
-    }
+   
 
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
@@ -203,6 +201,9 @@ class ProductController {
             res.status(500).json({ message: 'Error filtering products', error });
         }
     }
+
+    
+
 }
 
 module.exports = new ProductController();

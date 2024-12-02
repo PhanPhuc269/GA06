@@ -7,6 +7,20 @@ const Product = require("@components/product/models/Product");
 const passport = require('passport');
 
 class AuthController{
+
+    async home(req, res, next) {
+        try {
+            const onSaleProducts = await Product.find({ availibility: 'On Sale' });
+            const notOnSaleProducts = await Product.find({ availibility: { $ne: 'On Sale' } });
+    
+            res.render('home', {
+                onSaleProducts: mutipleMongooseToObject(onSaleProducts),
+                notOnSaleProducts: mutipleMongooseToObject(notOnSaleProducts)
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
     viewRegistration(req,res,next){
         res.render('registration');
     }
@@ -33,19 +47,7 @@ class AuthController{
     }
     // [GET] /
 
-    async home(req, res, next) {
-        try {
-            const onSaleProducts = await Product.find({ availibility: 'On Sale' });
-            const notOnSaleProducts = await Product.find({ availibility: { $ne: 'On Sale' } });
     
-            res.render('home', {
-                onSaleProducts: mutipleMongooseToObject(onSaleProducts),
-                notOnSaleProducts: mutipleMongooseToObject(notOnSaleProducts)
-            });
-        } catch (error) {
-            next(error);
-        }
-    }
     // [GET] /login
     viewLogin(req, res, next) {
         res.render('login');
