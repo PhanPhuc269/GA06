@@ -86,13 +86,9 @@ class ProductController {
         }
     }
 
-    ViewProductCheckout(req, res, next) {
-        res.render('checkout');
-    }
+    
 
-    ViewShoppingCart(req, res, next) {
-        res.render('cart');
-    }
+    
 
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
