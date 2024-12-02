@@ -88,10 +88,6 @@ class ProductController {
         }
     }
 
-   
-
-   
-
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
     }
