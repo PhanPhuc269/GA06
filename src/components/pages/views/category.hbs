@@ -243,13 +243,14 @@
                                     <div class="price">
                                         <h6>${{this.price}}</h6>
                                         <h6 class="l-through">$210.00</h6>
-                                        <h6>${{this.type}}</h6>
+                                       
                                     </div>
                                     <div class="prd-bottom">
-                                        <a href="" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
+                                       <a href="javascript:void(0)" class="social-info add-to-cart" data-slug="{{this.slug}}" data-name="{{this.name}}" data-price="{{this.price}}" data-image="/{{this.image}}">
+                                        <span class="ti-bag"></span>
+                                        <p class="hover-text">add to bag</p>
                                         </a>
+
                                         <a href="" class="social-info">
                                             <span class="lnr lnr-heart"></span>
                                             <p class="hover-text">Wishlist</p>
@@ -347,6 +348,7 @@
     </section>
     <!-- End related-product Area -->
 <script src="/js/filter.js"></script>
+
 </body>
 
  
