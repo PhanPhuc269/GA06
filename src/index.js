@@ -63,6 +63,8 @@ app.use((req, res, next) => {
 });
 app.use((req, res, next) => {
   res.locals.userId = req.session.userId;
+  res.locals.user = req.user; 
+  res.locals.isAuthenticated = req.isAuthenticated();
   next();
 });
 

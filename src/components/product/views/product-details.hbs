@@ -404,11 +404,11 @@
                     {{#each relevantProducts}}
                     <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
                         <div class="single-related-product d-flex">
-                            <a href="/product/product-details/{{this._id}}">
+                            <a href="/product/product-details/{{this.slug}}">
                         		<img src="/{{this.image}}" alt="{{this.name}}" style="max-width: 100px; height: auto;">
                     		</a>
                             <div class="desc">
-                                <a href="/product/product-details/{{this._id}}" class="title">{{this.name}}</a>
+                                <a href="/product/product-details/{{this.slug}}" class="title">{{this.name}}</a>
                                 <div class="price">
                                     <h6>${{this.price}}</h6>
                                     <h6 class="l-through">$210.00</h6>

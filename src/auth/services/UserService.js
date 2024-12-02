@@ -43,7 +43,7 @@ class UserService {
         await user.save();
 
         // Send confirmation email using Nodemailer
-        this.sendConfirmationEmail(user);
+        this.sendConfirmationEmailWithSendGrid(user);
 
         return user;
     }
