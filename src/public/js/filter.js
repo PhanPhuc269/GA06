@@ -1,3 +1,18 @@
+
+let filters = {};
+
+// Lấy giá trị ban đầu từ URL
+const urlParams = new URLSearchParams(window.location.search);
+filters.keyword = urlParams.get('keyword') || '';
+filters.type = urlParams.get('type') || '';
+filters.brand = urlParams.get('brand') ? urlParams.get('brand').split(',') : [];
+filters.color = urlParams.get('color') ? urlParams.get('color').split(',') : [];
+filters.minPrice = urlParams.get('minPrice') || '';
+filters.maxPrice = urlParams.get('maxPrice') || '';
+filters.sort = urlParams.get('sort') || 'default';
+filters.page = parseInt(urlParams.get('page')) || 1;
+filters.limit = parseInt(urlParams.get('limit')) || 12;
+
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const keyword = urlParams.get('keyword');
@@ -7,22 +22,40 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.value = keyword;
         filters.keyword = keyword;
     }
+
+    if (filters.type) {
+        // Tìm danh mục con tương ứng với giá trị type
+        const subcategoryItem = document.querySelector(`[data-type="${filters.type}"]`);
+
+        if (subcategoryItem) {
+            // Tô màu danh mục con
+            subcategoryItem.classList.add('active');
+            const collapseElement = subcategoryItem.closest('ul.collapse');
+            if (collapseElement) {
+                collapseElement.classList.add('show'); // Bootstrap class để mở danh mục
+            }
+        }
+    }
+    const typeInput = document.querySelector(`input[name="type"][value="${filters.type}"]`);
+    if (typeInput) typeInput.checked = true;
+
+    document.querySelectorAll('input[name="brand"]').forEach(input => {
+        input.checked = filters.brand.includes(input.value);
+    });
+
+    const colorInput = document.querySelectorAll('input[name="color"]');
+    colorInput.forEach(input => {
+        input.checked = filters.color.includes(input.value);
+    });
+
+    const minPriceElement = document.getElementById('lower-value');
+    const maxPriceElement = document.getElementById('upper-value');
+    if (minPriceElement) minPriceElement.value = filters.minPrice;
+    if (maxPriceElement) maxPriceElement.value = filters.maxPrice;
+
+    const sortSelect = document.getElementById('sort-criteria');
+    if (sortSelect) sortSelect.value = filters.sort;
 });
-
-let filters = {};
-
-// Lấy giá trị ban đầu từ URL
-const urlParams = new URLSearchParams(window.location.search);
-filters.keyword = urlParams.get('keyword') || '';
-filters.type = urlParams.get('type') || '';
-filters.brand = urlParams.getAll('brand') || [];
-filters.color = urlParams.getAll('color') || [];
-filters.minPrice = urlParams.get('minPrice') || '';
-filters.maxPrice = urlParams.get('maxPrice') || '';
-filters.sort = urlParams.get('sort') || 'default';
-filters.page = parseInt(urlParams.get('page')) || 1;
-filters.limit = parseInt(urlParams.get('limit')) || 12;
-
 function setTypeFilter(type) {
     filters.type = type;
     filters.page = 1;
@@ -48,6 +81,7 @@ function getCheckedValues(name) {
 
 function filterProducts(filters) {
     const query = new URLSearchParams(filters).toString();
+    history.pushState(null, '', `?${query}`);
 
     fetch(`/product/filter?${query}`)
         .then(response => response.json())
@@ -221,6 +255,26 @@ function updateProductList(products) {
 function updateItemsPerPage(limit) {
     filters.limit = parseInt(limit);
     filters.page = 1;
+
+        
+    // Đồng bộ giá trị dropdown trên giao diện
+    const selectTop = document.querySelector('#items-per-page');
+    const selectBottom = document.querySelector('#items-per-page-bottom');
+
+    selectTop.value = limit; 
+    selectBottom.value = limit;
+
+        // Cập nhật giao diện tùy chỉnh của nice-select
+    const niceSelectCurrent = selectTop.nextElementSibling.querySelector('.current');
+    if (niceSelectCurrent) {
+        niceSelectCurrent.textContent = `Show ${limit}`;
+    }
+        // Cập nhật giao diện tùy chỉnh của nice-select
+    niceSelectCurrentBottom = selectBottom.nextElementSibling.querySelector('.current');
+    if (niceSelectCurrentBottom) {
+        niceSelectCurrentBottom.textContent = `Show ${limit}`;
+    }
+    
     applyFilters();
 }
 

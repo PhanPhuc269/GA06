@@ -13,6 +13,7 @@ router.get('/confirm/:token', AuthController.confirmAccount);
 router.get('/verify', ensureLogin, AuthController.waitingForConfirmation);
 router.get('/check-confirmation',ensureLogin, AuthController.checkConfirmation);
 router.post('/resend-confirmation',ensureLogin, AuthController.reSendConfirmation);
+router.get('/logout',AuthController.logout);
 
 // Route cho chức năng quên mật khẩu
 router.get('/forgot-password', AuthController.viewForgotPassword);

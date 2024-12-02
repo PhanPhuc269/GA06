@@ -6118,3 +6118,6 @@ textarea {
   border: 1px solid #ccc;
   background: #fff;
 }
+  .text-normal-case {
+    text-transform: none !important;
+}

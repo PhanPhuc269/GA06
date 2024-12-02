@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const { google } = require('googleapis');
 const jwt = require('jsonwebtoken');
-const cryptoRandomString = import('crypto-random-string');
 const sgMail = require('@sendgrid/mail');
 
 
@@ -190,6 +189,7 @@ class UserService {
     }
 
     async sendVerificationCodeWithSendGrid(req, user) {
+        const cryptoRandomString = (await import('crypto-random-string')).default;
         const verificationCode = cryptoRandomString({ length: 6, type: 'numeric' });
         req.session.verificationCode = verificationCode;
         req.session.verificationCodeExpires = Date.now() + 300000; // 5 minutes from now

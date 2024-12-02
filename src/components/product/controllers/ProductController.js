@@ -1,3 +1,4 @@
+const { MAX } = require('uuid');
 const { mutipleMongooseToObject } = require('../../../utils/mongoose');
 const { mongooseToObject } = require('../../../utils/mongoose');
 const Product = require("../models/Product");
@@ -98,23 +99,82 @@ class ProductController {
     // Tìm kiếm sản phẩm
     async SearchProduct(req, res, next) {
         try {
-            const keyword = req.query.keyword || '';
-            const page = parseInt(req.query.page) || 1;
-            const limit = parseInt(req.query.limit) || 12;
-            const skip = (page - 1) * limit;
+            const {
+                type: productType,
+                brand: productBrand,
+                color: productColor,
+                minPrice,
+                maxPrice,
+                page = 1,
+                limit = 12,
+                keyword,
+                sort,
+            } = req.query;
 
-            const filters = {
-                name: { $regex: keyword, $options: 'i' },
-            };
+            const skip = (parseInt(page) - 1) * parseInt(limit);
+            const filters = {};
+
+            if (keyword) {
+                filters.name = { $regex: keyword, $options: 'i' };
+            }
+
+            if (productType) {
+                const typeArray = productType.includes(',') ? productType.split(',') : [productType];
+                filters.type = { $in: typeArray };
+            }
+
+            if (productBrand) {
+                const brandArray = productBrand.includes(',') ? productBrand.split(',') : [productBrand];
+                filters.brand = { $in: brandArray };
+            }
+
+            if (productColor) {
+                const colorArray = productColor.includes(',') ? productColor.split(',') : [productColor];
+                filters.color = { $in: colorArray };
+            }
+
+            if (minPrice || maxPrice) {
+                filters.price = {};
+                if (minPrice) filters.price.$gte = parseFloat(minPrice);
+                if (maxPrice) filters.price.$lte = parseFloat(maxPrice);
+            }
+
+            let sortCriteria = {};
+            switch (sort) {
+                case 'price_asc':
+                    sortCriteria = { price: 1 };
+                    break;
+                case 'price_desc':
+                    sortCriteria = { price: -1 };
+                    break;
+                case 'creation_time_desc':
+                    sortCriteria = { createdAt: -1 };
+                    break;
+                case 'rate_desc':
+                    sortCriteria = { rate: -1 };
+                    break;
+                default:
+                    sortCriteria = {};
+            }
 
             const total = await Product.countDocuments(filters);
-            const products = await Product.find(filters).skip(skip).limit(limit);
+            const products = await Product.find(filters)
+                .sort(sortCriteria)
+                .skip(skip)
+                .limit(parseInt(limit));
             const dealProducts = await Product.find({ availibility: 'On Sale' });
 
             res.render('category', {
                 products: mutipleMongooseToObject(products),
+                sort,
+                limit,
+                productType,
+                productBrand,
+                productColor,
+                minPrice,
+                maxPrice,
                 dealProducts: mutipleMongooseToObject(dealProducts),
-                currentPage: page,
+                currentPage: parseInt(page),
                 totalPages: Math.ceil(total / limit),
             });
         } catch (error) {

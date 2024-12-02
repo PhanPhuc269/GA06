@@ -164,7 +164,7 @@ class AuthController{
                 return next(err);
             }
             if (!user) {
-                req.flash('error_msg', 'Sai tên đăng nhập hoặc mật khẩu');
+                req.flash('error_msg', 'Sai email hoặc mật khẩu');
                 req.flash('email', req.body.email);
                 return res.redirect('/login');
             }
@@ -179,6 +179,15 @@ class AuthController{
             });
         })(req, res, next);
     }
+    // [GET] /logout
+    logout (req, res,next){
+        req.logout((err) => {
+            if (err) {
+                return res.status(500).send('Error logging out');
+            }
+            res.redirect('/login'); // Chuyển hướng về trang đăng nhập
+        });
+    };
 
 }
 

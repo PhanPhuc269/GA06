@@ -99,13 +99,6 @@ app.set('views', viewPaths);
 
 route(app);
 
-app.get('/logout', (req, res) => {
-    req.session.destroy(() => {
-        res.clearCookie('connect.sid');
-        res.redirect('/');
-    });
-});
-
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
