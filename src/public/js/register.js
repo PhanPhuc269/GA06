@@ -48,7 +48,7 @@ async function handleRegister(event) {
     if (response.status === 400) {
         errorMessage.textContent = result.message;
     } else if (response.status === 201) {
-        window.location.href = '/login'; // Redirect to success page
+        window.location.href = '/verify'; // Redirect to success page
     } else {
         errorMessage.textContent = 'An unexpected error occurred';
     }

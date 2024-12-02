@@ -33,7 +33,7 @@ passport.deserializeUser(async (id, done) => {
         if (!user) {
             return done(null, false);
         }
-        done(null, { ...user.toObject() });
+        done(null, { ...user.toObject(), isConfirmed: user.isConfirmed });
     } catch (error) {
         done(error);
     }
