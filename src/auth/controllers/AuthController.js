@@ -1,3 +1,4 @@
+
 const { mutipleMongooseToObject ,mongooseToObject } = require('@utils/mongoose');
 const crypto = require('crypto');
 const Product = require("@components/product/models/Product");
@@ -84,14 +85,6 @@ class AuthController{
             res.status(400).json({ message: error.message });
         }
     }
-
-
-
-
-
-
-
-
 
 
     // [GET] /
