@@ -6071,53 +6071,6 @@ textarea {
 
 .animate__fadeInUp {
   animation: fadeInUp 1s ease-out; }
-  .order-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Đảm bảo mọi thứ căn giữa theo chiều dọc */
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd; /* (Tuỳ chọn) Ngăn cách giữa các dòng */
-}
-
-.order-name {
-    flex: 2; /* Chiếm nhiều không gian hơn để tên sản phẩm không bị cắt */
-    text-align: left;
-}
-
-.order-quantity {
-    flex: 1; /* Giữ phần số lượng ngắn hơn */
-    text-align: center;
-}
-
-.order-total {
-    flex: 1; /* Giữ phần giá ngắn hơn */
-    text-align: right;
-}
-
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.quantity-controls button {
-  width: 30px;
-  height: 30px;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
-  cursor: pointer;
-}
-
-.quantity-controls button:hover {
-  background: #e0e0e0;
-}
-
-.quantity-controls .qty-input {
-  width: 40px;
-  text-align: center;
-  border: 1px solid #ccc;
-  background: #fff;
-}
   .text-normal-case {
     text-transform: none !important;
 }

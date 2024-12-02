@@ -7,10 +7,6 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String, required: true },
     isConfirmed: { type: Boolean, default: false },
-    // secretKey: {
-    //     type: String,
-    //     default: null,
-    // }
 });
 
 UserSchema.pre('save', async function(next) {

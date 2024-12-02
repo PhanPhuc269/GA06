@@ -88,6 +88,7 @@ class ProductController {
         }
     }
 
+
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
     }
@@ -257,8 +258,6 @@ class ProductController {
             res.status(500).json({ message: 'Error filtering products', error });
         }
     }
-
-    
 
 }
 
