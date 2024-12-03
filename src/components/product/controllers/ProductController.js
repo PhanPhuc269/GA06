@@ -1,5 +1,6 @@
 const { mutipleMongooseToObject } = require('../../../utils/mongoose');
 const { mongooseToObject } = require('../../../utils/mongoose');
+const ReviewController = require('../../review/controllers/ReviewController');
 const Product = require("../models/Product");
 
 
@@ -44,25 +45,46 @@ class ProductController {
     
     async ViewProductDetails(req, res, next) {
         try {
-            const product = await Product.findOne({ slug: req.params.slug });
-
-            const relevantProducts = await Product.find({ category: product.category }).limit(9);
-            
-            // Log the relevant products to check the returned data
-            console.log('Relevant Products:', relevantProducts);
-
-            res.render('product-details', { 
-                product: mongooseToObject(product),
-                relevantProducts: mutipleMongooseToObject(relevantProducts),
-
-             });
-
-
+          const product = await Product.findOne({ slug: req.params.slug });
+          const relevantProducts = await Product.find({ category: product.category }).limit(9);
+          const page = parseInt(req.query.reviewPage) || 1;
+          const limit = 5;
+    
+          // Fetch reviews with pagination
+          const { reviews, totalReviews, totalPages, currentPage } = await ReviewController.getReviewsByProductId(
+            product._id,
+            page,
+            limit
+          );
           
+          // Kiểm tra giá trị và kiểu dữ liệu
+          console.log('currentPage:', currentPage, typeof currentPage);
+          console.log('totalPages:', totalPages, typeof totalPages);
+          
+          // Calculate overallRating using ReviewController
+          const overallRating = await ReviewController.getOverallRating(product._id);
+    
+          // Update the product's rate
+          product.rate = overallRating;
+          await product.save();
+    
+          // Calculate ratingBreakdown using ReviewController
+          const ratingBreakdown = await ReviewController.getRatingBreakdown(product._id);
+    
+          res.render('product-details', { 
+            product: mongooseToObject(product),
+            relevantProducts: mutipleMongooseToObject(relevantProducts),
+            reviews: mutipleMongooseToObject(reviews),
+            overallRating,
+            totalReviews,
+            ratingBreakdown,
+            user: req.user,
+            reviewPagination: { totalPages, currentPage },
+          });
         } catch (error) {
-            next(error);
+          next(error);
         }
-    }
+      }
 
     ViewProductCheckout(req, res, next) {
         res.render('checkout');
