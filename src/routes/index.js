@@ -4,7 +4,7 @@ const blogRouter=require('../components/blog/blogRoute');
 const pagesRouter=require('../components/pages/pagesRoute');
 const contactRouter=require('../components/contact/contactRoute');
 const aboutRouter=require('../components/about/aboutRoute');
-
+const reviewRoutes = require('../components/review/reviewRoutes');
 
 function router(app)
 {
@@ -14,6 +14,7 @@ function router(app)
    app.use('/pages', pagesRouter);
    app.use('/contact', contactRouter);
    app.use('/about', aboutRouter);
+   app.use('/reviews', reviewRoutes);
 }
 
 module.exports = router

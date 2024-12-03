@@ -71,7 +71,12 @@ app.engine('hbs', handlebars.engine({
   extname: '.hbs',
   defaultLayout: 'main',  // Đặt layout mặc định là 'main.hbs'
   layoutsDir: path.join(__dirname, 'common_views', 'layouts'),
-  partialsDir: path.join(__dirname, 'common_views', 'partials'),
+  partialsDir: [
+    path.join(__dirname, 'common_views', 'partials'),
+    
+    // Add the partials directory from the review component
+    path.join(__dirname, 'components', 'review', 'views', 'partials'),
+  ],
   helpers: require('./helpers/handlebars')
 }));
 app.set('view engine', 'hbs');
