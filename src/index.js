@@ -10,7 +10,7 @@ const fs = require('fs');
 
 const session = require('express-session');
 const passport = require('passport');
-require('./auth/config/passportConfig');
+require('./components/auth/config/passportConfig');
 
 
 //nodemon --inspect src/index.js

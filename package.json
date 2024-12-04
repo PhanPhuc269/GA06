@@ -25,8 +25,7 @@
     "@AuthMiddleware": "src/middlewares/AuthMiddleware",
     "@utils": "src/utils",
     "@components": "src/components",
-    "@helpers": "src/helpers",
-    "@auth": "src/auth"
+    "@helpers": "src/helpers"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.4",

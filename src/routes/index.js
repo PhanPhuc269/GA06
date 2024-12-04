@@ -1,4 +1,4 @@
-const authRouter=require('../auth/auth');
+const authRouter=require('../components/auth/auth');
 const productRouter=require('../components/product/productRoutes');
 const blogRouter=require('../components/blog/blogRoute');
 const pagesRouter=require('../components/pages/pagesRoute');
