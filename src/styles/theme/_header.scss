@@ -253,3 +253,14 @@
 	// 	margin-right: 15px;
 	// }
 }
+
+.avatar {
+	width: 44px;
+	height: 44px;
+	margin-right: 0.5rem;
+	border-radius: 50%;
+	object-fit: cover; /* Đảm bảo ảnh giữ đúng tỉ lệ và vừa với khung hình */
+  }
+.avatar-dropdown {
+	margin-top: -18px !important; /* Điều chỉnh giá trị này để thay đổi khoảng cách phía trên */
+}

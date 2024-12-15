@@ -13,7 +13,7 @@
 					</button>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav ml-auto">
+						<ul class="nav navbar-nav menu_nav ml-auto align-items-center">
 							
 							<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 							<li class="nav-item submenu dropdown">
@@ -39,11 +39,11 @@
 							{{#if isAuthenticated}}
 								<li class="nav-item submenu dropdown">
 									<a href="#" class="nav-link dropdown-toggle text-normal-case" data-toggle="dropdown" role="button" aria-haspopup="true"
-									aria-expanded="false"><span class="fa fa-user mr-2"></span>{{user.username}}</a>
-									<ul class="dropdown-menu">
-										<li class="nav-item"><a class="nav-link" href="#">Tài khoản của tôi</a></li>
-										<li class="nav-item"><a class="nav-link" href="/pages/tracking">Theo dõi đơn hàng</a></li>
-										<li class="nav-item"><a class="nav-link" href="/logout">Đăng xuất</a></li>
+									aria-expanded="false"><img class="avatar" src="{{user.avatar}}"></img>{{user.username}}</a>
+									<ul class="dropdown-menu avatar-dropdown ">
+										<li class="nav-item"><a class="nav-link" href="/setting/edit-profile">My account</a></li>
+										<li class="nav-item"><a class="nav-link" href="/pages/tracking">Tracking my orders</a></li>
+										<li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
 									</ul>
 								</li>
 							{{else}}

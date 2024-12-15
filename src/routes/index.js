@@ -7,6 +7,7 @@ const aboutRouter=require('../components/about/aboutRoute');
 const cartRouter=require('../components/cart/cartRoute');
 const homeRouter=require('../components/home/homeRoute');
 const orderRouter=require('../components/order/orderRoute');
+const settingRouter=require('../components/setting/settingRoute');
 
 function router(app)
 {
@@ -19,6 +20,7 @@ function router(app)
    app.use('/cart', cartRouter);
    app.use('/home', homeRouter);
    app.use('/order', orderRouter);
+   app.use('/setting', settingRouter);
 }
 
 module.exports = router
