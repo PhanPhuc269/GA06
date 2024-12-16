@@ -42,7 +42,7 @@ class UserService {
         await user.save();
 
         // Send confirmation email using Nodemailer
-        this.sendConfirmationEmailWithSendGrid(user);
+        //this.sendConfirmationEmailWithSendGrid(user);
 
         return user;
     }
@@ -202,7 +202,7 @@ class UserService {
 
         const msg = {
             to: user.email,
-            from: `${process.env.SENDGRID_EMAIL}`, // Use the email address or domain you verified with SendGrid
+            from: `Dimillav <${process.env.SENDGRID_EMAIL}>`, // Use the email address or domain you verified with SendGrid
             subject: 'Verification Code',
             html: html.replace('{{username}}', user.username).replace('{{verificationCode}}', verificationCode)
         };

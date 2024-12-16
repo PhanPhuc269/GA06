@@ -1,4 +1,4 @@
-const authRouter=require('../auth/auth');
+const authRouter=require('../components/auth/auth');
 const productRouter=require('../components/product/productRoutes');
 const blogRouter=require('../components/blog/blogRoute');
 const pagesRouter=require('../components/pages/pagesRoute');
@@ -7,6 +7,11 @@ const aboutRouter=require('../components/about/aboutRoute');
 const cartRouter=require('../components/cart/cartRoute');
 const homeRouter=require('../components/home/homeRoute');
 const orderRouter=require('../components/order/orderRoute');
+<<<<<<< HEAD
+=======
+const settingRouter=require('../components/setting/settingRoute');
+const reviewRoutes = require('../components/review/reviewRoutes');
+>>>>>>> 6b6f6041b3d553108ffabff015d4a8012a980c06
 
 function router(app)
 {
@@ -19,6 +24,8 @@ function router(app)
    app.use('/cart', cartRouter);
    app.use('/home', homeRouter);
    app.use('/order', orderRouter);
+   app.use('/setting', settingRouter);
+   app.use('/reviews', reviewRoutes);
 }
 
 module.exports = router

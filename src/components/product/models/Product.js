@@ -13,6 +13,7 @@ const Product = new Schema({
     brand: {type: String},
     type:{type: String},
     color:{type: String},
+    rate:{type: Number},
     slug: { type: String, unique: true },
 
 });
