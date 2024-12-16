@@ -7,11 +7,8 @@ const aboutRouter=require('../components/about/aboutRoute');
 const cartRouter=require('../components/cart/cartRoute');
 const homeRouter=require('../components/home/homeRoute');
 const orderRouter=require('../components/order/orderRoute');
-<<<<<<< HEAD
-=======
 const settingRouter=require('../components/setting/settingRoute');
 const reviewRoutes = require('../components/review/reviewRoutes');
->>>>>>> 6b6f6041b3d553108ffabff015d4a8012a980c06
 
 function router(app)
 {
