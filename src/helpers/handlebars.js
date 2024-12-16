@@ -32,26 +32,28 @@ module.exports={
       </a>`;
         return new Handlebars.SafeString(output);
     },
-    eq: (media, type)=>{
-      if (!media) {
-        return false;
-      }
+    // eq: (media, type)=>{
+    //   if (!media) {
+    //     return false;
+    //   }
 
-      // Các phần mở rộng tệp phổ biến cho video và hình ảnh
-      const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
-      const videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mkv'];
+    //   // Các phần mở rộng tệp phổ biến cho video và hình ảnh
+    //   const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
+    //   const videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mkv'];
 
-      const fileExtension = media.split('.').pop().toLowerCase();
+    //   const fileExtension = media.split('.').pop().toLowerCase();
 
-      // Kiểm tra loại tệp
-      if (type === 'image') {
-          return imageExtensions.includes(fileExtension);
-      } else if (type === 'video') {
-          return videoExtensions.includes(fileExtension);
-      }
+    //   // Kiểm tra loại tệp
+    //   if (type === 'image') {
+    //       return imageExtensions.includes(fileExtension);
+    //   } else if (type === 'video') {
+    //       return videoExtensions.includes(fileExtension);
+    //   }
 
-      return false;
-    },
+    //   return false;
+    // },
+
+    eq: (a, b) => a === b,
     formatDuration:(seconds) => {
             const hours = Math.floor(seconds / 3600);
             const minutes = Math.floor((seconds % 3600) / 60);
@@ -60,6 +62,7 @@ module.exports={
         },
     gt: (a, b) => a > b,
     lt: (a, b) => a < b,
+    lte: (a, b) => a <= b,
     add: (a, b) => a + b,
     sub: (a, b) => a - b,
     ifEquals: (a, b, options) => (a === b ? options.fn(this) : options.inverse(this)),
@@ -75,5 +78,20 @@ module.exports={
       const month = ('0' + (d.getMonth() + 1)).slice(-2);
       const day = ('0' + d.getDate()).slice(-2);
       return `${d.getFullYear()}-${month}-${day}`;
-    } 
+    },
+    range: (start, end) => {
+      let rangeArray = [];
+      for (let i = start; i <= end; i++) {
+        rangeArray.push(i);
+      }
+      return rangeArray;
+    },     
+    ternary: (condition, trueValue, falseValue) => {
+      return condition ? trueValue : falseValue;
+    },
+    toNumber: (value) => {
+     return Number(value);
+    },
+    
+    
 }

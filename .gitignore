@@ -1,9 +1,6 @@
 .vscode
 launch.json
 .env
-<<<<<<< HEAD
 
-=======
 launch.json
->>>>>>> 261a4d9c631e691081b7844eda6c675e2c0bfb60
 node_modules/

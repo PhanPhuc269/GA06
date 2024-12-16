@@ -8,6 +8,7 @@ const cartRouter=require('../components/cart/cartRoute');
 const homeRouter=require('../components/home/homeRoute');
 const orderRouter=require('../components/order/orderRoute');
 const settingRouter=require('../components/setting/settingRoute');
+const reviewRoutes = require('../components/review/reviewRoutes');
 
 function router(app)
 {
@@ -21,6 +22,7 @@ function router(app)
    app.use('/home', homeRouter);
    app.use('/order', orderRouter);
    app.use('/setting', settingRouter);
+   app.use('/reviews', reviewRoutes);
 }
 
 module.exports = router

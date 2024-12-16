@@ -1,0 +1,67 @@
+<div class="review_box">
+    <h4>Add a Review</h4>
+    <p>Your Rating:</p>
+    <ul class="list">
+        {{#each (range 1 5)}}
+            <li>
+                <a onclick="selectRating({{this}})">
+                    <i class="fa fa-star{{#if (lte this ../selectedRating)}} checked{{/if}}"></i>
+                </a>
+            </li>
+        {{/each}}
+    </ul>
+    <p id="selected-rating">Star</p> 
+    <form class="row contact_form" action="/reviews" method="POST" id="reviewForm" novalidate="novalidate">
+        <input type="hidden" name="rating" value="0"> 
+        <input type="hidden" name="productId" value="{{productId}}">
+        <input type="hidden" name="slug" value="{{slug}}">
+        
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name" required {{#unless user}}disabled{{/unless}}>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required {{#unless user}}disabled{{/unless}}>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required {{#unless user}}disabled{{/unless}}>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <textarea class="form-control" name="comment" id="comment" rows="3" placeholder="Your Review" required {{#unless user}}disabled{{/unless}}></textarea>
+            </div>
+        </div>
+        <div class="col-md-12 text-right">
+            <button type="submit" class="primary-btn" {{#unless user}}disabled onclick="alert('Please log in to add a review.')"{{/unless}}>
+                Add Review
+            </button>
+            {{#unless user}}
+                <p>Please <a href="/login">log in</a> to add a review.</p>
+            {{/unless}}
+        </div>
+    </form>
+</div>
+
+<script>
+    function selectRating(rating) {
+        document.getElementById('selected-rating').innerText = rating + ' Star' + (rating > 1 ? 's' : '');
+        document.querySelector('input[name="rating"]').value = rating;
+    }
+
+    document.getElementById('reviewForm').addEventListener('submit', function(event) {
+        var rating = document.querySelector('input[name="rating"]').value;
+        if (rating === "0") { 
+            alert("Vui lòng chọn đánh giá trước khi thêm.");
+            event.preventDefault(); 
+        } else {
+            // Nếu form được submit thành công (bạn cần xử lý logic này ở phía server)
+            // Hiển thị thông báo cho người dùng
+            alert("Cảm ơn bạn đã đánh giá!"); 
+        }
+    });
+</script>
