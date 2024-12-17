@@ -10,13 +10,14 @@ class EditProfileService {
     
     async updateProfile(userId, updateFields) {
         try {
+          
           // Tạo đối tượng chứa các trường cần cập nhật
           const updateData = {};
     
           // Kiểm tra và thêm từng trường vào đối tượng updateData nếu có
           if (updateFields.username) updateData.username = updateFields.username;
           if (updateFields.name) updateData.name = updateFields.name;
-          if (updateFields.email) updateData.email = updateFields.email;
+          //if (updateFields.email) updateData.email = updateFields.email;
           if (updateFields.avatarUrl) updateData.avatar = updateFields.avatarUrl;
           if (updateFields.address) updateData.address = updateFields.address;
           if (updateFields.phone) updateData.phone = updateFields.phone;

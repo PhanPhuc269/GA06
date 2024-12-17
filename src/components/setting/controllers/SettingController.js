@@ -13,14 +13,14 @@ class SettingController {
     updateGeneral(req, res, next) {
         upload.single('avatar')(req, res,async function (err) {
         try {
-            const { username, name, email } = req.body;
+            const { username, name } = req.body;
             const avatarUrl = req.file ? req.file.path : null;
             
             // Logic cập nhật vào database
-            const updatedData = { username, name, email };
+            const updatedData = { username, name };
             if (avatarUrl) updatedData.avatar = avatarUrl;
         
-            const profile = await editProfileService.updateProfile(req.user._id, {username, name, email, avatarUrl});
+            const profile = await editProfileService.updateProfile(req.user._id, {username, name, avatarUrl});
 
             res.render('edit-profile', { profile : mongooseToObject(profile), successMessage: "Cập nhật thành công" });
             
