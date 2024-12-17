@@ -63,6 +63,7 @@ module.exports={
     gt: (a, b) => a > b,
     lt: (a, b) => a < b,
     lte: (a, b) => a <= b,
+    multiply: (a, b) => a * b,
     add: (a, b) => a + b,
     sub: (a, b) => a - b,
     ifEquals: (a, b, options) => (a === b ? options.fn(this) : options.inverse(this)),

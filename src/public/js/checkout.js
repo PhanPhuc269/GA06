@@ -35,32 +35,4 @@ document.addEventListener("DOMContentLoaded", () => {
 // Lấy các sản phẩm trong giỏ hàng từ localStorage
 const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-// Lắng nghe sự kiện gửi form
-document.getElementById('checkout-form').addEventListener('submit', function(event) {
-    event.preventDefault();  // Ngừng submit mặc định
-
-    // Lấy dữ liệu từ form
-    const formData = new FormData(this);
-
-    // Lấy danh sách sản phẩm từ localStorage
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    // Thêm items vào FormData
-    formData.append('items', JSON.stringify(cartItems));  // Chuyển items thành chuỗi JSON và thêm vào formData
-
-    // Gửi dữ liệu qua AJAX
-    fetch('/order/checkout', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Form submitted successfully:', data);
-        // Xử lý kết quả trả về sau khi gửi form thành công
-    })
-    .catch(error => {
-        console.error('Error submitting form:', error);
-        // Xử lý lỗi nếu có
-    });
-});
 

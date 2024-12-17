@@ -1,0 +1,68 @@
+<body>
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Chi tiết đơn hàng</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/home">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="/order/list">Danh sách đơn hàng<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">Chi tiết</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <section class="order_details_area section_gap">
+        <div class="container">
+            <h2>Chi tiết đơn hàng</h2>
+            <div class="order_details">
+                <p><strong>Mã đơn hàng:</strong> {{order._id}}</p>
+                <p><strong>Ngày đặt:</strong> {{order.createdAt}}</p>
+                <p><strong>Khách hàng:</strong> {{order.firstName}} {{order.lastName}}</p>
+                <p><strong>Email:</strong> {{order.email}}</p>
+                <p><strong>Số điện thoại:</strong> {{order.phoneNumber}}</p>
+                <p><strong>Địa chỉ:</strong> {{order.addressLine1}}, {{order.city}}, {{order.district}}</p>
+                <p><strong>Ghi chú:</strong> {{order.orderNotes}}</p>
+                <p><strong>Tổng tiền:</strong> ${{order.totalAmount}}</p>
+                <p><strong>Phí giao hàng:</strong> ${{order.shippingFee}}</p>
+                <p><strong>Trạng thái:</strong> {{order.status}}</p>
+            </div>
+
+            <h3 class="mt-4">Sản phẩm trong đơn hàng</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Thương hiệu</th>
+                        <th>Danh mục</th>
+                        <th>Màu sắc</th>
+                        <th>Mô tả</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each order.items}}
+                    <tr>
+                        <td><img src="/{{this.productId.image}}" alt="{{this.productId.name}}" style="width: 100px;"></td>
+                        <td>{{this.productId.name}}</td>
+                        <td>{{this.productId.brand}}</td>
+                        <td>{{this.productId.category}}</td>
+                        <td>{{this.productId.color}}</td>
+                        <td>{{this.productId.description}}</td>
+                        <td>${{this.productId.price}}</td>
+                        <td>{{this.quantity}}</td>
+                        <td>${{ multiply this.quantity  this.productId.price}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
