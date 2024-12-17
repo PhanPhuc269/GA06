@@ -32,26 +32,6 @@ module.exports={
       </a>`;
         return new Handlebars.SafeString(output);
     },
-    // eq: (media, type)=>{
-    //   if (!media) {
-    //     return false;
-    //   }
-
-    //   // Các phần mở rộng tệp phổ biến cho video và hình ảnh
-    //   const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
-    //   const videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv', 'mkv'];
-
-    //   const fileExtension = media.split('.').pop().toLowerCase();
-
-    //   // Kiểm tra loại tệp
-    //   if (type === 'image') {
-    //       return imageExtensions.includes(fileExtension);
-    //   } else if (type === 'video') {
-    //       return videoExtensions.includes(fileExtension);
-    //   }
-
-    //   return false;
-    // },
 
     eq: (a, b) => a === b,
     formatDuration:(seconds) => {
@@ -93,6 +73,8 @@ module.exports={
     toNumber: (value) => {
      return Number(value);
     },
-    
+    not : (value) => {
+      return !value;
+    },
     
 }

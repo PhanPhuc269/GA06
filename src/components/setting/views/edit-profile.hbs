@@ -164,11 +164,13 @@ border-color: rgba(24,28,33,0.03) !important;
               </div>
               <div class="form-group">
                 <label class="form-label">E-mail</label>
-                <input type="text" class="form-control mb-1" name="email" value="{{profile.email}}">
+                <input type="text" class="form-control mb-1" value="{{profile.email}}" disabled>
+                {{#if (not profile.isConfirmed)}}
                 <div class="alert alert-warning mt-3">
-                  Your email is not confirmed. Please check your inbox.<br>
-                  <a href="javascript:void(0)">Resend confirmation</a>
+                      Your email is not confirmed. Please check your inbox.<br>
+                      <a id="resend-confirmation-button" href="javascript:void(0)" >Resend confirmation</a>
                 </div>
+                {{/if}}
                 <div class="form-group text-right mt-3">
                   <button type="submit" class="btn btn-primary">Save changes</button>&nbsp;
                   <button type="button" class="btn btn-default">Cancel</button>
@@ -233,7 +235,9 @@ border-color: rgba(24,28,33,0.03) !important;
       </div>
     </div>
   </div>
-
+  <form id="resend-email-form" action="/resend-confirmation" method="post" style="display:none;">
+    <input type="hidden" name="email" value="{{profile.email}}">
+  </form>
   {{!-- <div class="text-right mt-3">
     <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
     <button type="button" class="btn btn-default">Cancel</button>
@@ -246,7 +250,9 @@ border-color: rgba(24,28,33,0.03) !important;
 
 </script>
 <script>
-
+  document.getElementById('resend-confirmation-button').addEventListener('click', function() {
+    document.getElementById('resend-email-form').submit();
+  });
 
 </script>
 
