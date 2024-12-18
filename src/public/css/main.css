@@ -6139,3 +6139,13 @@ background: #fff;
   vertical-align: middle; /* Căn giữa theo chiều dọc */
   padding: 8px; /* Khoảng cách trong ô */
 }
+
+body {
+  margin: 0;
+  padding: 0 0 50px 0; /* Thêm khoảng cách 50px ở dưới */
+  box-sizing: border-box;
+}
+
+.container {
+  margin-bottom: 50px; /* Khoảng cách riêng cho phần container */
+}

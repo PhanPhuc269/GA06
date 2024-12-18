@@ -1,7 +1,7 @@
 async function syncCartWithServer() {
     const localCart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
        
-console.log(localCart);
+//console.log(localCart);
     try {
      
         const response = await fetch('/cart/sync', {
@@ -16,7 +16,7 @@ console.log(localCart);
 
         if (response.ok) {
             // const data = await response.json();
-            console.log('Giỏ hàng đồng bộ thành công:', localCart);
+          //  console.log('Giỏ hàng đồng bộ thành công:', localCart);
         } else {
             console.error('Lỗi khi đồng bộ giỏ hàng');
         }

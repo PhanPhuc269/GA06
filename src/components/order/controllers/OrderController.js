@@ -15,7 +15,7 @@ class OrderController{
                 const customerId = req.user._id; // Lấy userId từ session hoặc JWT
                 console.log('user: ',customerId);
                 const orders = await Order.find({ customerId }); // Lấy danh sách đơn hàng từ DB
-            console.log('đơn hàng:' ,orders);
+         //   console.log('đơn hàng:' ,orders);
                 res.render('orderList', {  orders: mutipleMongooseToObject(orders), }); // Truyền danh sách đơn hàng vào view
             } catch (error) {
                 next(error); // Xử lý lỗi (có thể hiển thị trang lỗi hoặc thông báo)

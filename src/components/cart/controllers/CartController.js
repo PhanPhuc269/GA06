@@ -12,7 +12,7 @@ class CartController{
     try {
         const { items } = req.body;
         const userId = req.user._id;
-        console.log(items);
+       // console.log(items);
         const cartItems = [];
         for (const item of items) {
             const product = await Product.findOne({ slug: item.slug });
@@ -27,7 +27,7 @@ class CartController{
                 price: product.price
             });
         }
-        console.log(cartItems);
+      //  console.log(cartItems);
         let cart = await Cart.findOne({ userId });
         if (!cart) {
             cart = new Cart({ userId, items: cartItems });
