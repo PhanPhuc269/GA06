@@ -98,91 +98,22 @@ class OrderController{
             // Lưu đơn hàng vào cơ sở dữ liệu
             await newOrder.save();
     
-            // Xóa giỏ hàng của người dùng sau khi đặt hàng thành công
-           // await Cart.deleteOne({ userId });
+         
     
             // Trả về kết quả thành công
             res.redirect(`/order/list`);
         } catch (error) {
             console.error(error);
-            res.status(500).json({
-                message: 'Lỗi khi tạo đơn hàng.',
-                error: error.message
+            // Hiển thị thông báo lỗi lên giao diện web
+            res.status(500).render('errorOrder', {
+                message: 'Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại sau.',
+                errorCode: 500,
+                errorDetails: error.message // Chỉ hiển thị chi tiết lỗi nếu cần thiết
             });
         }
     };
 
-     async viewPayment(req, res, next) {
-        try {
-            const orderId = req.query.orderId; // Lấy orderId từ query parameter
-            const order = await Order.findById(orderId);
-            if (!order) {
-                return res.status(404).render('error', { message: 'Không tìm thấy đơn hàng!' });
-            }
-
-            const bankInfo = {
-                id: process.env.BANK_ID,
-                accountNo: process.env.ACCOUNT_NO,
-                accountName: process.env.ACCOUNT_NAME,
-                template: process.env.TEMPLATE,
-            };
-
-            const qrCodeData = `https://img.vietqr.io/image/${bankInfo.id}-${bankInfo.accountNo}-${bankInfo.template}.png?amount=${order.totalAmount}&addInfo=${encodeURIComponent(order._id)}&accountName=${bankInfo.accountName}`;
-
-            res.render('payment', {
-                order: mongooseToObject(order),
-                qrCode: qrCodeData,
-            });
-        } catch (error) {
-            console.error('Error viewing payment:', error);
-            res.status(500).render('error', { message: 'Có lỗi xảy ra khi hiển thị thanh toán.' });
-        }
-    }
-
-    // Xử lý thanh toán
-    async processPayment(req, res, next) {
-        try {
-            const { transactionId } = req.body;
-            const transaction = await Transaction.findById(transactionId);
-            if (!transaction) {
-                return res.status(404).json({ message: 'Không tìm thấy giao dịch!' });
-            }
-
-            if (transaction.status !== 'pending') {
-                return res.status(400).json({ message: 'Giao dịch không còn ở trạng thái đang chờ!' });
-            }
-
-            const checkInterval = 10 * 1000; // 10 giây
-            const timeout = 5 * 60 * 1000; // 5 phút
-            let elapsed = 0;
-
-            const checkPaymentStatus = async () => {
-                if (elapsed >= timeout) {
-                    transaction.status = 'failed';
-                    await transaction.save();
-                    console.log('Transaction failed due to timeout:', transactionId);
-                    return res.status(400).json({ message: 'Quá thời gian chờ thanh toán.' });
-                }
-
-                // Giả định `checkPaid` là một hàm kiểm tra trạng thái thanh toán
-                const isPaid = await checkPaid(transaction.amount, transaction.description);
-                if (isPaid.success) {
-                    transaction.status = 'completed';
-                    await transaction.save();
-                    console.log('Transaction completed successfully:', transactionId);
-                    return res.json({ message: 'Thanh toán thành công!', transaction });
-                }
-
-                elapsed += checkInterval;
-                setTimeout(checkPaymentStatus, checkInterval);
-            };
-
-            checkPaymentStatus();
-        } catch (error) {
-            console.error('Error processing payment:', error);
-            res.status(500).json({ message: 'Có lỗi xảy ra khi xử lý thanh toán.', error });
-        }
-    }
+   
 }
 
 module.exports = new OrderController();
