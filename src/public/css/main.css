@@ -6132,3 +6132,10 @@ background: #fff;
 .avatar-dropdown {
   margin-top: -18px !important; /* Điều chỉnh giá trị này để thay đổi khoảng cách phía trên */
 }
+
+.table th {
+  white-space: nowrap; /* Ngăn xuống dòng */
+  text-align: center;  /* Căn giữa văn bản */
+  vertical-align: middle; /* Căn giữa theo chiều dọc */
+  padding: 8px; /* Khoảng cách trong ô */
+}
