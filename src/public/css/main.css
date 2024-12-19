@@ -6140,12 +6140,7 @@ background: #fff;
   padding: 8px; /* Khoảng cách trong ô */
 }
 
-body {
-  margin: 0;
-  padding: 0 0 50px 0; /* Thêm khoảng cách 50px ở dưới */
-  box-sizing: border-box;
+.container-error {
+  margin-bottom: 50px; /* Thêm khoảng cách chỉ cho container này */
 }
 
-.container {
-  margin-bottom: 50px; /* Khoảng cách riêng cho phần container */
-}
