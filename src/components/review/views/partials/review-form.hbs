@@ -16,21 +16,7 @@
         <input type="hidden" name="productId" value="{{productId}}">
         <input type="hidden" name="slug" value="{{slug}}">
         
-        <div class="col-md-12">
-            <div class="form-group">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name" required {{#unless user}}disabled{{/unless}}>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required {{#unless user}}disabled{{/unless}}>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required {{#unless user}}disabled{{/unless}}>
-            </div>
-        </div>
+
         <div class="col-md-12">
             <div class="form-group">
                 <textarea class="form-control" name="comment" id="comment" rows="3" placeholder="Your Review" required {{#unless user}}disabled{{/unless}}></textarea>

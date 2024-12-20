@@ -7,14 +7,9 @@ const ProductService = require("../services/ProductService");
 
 class ProductController {
 
-
-
-
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
     }
-
-   
 
     // Lọc sản phẩm
     async getFilteredProducts(req, res, next) {
