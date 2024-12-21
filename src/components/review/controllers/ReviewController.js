@@ -5,29 +5,43 @@ class ReviewController {
     return await ReviewService.getReviewsByProductId(productId, page, limit);
   }
 
-  static async submitReview(req, res, next) { 
+  static async submitReview(req, res, next) {
     try {
-      const { productId, rating, comment, slug } = req.body;
-      const userId = req.user._id;
+        const { productId, rating, comment, slug } = req.body;
+        const userId = req.user._id;
 
-      await ReviewService.submitReview({ productId, rating, comment, userId });
+        const ratingNumber = parseInt(rating, 10);
 
-      if (req.xhr) {
-        // If AJAX request, send JSON response
-        const data = await ReviewService.getReviewsByProductId(productId, 1, 5);
-        const overallRating = await ReviewService.getOverallRating(productId);
-        const ratingBreakdown = await ReviewService.getRatingBreakdown(productId);
-        res.json({ success: true, reviews: data.reviews, currentPage: data.currentPage, totalPages: data.totalPages, overallRating, ratingBreakdown });
-      } else {
-        // Regular form submission
-        res.redirect(`/product/product-details/${slug}`);
-      }
+        await ReviewService.submitReview({ productId, rating: ratingNumber, comment, userId });
+        console.log('Review submitted successfully.');
+
+        if (req.xhr) {
+            // If AJAX request, send JSON response
+            const data = await ReviewService.getReviewsByProductId(productId, 1, 5);
+            console.log('Fetched Reviews:', data);
+            const overallRating = await ReviewService.getOverallRating(productId);
+            console.log('Fetched Overall Rating:', overallRating);
+            const ratingBreakdown = await ReviewService.getRatingBreakdown(productId);
+            console.log('Fetched Rating Breakdown:', ratingBreakdown);
+            res.json({
+                success: true,
+                reviews: data.reviews,
+                currentPage: data.currentPage,
+                totalPages: data.totalPages,
+                overallRating,
+                ratingBreakdown,
+                totalReviews: data.totalReviews,
+            });
+        } else {
+            // Regular form submission
+            res.redirect(`/product/product-details/${slug}`);
+        }
     } catch (error) {
-      if (req.xhr) {
-        res.status(500).json({ success: false, message: 'Error submitting review', error });
-      } else {
-        next(error);
-      }
+        if (req.xhr) {
+            res.status(500).json({ success: false, message: 'Error submitting review', error });
+        } else {
+            next(error);
+        }
     }
   }
 

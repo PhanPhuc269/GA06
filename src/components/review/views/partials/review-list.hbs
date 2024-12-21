@@ -1,5 +1,4 @@
 <div class="review_section">
-  <!-- Overall Rating and Rating Breakdown -->
   <div class="row total_rate mb-4">
     <div class="col-6">
       <div class="box_total">
@@ -15,7 +14,7 @@
         {{#each ratingBreakdown}}
             <li>
             <a href="#">
-                {{@key}} Star 
+                {{@key}} Star
                 {{#each (range 1 5)}}
                 <i class="fa {{ternary (lte this (toNumber @../key)) 'fa-star checked' 'fa-star-o'}}"></i>
                 {{/each}}
@@ -28,7 +27,6 @@
     </div>
   </div>
 
-  <!-- List of Individual Reviews -->
   <div class="review_list" id="review-list" data-product-id="{{product._id}}">
     {{#each reviews}}
       <div class="review_item mb-4">
@@ -47,13 +45,12 @@
     {{/each}}
   </div>
 
-  <!-- Pagination Controls -->
   <nav aria-label="Review pagination">
     <ul class="pagination">
       {{#if (gt reviewPagination.currentPage 1)}}
         <li class="page-item">
           <a class="page-link" href="#" data-page="{{sub reviewPagination.currentPage 1}}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
+            <span aria-hidden="true">«</span>
           </a>
         </li>
       {{/if}}
@@ -67,7 +64,7 @@
       {{#if (lt reviewPagination.currentPage reviewPagination.totalPages)}}
         <li class="page-item">
           <a class="page-link" href="#" data-page="{{add reviewPagination.currentPage 1}}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
+            <span aria-hidden="true">»</span>
           </a>
         </li>
       {{/if}}
