@@ -9,6 +9,10 @@ router.get('/registration',AuthController.viewRegistration);
 router.post('/register',AuthController.register);
 router.get('/login',AuthController.viewLogin);
 router.post('/login',AuthController.login);
+router.get('/auth/google', AuthController.authenticateGoogle);
+router.get('/auth/google/callback', AuthController.authenticateGoogleCallback);
+
+
 router.get('/confirm/:token', AuthController.confirmAccount);
 router.get('/verify', ensureLogin, AuthController.waitingForConfirmation);
 router.get('/check-confirmation',ensureLogin, AuthController.checkConfirmation);

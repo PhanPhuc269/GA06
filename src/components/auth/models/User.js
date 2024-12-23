@@ -4,12 +4,13 @@ const bcrypt = require('bcryptjs');
 const { google } = require('googleapis');
 
 const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    googleId: { type: String, unique: true, sparse: true }, 
+    username: { type: String, unique: true, sparse: true },
+    password: { type: String },
     email: { type: String, required: true },
     isConfirmed: { type: Boolean, default: false },
     birthday: { type: Date },
-    avatar: { type: String, default: '/img/default-avatar' },
+    avatar: { type: String, default: '/img/default-avatar.png' },
     address: { type: String },
     phone: { type: String },
     facebook: { type: String },

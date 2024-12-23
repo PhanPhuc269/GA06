@@ -16,9 +16,24 @@ class SettingController {
             const { username, name } = req.body;
             const avatarUrl = req.file ? req.file.path : null;
             
+            const currentProfile = await editProfileService.getProfile(req.user._id);
+
             // Logic cập nhật vào database
             const updatedData = { username, name };
-            if (avatarUrl) updatedData.avatar = avatarUrl;
+            if (avatarUrl) {
+                // Xóa ảnh cũ nếu có
+                if (currentProfile.avatar && currentProfile.avatar !== '/img/default-avatar') {
+                    const publicId = currentProfile.avatar.split('/').slice(-2).join('/').split('.')[0];
+                    cloudinary.uploader.destroy(publicId, (error, result) => {
+                        if (error) {
+                            console.error('Failed to delete old avatar:', error);
+                        } else {
+                            console.log('Old avatar deleted:', result);
+                        }
+                    });
+                }
+                updatedData.avatar = avatarUrl;
+            }
         
             const profile = await editProfileService.updateProfile(req.user._id, {username, name, avatarUrl});
 
