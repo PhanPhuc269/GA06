@@ -6,6 +6,7 @@ const path = require('path');
 const { google } = require('googleapis');
 const jwt = require('jsonwebtoken');
 const sgMail = require('@sendgrid/mail');
+const validator = require('../validation');
 
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -21,8 +22,11 @@ class UserService {
 
     async registerUser(username, email, password) {
         // Kiểm tra định dạng email
-        if (!this.isValidEmail(email)) {
+        if (!validator.validateEmail(email)) {
             throw new Error('Invalid email format');
+        }
+        if(!validator.validatePassword(password)){
+            throw new Error('Password does not meet the complexity requirements.');
         }
 
         // Check if the username already exists
@@ -45,11 +49,6 @@ class UserService {
         //this.sendConfirmationEmailWithSendGrid(user);
 
         return user;
-    }
-
-    isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
     }
 
     async sendConfirmationEmail(user) {
