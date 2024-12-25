@@ -7305,7 +7305,7 @@ textarea {
 }
 
 .avt-member {
-  width: 150px;
+  width: 80px;
 }
 
 /* Blockquote Styling */
@@ -7349,3 +7349,9 @@ textarea {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}

@@ -6123,8 +6123,8 @@ border: 1px solid #ccc;
 background: #fff;
 }
 .avatar {
-  width: 44px;
-  height: 44px;
+  width: 35px;
+  height: 35px;
   margin-right: 0.5rem;
   border-radius: 50%;
   object-fit: cover; /* Đảm bảo ảnh giữ đúng tỉ lệ và vừa với khung hình */
