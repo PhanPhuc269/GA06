@@ -20,7 +20,7 @@
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
 								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/product/search">Shop Category</a></li>
+									<li class="nav-item"><a class="nav-link" href="/product/list">Shop Category</a></li>
 									<li class="nav-item"><a class="nav-link" href="/order/checkout">Product Checkout</a></li>
 									<li class="nav-item"><a class="nav-link" href="/product/confirmation">Confirmation</a></li>
 								</ul>
@@ -53,15 +53,15 @@
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item"><a href="/cart" class="cart"><span class="fa fa-shopping-cart"></span></a></li>
 
-							<li class="nav-item">
+							{{!-- <li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-							</li>
+							</li> --}}
 						</ul>
 					</div>
 				</div>
 			</nav>
 		</div>
-		<div class="search_input" id="search_input_box">
+		{{!-- <div class="search_input" id="search_input_box">
 			<div class="container">
 				<form class="d-flex justify-content-between" action="/product/search" method="get">
 					<input type="text" class="form-control" id="search_input" name="keyword" placeholder="Search Here">
@@ -69,6 +69,12 @@
 					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
 				</form>
 			</div>
-		</div>
+		</div> --}}
+		  <div class="search_input" id="search_input_box">
+        <form action="/product/search" method="get">
+            <input type="text" class="search_input_field" id="search_input" name="keyword" placeholder="Search Here...">
+            <button type="submit" class="search_button">Search</button>
+        </form>
+    </div>
 	</header>
 	<!-- End Header Area -->

@@ -6144,3 +6144,38 @@ background: #fff;
   margin-bottom: 50px; /* Thêm khoảng cách chỉ cho container này */
 }
 
+/* Định dạng cho thanh tìm kiếm */
+.search_input_box {
+  width: 100%; /* Chiếm toàn bộ chiều rộng của màn hình */
+  padding: 10px 0; /* Padding phía trên và dưới thanh tìm kiếm */
+  background-color: #fff; /* Màu nền trắng */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bóng mờ nhẹ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Định dạng cho ô nhập liệu */
+.search_input_field {
+  width: 60%; /* Chiếm 60% chiều rộng màn hình */
+  padding: 12px 20px; /* Padding cho ô nhập liệu */
+  font-size: 16px; /* Kích thước chữ */
+  border: 1px solid #ccc; /* Viền màu xám */
+  border-radius: 25px; /* Bo tròn các góc */
+  margin-right: 10px; /* Khoảng cách giữa ô nhập và nút */
+}
+
+/* Định dạng cho nút tìm kiếm */
+.search_button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search_button:hover {
+  background-color: #0056b3;
+}

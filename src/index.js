@@ -11,7 +11,8 @@ const fs = require('fs');
 const session = require('express-session');
 const passport = require('passport');
 require('./components/auth/config/passportConfig');
-
+// Import các hàm từ file elasticsearch.js
+const { createIndex, syncAllProducts } = require('../src/config/elasticsearch/createIndex');
 
 //nodemon --inspect src/index.js
 const db = require('./config/db');
@@ -106,4 +107,7 @@ route(app);
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
+  createIndex(); // Tạo chỉ mục
+  // deleteIndex(); // Xóa chỉ mục (nếu cần)
+  syncAllProducts(); // Đồng bộ sản phẩm (nếu cần)
 });
