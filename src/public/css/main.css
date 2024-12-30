@@ -1033,7 +1033,9 @@ h6 {
     border-radius: 0px; }
     @media (max-width: 991px) {
       .header_area .navbar .navbar-collapse {
-        margin-top: 30px; }
+        margin: 8px 0; 
+
+      }
         .header_area .navbar .navbar-collapse .nav-item {
           padding: 10px; } }
     .header_area .navbar .navbar-toggler .icon-bar {
@@ -1215,10 +1217,12 @@ h6 {
 .banner-area {
   background: url(../img/banner/banner-bg.jpg) center no-repeat;
   background-size: cover;
-  position: relative; }
+  position: relative; 
+}
   @media (max-width: 768px) {
     .banner-area .fullscreen {
-      height: 650px !important; } }
+      height: 650px !important; }
+     }
   .banner-area .active-banner-slider .owl-nav {
     position: absolute;
     right: 0;
@@ -4916,7 +4920,7 @@ label {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.07);
   height: 100%;
   text-align: center;
-  padding-top: 115px; }
+  padding-top: 90px !important; }
   .login_form_inner h3 {
     color: #222222;
     text-transform: uppercase;
@@ -6123,14 +6127,19 @@ border: 1px solid #ccc;
 background: #fff;
 }
 .avatar {
-  width: 35px;
-  height: 35px;
+  width: 20px;
+  height: 20px;
   margin-right: 0.5rem;
   border-radius: 50%;
   object-fit: cover; /* Đảm bảo ảnh giữ đúng tỉ lệ và vừa với khung hình */
 }
 .avatar-dropdown {
   margin-top: -18px !important; /* Điều chỉnh giá trị này để thay đổi khoảng cách phía trên */
+}
+@media (max-width: 991px) {
+  .avatar-dropdown {
+    margin-top: 0 !important; /* Điều chỉnh giá trị này để thay đổi khoảng cách phía trên */
+  }
 }
 
 .table th {
@@ -6144,3 +6153,155 @@ background: #fff;
   margin-bottom: 50px; /* Thêm khoảng cách chỉ cho container này */
 }
 
+/* Container chung */
+.toast-container {
+  z-index: 1050;
+}
+
+.custom-toast {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 5px;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid;
+  min-width: 300px;
+}
+
+/* Các loại Toast */
+.custom-toast.success {
+  border-left-color: #28a745;
+}
+
+.custom-toast.error {
+  border-left-color: #dc3545;
+}
+
+.custom-toast.info {
+  border-left-color: #007bff;
+}
+
+.custom-toast.warning {
+  border-left-color: #ffc107;
+}
+
+/* Header */
+.toast-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 0px;
+}
+
+/* Icon */
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.icon {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.custom-toast.success .icon-wrapper {
+  background-color: #28a745;
+}
+
+.custom-toast.error .icon-wrapper {
+  background-color: #dc3545;
+}
+
+.custom-toast.info .icon-wrapper {
+  background-color: #007bff;
+}
+
+.custom-toast.warning .icon-wrapper {
+  background-color: #ffc107;
+}
+
+/* Nội dung */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.toast-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.toast-subtitle {
+  font-size: 14px;
+  margin: 0;
+  color: #6c757d;
+}
+
+/* Close button */
+.btn-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  opacity: 0.7;
+}
+
+.btn-close:hover {
+  opacity: 1;
+}
+.relative-position {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  right: 76px; /* Điều chỉnh khoảng cách từ bên phải */
+  top: 50%; /* Điều chỉnh khoảng cách từ trên */
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #000; /* Điều chỉnh màu sắc biểu tượng */
+}
+.top_nav {
+  font-size: 12px;
+  background-color: #f0dfcf !important;
+  padding: 5px 0;
+  
+}
+#search_input {
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 13px 19px;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #212121;
+  border: none;
+  outline: none;
+  background: #eff0f5;
+  box-shadow: none;
+  border-radius: 2px;
+}
+.main_menu{
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.cart {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #000;
+}

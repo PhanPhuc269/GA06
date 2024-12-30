@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     googleId: { type: String, unique: true, sparse: true }, 
     username: { type: String, unique: true, sparse: true },
     password: { type: String },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     isConfirmed: { type: Boolean, default: false },
     birthday: { type: Date },
     avatar: { type: String, default: '/img/default-avatar.png' },

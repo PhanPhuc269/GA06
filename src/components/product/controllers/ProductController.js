@@ -7,14 +7,9 @@ const ProductService = require("../services/ProductService");
 
 class ProductController {
 
-
-
-
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
     }
-
-   
 
     // Lọc sản phẩm
     async getFilteredProducts(req, res, next) {
@@ -199,6 +194,15 @@ class ProductController {
 
             const total = await ProductService.countProducts(filters);
             const products = await ProductService.getProductList(filters, sortCriteria, skip, parseInt(limit));
+
+            if (req.xhr) {
+                return res.json({
+                    products: mutipleMongooseToObject(products),
+                    total,
+                    currentPage: parseInt(page),
+                    totalPages: Math.ceil(total / limit),
+                });
+            }
 
             res.render('category', {
                 products: mutipleMongooseToObject(products),

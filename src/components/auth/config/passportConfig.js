@@ -14,6 +14,9 @@ passport.use(new LocalStrategy({
         if (!user) {
             return done(null, false, { message: 'Incorrect email.' });
         }
+        if (user.password===undefined) {
+            return done(null, false, { message: 'You registered with Google. Please login with Google.' });
+        }
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return done(null, false, { message: 'Incorrect password.' });
@@ -29,7 +32,7 @@ passport.use(new LocalStrategy({
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID, // Thay bằng Client ID của bạn
     clientSecret: process.env.GOOGLE_CLIENT_SECRET, // Thay bằng Client Secret của bạn
-    callbackURL: 'http://localhost:3000/auth/google/callback' // URL callback của bạn
+    callbackURL: '/auth/google/callback' // URL callback của bạn
 }, async (accessToken, refreshToken, profile, done) => {
     console.log('GoogleStrategy');
     try {
@@ -38,10 +41,13 @@ passport.use(new GoogleStrategy({
 
         // Nếu user chưa tồn tại, tạo mới
         if (!user) {
+            const email = profile.emails[0].value;
+            const username = email.split('@')[0];
             user = await User.create({
                 googleId: profile.id,
                 email: profile.emails[0].value,
                 name: profile.displayName,
+                username: username,
                 isConfirmed: true
             });
         }

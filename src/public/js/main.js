@@ -572,6 +572,27 @@ $(document).ready(function(){
 
 
   
+      const searchInput = document.getElementById('search_input');
+  const deleteSearchBtn = document.getElementById('delete_search');
 
+  // Ẩn nút delete ban đầu nếu ô input không có dữ liệu
+  if (!searchInput.value) {
+      deleteSearchBtn.style.display = 'none';
+  }
+
+  // Lắng nghe sự kiện input để kiểm tra dữ liệu trong ô input
+  searchInput.addEventListener('input', function() {
+      if (searchInput.value) {
+          deleteSearchBtn.style.display = 'inline'; // Hiện nút delete
+      } else {
+          deleteSearchBtn.style.display = 'none'; // Ẩn nút delete
+      }
+  });
+
+  // Lắng nghe sự kiện click trên nút delete để xóa dữ liệu trong ô input
+  deleteSearchBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      deleteSearchBtn.style.display = 'none'; // Ẩn nút delete
+  });
  });
 
