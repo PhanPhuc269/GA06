@@ -4,7 +4,8 @@ const { mongooseToObject } = require('../../../utils/mongoose');
 const ReviewController = require('../../review/controllers/ReviewController');
 const Product = require("../models/Product");
 const ProductService = require("../services/ProductService");
-
+const ElasticsearchService = require("../services/ElasticsearchService");
+const elasticClient=require("../../../config/elasticsearch/elasticsearch");
 class ProductController {
 
     ViewOrderConfirmation(req, res, next) {
@@ -160,7 +161,9 @@ class ProductController {
         }
     }
 
-    async SearchProduct(req, res, next) {
+   
+    
+    async  SearchProduct(req, res, next) {
         try {
             const {
                 type: productType,
@@ -173,24 +176,24 @@ class ProductController {
                 keyword,
                 sort,
             } = req.query;
-
-            const skip = (parseInt(page) - 1) * parseInt(limit);
+    
+            // Khởi tạo bộ lọc cho các trường tìm kiếm
             const filters = {};
-
-            if (keyword) filters.name = { $regex: keyword, $options: 'i' };
-            if (productType) filters.type = { $in: productType.split(',') };
-            if (productBrand) filters.brand = { $in: productBrand.split(',') };
-            if (productColor) filters.color = { $in: productColor.split(',') };
-            if (minPrice || maxPrice) filters.price = { ...(minPrice && { $gte: minPrice }), ...(maxPrice && { $lte: maxPrice }) };
-
-            let sortCriteria = {};
+            if (productType) filters.type = productType;
+            if (productBrand) filters.brand = productBrand;
+            if (productColor) filters.color = productColor;
+            if (minPrice || maxPrice) filters.price = { minPrice, maxPrice };
+    
+            // Định nghĩa các điều kiện sắp xếp (sort)
+            let sortCriteria = [];
             switch (sort) {
-                case 'price_asc': sortCriteria = { price: 1 }; break;
-                case 'price_desc': sortCriteria = { price: -1 }; break;
-                case 'creation_time_desc': sortCriteria = { createdAt: -1 }; break;
-                case 'rate_desc': sortCriteria = { rate: -1 }; break;
-                default: sortCriteria = {};
+                case 'price_asc': sortCriteria = [{ price: { order: 'asc' } }]; break;
+                case 'price_desc': sortCriteria = [{ price: { order: 'desc' } }]; break;
+                case 'creation_time_desc': sortCriteria = [{ createdAt: { order: 'desc' } }]; break;
+                case 'rate_desc': sortCriteria = [{ rate: { order: 'desc' } }]; break;
+                default: sortCriteria = [];
             }
+//<<<<<<< features/complexityPassword
 
             const total = await ProductService.countProducts(filters);
             const products = await ProductService.getProductList(filters, sortCriteria, skip, parseInt(limit));
@@ -204,17 +207,34 @@ class ProductController {
                 });
             }
 
+//=======
+    
+            // Thực hiện tìm kiếm qua Elasticsearch
+          //  const products = await ElasticsearchService.searchProducts(keyword, filters, page, limit);
+    
+            // // Lấy tổng số sản phẩm (cho phép phân trang)
+            // const totalResponse = await elasticClient.count({
+            //     index: 'products',
+            //     body: { query: { bool: { must: [{ multi_match: { query: keyword, fields: ['name', 'description'] } }] } } },
+            // });
+//     console.log("sanp: ",products);
+//             const total = products.length;
+//             console.log("tol: ",total);
+//             const totalPages = Math.ceil(total / limit);
+    
+//             // Render kết quả trên giao diện
+// >>>>>>> main
             res.render('category', {
-                products: mutipleMongooseToObject(products),
+                products: products,
                 total,
                 currentPage: parseInt(page),
-                totalPages: Math.ceil(total / limit),
+                totalPages,
             });
         } catch (error) {
             next(error);
         }
     }
-
+    
 }
 
 module.exports = new ProductController();
