@@ -150,6 +150,8 @@ class AuthController{
         const email = req.flash('email')[0] || '';
         res.render('login', { email });
     }
+
+
     // [POST] /login
     async login(req, res, next) {
         passport.authenticate('local', (err, user, info) => {
@@ -172,6 +174,20 @@ class AuthController{
             });
         })(req, res, next);
     }
+    // [GET] /auth/google
+    authenticateGoogle(req, res, next) {
+        passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+    }
+
+    // [GET] /auth/google/callback
+    authenticateGoogleCallback(req, res, next) {
+        passport.authenticate('google', {
+            successRedirect: '/',
+            failureRedirect: '/login',
+        })(req, res, next);
+    }
+
+
     // [GET] /logout
     logout (req, res,next){
         req.logout((err) => {

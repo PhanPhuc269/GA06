@@ -1,6 +1,4 @@
 
-
-
 let filters = {};
 
 // Lấy giá trị ban đầu từ URL
@@ -16,6 +14,7 @@ filters.page = parseInt(urlParams.get('page')) || 1;
 filters.limit = parseInt(urlParams.get('limit')) || 12;
 
 document.addEventListener('DOMContentLoaded', () => {
+    const searchForm = document.getElementById('searchForm');    
     const urlParams = new URLSearchParams(window.location.search);
     const keyword = urlParams.get('keyword');
     const searchInput = document.getElementById('search_input');
@@ -57,6 +56,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const sortSelect = document.getElementById('sort-criteria');
     if (sortSelect) sortSelect.value = filters.sort;
+    // Lắng nghe sự kiện submit của form
+    searchForm.addEventListener('submit', function(event) {
+        const currentUrl = window.location.pathname;
+        if (currentUrl.includes('/product/search')) {
+            event.preventDefault(); // Ngăn chặn hành vi submit mặc định
+            // Lấy giá trị từ ô input
+            var keyword = searchInput.value.trim();
+            
+            // Cập nhật giá trị keyword trong filters
+            filters.keyword = keyword;
+            filters.page = 1;
+            applyFilters();
+
+            // Gửi yêu cầu AJAX nếu đang ở trang tìm kiếm
+            fetch(`/product/search?keyword=${encodeURIComponent(filters.keyword)}`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý dữ liệu trả về từ server
+                console.log(data);
+                // Cập nhật giao diện với dữ liệu mới
+                // Ví dụ: cập nhật danh sách sản phẩm
+            })
+            .catch(error => console.error('Error:', error));
+            updateProductList(data.products);
+        }
+        
+    });
 });
 function setTypeFilter(type) {
     filters.type = type;
@@ -320,4 +351,5 @@ document.addEventListener('DOMContentLoaded', function () {
             applyFilters();
         });
     });
+    
 });

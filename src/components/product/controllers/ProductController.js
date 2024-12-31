@@ -8,14 +8,9 @@ const ElasticsearchService = require("../services/ElasticsearchService");
 const elasticClient=require("../../../config/elasticsearch/elasticsearch");
 class ProductController {
 
-
-
-
     ViewOrderConfirmation(req, res, next) {
         res.render('confirmation');
     }
-
-   
 
     // Lọc sản phẩm
     async getFilteredProducts(req, res, next) {
@@ -198,21 +193,37 @@ class ProductController {
                 case 'rate_desc': sortCriteria = [{ rate: { order: 'desc' } }]; break;
                 default: sortCriteria = [];
             }
+//<<<<<<< features/complexityPassword
+
+            const total = await ProductService.countProducts(filters);
+            const products = await ProductService.getProductList(filters, sortCriteria, skip, parseInt(limit));
+
+            if (req.xhr) {
+                return res.json({
+                    products: mutipleMongooseToObject(products),
+                    total,
+                    currentPage: parseInt(page),
+                    totalPages: Math.ceil(total / limit),
+                });
+            }
+
+//=======
     
             // Thực hiện tìm kiếm qua Elasticsearch
-            const products = await ElasticsearchService.searchProducts(keyword, filters, page, limit);
+          //  const products = await ElasticsearchService.searchProducts(keyword, filters, page, limit);
     
             // // Lấy tổng số sản phẩm (cho phép phân trang)
             // const totalResponse = await elasticClient.count({
             //     index: 'products',
             //     body: { query: { bool: { must: [{ multi_match: { query: keyword, fields: ['name', 'description'] } }] } } },
             // });
-    console.log("sanp: ",products);
-            const total = products.length;
-            console.log("tol: ",total);
-            const totalPages = Math.ceil(total / limit);
+//     console.log("sanp: ",products);
+//             const total = products.length;
+//             console.log("tol: ",total);
+//             const totalPages = Math.ceil(total / limit);
     
-            // Render kết quả trên giao diện
+//             // Render kết quả trên giao diện
+// >>>>>>> main
             res.render('category', {
                 products: products,
                 total,

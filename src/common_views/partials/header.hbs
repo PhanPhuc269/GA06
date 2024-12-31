@@ -1,8 +1,37 @@
 <!-- Start Header Area -->
 	<header class="header_area sticky-header">
+
 		<div class="main_menu">
+					<!-- Small Navigation Tabs -->
+			<div class="top_nav navbar navbar-expand-lg navbar-light main_box">
+				<div class="container d-flex justify-content-between">
+					<ul class="nav">
+						
+					</ul>
+					<ul class="nav">
+						<li class="nav-item "><a href="/" class="nav-link">Home</a></li>
+						<li class="nav-item "><a href="/blog" class="nav-link">Blog</a></li>
+						<li class="nav-item "><a href="/about"class="nav-link">About</a></li>
+						<li class="nav-item "><a href="/contact"class="nav-link">Contact</a></li>
+						{{#if isAuthenticated}}
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle text-normal-case" data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false"><img class="avatar" src="{{user.avatar}}"></img>{{user.username}}</a>
+								<ul class="dropdown-menu avatar-dropdown ">
+									<li class="nav-item"><a class="nav-link" href="/setting/edit-profile">My account</a></li>
+									<li class="nav-item"><a class="nav-link" href="/order/list">Theo dõi đơn hàng</a></li>	
+									<li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+								</ul>
+							</li>
+						{{else}}
+							<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+							<li class="nav-item"><a class="nav-link" href="/registration">Register</a></li>
+						{{/if}}
+					</ul>
+				</div>
+			</div>
 			<nav class="navbar navbar-expand-lg navbar-light main_box">
-				<div class="container">
+				<div class="container p-1">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<a class="navbar-brand logo_h" href="/"><img src="/img/logo.png" alt="" class="logo"></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -13,51 +42,17 @@
 					</button>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav ml-auto align-items-center">
-							
-							<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Shop</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/product/list">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="/order/checkout">Product Checkout</a></li>
-									<li class="nav-item"><a class="nav-link" href="/product/confirmation">Confirmation</a></li>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Blog</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
-									<li class="nav-item"><a class="nav-link" href="/blog/single-blog">Blog Details</a></li>
-								</ul>
-							</li>
-							
-							<li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-							<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-							{{#if isAuthenticated}}
-								<li class="nav-item submenu dropdown">
-									<a href="#" class="nav-link dropdown-toggle text-normal-case" data-toggle="dropdown" role="button" aria-haspopup="true"
-									aria-expanded="false"><img class="avatar" src="{{user.avatar}}"></img>{{user.username}}</a>
-									<ul class="dropdown-menu avatar-dropdown ">
-										<li class="nav-item"><a class="nav-link" href="/setting/edit-profile">My account</a></li>
-										<li class="nav-item"><a class="nav-link" href="/order/list">Theo dõi đơn hàng</a></li>										<li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
-									</ul>
-								</li>
-							{{else}}
-								<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-								<li class="nav-item"><a class="nav-link" href="/registration">Register</a></li>
-							{{/if}}
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item">
-								<a href="/cart" class="cart position-relative">
-									<span class="fa fa-shopping-cart" style="font-size: 24px;"></span>
-									<span id="cart-count" class="badge badge-danger position-absolute">0</span>
-								</a>
-							</li>
-						</ul>
+
+						<div class="w-100">
+							<form class="d-flex relative-position justify-content-between w-100" action="/product/search" method="get" id="searchForm">
+								<input type="text" class="form-control w-100" id="search_input" name="keyword" placeholder="Search in Dimmillav">
+								<button type="submit" class="btn"><span class="lnr lnr-magnifier" id="search"></span></button>
+								<span class="lnr lnr-cross  close-btn" id="delete_search" title="Delete Search"></span>
+								
+								<a href="/cart" class="cart align-item-center"><span class="fa fa-shopping-cart fs-4"></span></a>
+							</form>
+
+						</div>
 
 					</div>
 				</div>
@@ -72,12 +67,8 @@
 				</form>
 			</div>
 		</div> --}}
-		  <div class="search_input" id="search_input_box">
-        <form action="/product/search" method="get">
-            <input type="text" class="search_input_field" id="search_input" name="keyword" placeholder="Search Here...">
-            <button type="submit" class="search_button">Search</button>
-        </form>
-    </div>
+
+
 	</header>
 	  <script src="/js/cart/cart.js"></script>
 	<!-- End Header Area -->
