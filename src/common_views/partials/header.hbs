@@ -51,12 +51,14 @@
 							{{/if}}
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="/cart" class="cart"><span class="fa fa-shopping-cart"></span></a></li>
-
-							{{!-- <li class="nav-item">
-								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-							</li> --}}
+							<li class="nav-item">
+								<a href="/cart" class="cart position-relative">
+									<span class="fa fa-shopping-cart" style="font-size: 24px;"></span>
+									<span id="cart-count" class="badge badge-danger position-absolute">0</span>
+								</a>
+							</li>
 						</ul>
+
 					</div>
 				</div>
 			</nav>
@@ -77,4 +79,5 @@
         </form>
     </div>
 	</header>
+	  <script src="/js/cart/cart.js"></script>
 	<!-- End Header Area -->
