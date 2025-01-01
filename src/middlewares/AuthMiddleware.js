@@ -13,6 +13,9 @@ module.exports = {
         }
         return next();
     }
+     // Lưu URL hiện tại vào session
+     req.session.returnTo = req.originalUrl;
+     console.log('l: ', req.session.returnTo)
     res.redirect('/login'); // Redirect nếu chưa đăng nhập
   },  
 

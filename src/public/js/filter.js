@@ -187,6 +187,16 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("cart", JSON.stringify(cart));
 
         alert(`${productName} đã được thêm vào giỏ hàng!`);
+        gtag('event', 'add_to_cart', {
+            'currency': 'VND', // Hoặc USD nếu cần
+            'value': productPrice , // Tổng giá trị của sản phẩm trong giỏ
+            'items': [{
+                'item_name': productName,  // Tên sản phẩm
+                'item_id': productSlug,    // ID sản phẩm
+                // 'quantity': quantity,      // Số lượng
+                'price': productPrice      // Giá sản phẩm
+            }]
+        });
     });
 });
 

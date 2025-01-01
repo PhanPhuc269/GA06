@@ -52,7 +52,7 @@ class ProductService {
             throw error;
         }
     }
-
+   
 }
 
 module.exports = new ProductService();

@@ -170,7 +170,11 @@ class AuthController{
                 if (!user.isConfirmed) {
                     return res.redirect('/verify'); // Redirect đến trang xác thực email
                 }
-                return res.redirect('/');
+               // Chuyển hướng về trang trước đó hoặc về home
+            const returnTo = req.session.returnTo || '/';
+            console.log('link:',returnTo)
+            delete req.session.returnTo; // Xóa giá trị sau khi sử dụng
+            return res.redirect(returnTo);
             });
         })(req, res, next);
     }

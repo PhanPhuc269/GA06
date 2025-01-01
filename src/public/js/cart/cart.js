@@ -30,9 +30,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>
                     <div class="media">
                         <div class="d-flex">
-                            <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
+                          <a href="/product/product-details/${item.slug}"  
+                            data-slug="${item.slug}" 
+                            data-name="${item.name}" 
+                            data-category="${item.category}">
+                                     <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
+                                </a>
+                         
                         </div>
                         <div class="media-body">
+                          <a href="/product/product-details/${item.slug}"  
+                            data-slug="${item.slug}" 
+                            data-name="${item.name}" 
+                            data-category="${item.category}">
                             <p>${item.name}</p>
                         </div>
                     </div>
@@ -62,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
         updateTotalPrice(totalPrice);
         updateCartCount(totalQuantity); // Cập nhật số lượng trên header
+        console.log(totalQuantity)
     }
     
     function updateCartCount(count) {

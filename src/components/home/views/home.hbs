@@ -186,7 +186,10 @@
 					<!-- single product -->
 					<div class="col-lg-3 col-md-6">
 						<div class="single-product">
-							<a href="/product/product-details/{{this.slug}}">
+							<a href="/product/product-details/{{this.slug}}" 
+							data-slug="{{this.slug}}" 
+                            data-name="{{this.name}}" 
+                            data-category="{{this.category}}">
 								<img class="img-fluid" src="{{this.image}}" alt="">
 							</a>
 							<div class="product-details">
@@ -422,7 +425,7 @@
 	</section>
 	<script src="/js/filter.js"></script>
    <script src="/js/cart/cart.js" ></script>
-	
-{{!-- <script src="/js/cart/syncCart.js" defer></script>
-<script src="/js/cart/syncUpdateCart.js" defer></script> --}}
+		<script src="/js/productDetailClick.js"></script>
+
+
 	<!-- End related-product Area -->

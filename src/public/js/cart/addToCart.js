@@ -38,6 +38,17 @@ document.querySelectorAll(".add-to-cart").forEach((button) => {
 
         // Cập nhật lại giao diện giỏ hàng hoặc hiển thị thông báo
         showToast(`${quantity} x ${productName} đã được thêm vào giỏ hàng!`, 'success', 'Success');
-        //alert(`${quantity} x ${productName} đã được thêm vào giỏ hàng!`);
+
+        // Gửi sự kiện "add_to_cart" đến Google Analytics
+        gtag('event', 'add_to_cart', {
+            'currency': 'VND', // Hoặc USD nếu cần
+            'value': productPrice * quantity, // Tổng giá trị của sản phẩm trong giỏ
+            'items': [{
+                'item_name': productName,  // Tên sản phẩm
+                'item_id': productSlug,    // ID sản phẩm
+                'quantity': quantity,      // Số lượng
+                'price': productPrice      // Giá sản phẩm
+            }]
+        });
     });
 });
