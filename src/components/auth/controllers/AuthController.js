@@ -154,6 +154,7 @@ class AuthController{
 
     // [POST] /login
     async login(req, res, next) {
+        let returnTo = req.session.returnTo ;
         passport.authenticate('local', (err, user, info) => {
             if (err) {
                 return next(err);
@@ -171,9 +172,11 @@ class AuthController{
                     return res.redirect('/verify'); // Redirect đến trang xác thực email
                 }
                // Chuyển hướng về trang trước đó hoặc về home
-            const returnTo = req.session.returnTo || '/';
-            console.log('link:',returnTo)
-            delete req.session.returnTo; // Xóa giá trị sau khi sử dụng
+       
+            if(!returnTo){
+                returnTo='/';
+            }
+            
             return res.redirect(returnTo);
             });
         })(req, res, next);

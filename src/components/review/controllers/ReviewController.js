@@ -18,11 +18,17 @@ class ReviewController {
         if (req.xhr) {
             // If AJAX request, send JSON response
             const data = await ReviewService.getReviewsByProductId(productId, 1, 5);
-            console.log('Fetched Reviews:', data);
-            const overallRating = await ReviewService.getOverallRating(productId);
-            console.log('Fetched Overall Rating:', overallRating);
+           
+         const allData=await ReviewService.getAllReviewsByProductId(productId)
+        //  Tính overallRating từ data
+        const reviews = allData.reviews || [];
+      
+        const overallRating = reviews.length > 0 ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1): 0;
+        
+        
             const ratingBreakdown = await ReviewService.getRatingBreakdown(productId);
             console.log('Fetched Rating Breakdown:', ratingBreakdown);
+            console.log('dl: ',data.reviews)
             res.json({
                 success: true,
                 reviews: data.reviews,

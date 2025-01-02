@@ -36,10 +36,12 @@ class ReviewService {
   }
 
   static async getOverallRating(productId) {
+    console.log('sp trước: ',productId);
     const result = await Review.aggregate([
       { $match: { productId } },
       { $group: { _id: null, averageRating: { $avg: '$rating' } } },
     ]);
+    console.log('result:', result); // Log để kiểm tra kết quả truy vấn
     return result.length > 0 ? result[0].averageRating.toFixed(1) : 0;
   }
 
@@ -74,6 +76,21 @@ class ReviewService {
       currentPage: parseInt(page),
     };
   }
+
+  static async getAllReviewsByProductId(productId) {
+    
+
+    const reviews = await Review.find({ productId });
+      
+
+    
+
+    return {
+      reviews,
+     
+    };
+  }
+
 }
 
 module.exports = ReviewService;

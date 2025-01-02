@@ -15,9 +15,12 @@ module.exports = {
     }
      // Lưu URL hiện tại vào session
      req.session.returnTo = req.originalUrl;
-     console.log('l: ', req.session.returnTo)
-    res.redirect('/login'); // Redirect nếu chưa đăng nhập
-  },  
+
+    req.session.save(() => {
+        console.log('URL được lưu:', req.session.returnTo);
+        res.redirect('/login');
+  });
+},  
 
   ensureRole: (role) => {
     return (req, res, next) => {
