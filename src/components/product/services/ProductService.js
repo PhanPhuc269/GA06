@@ -44,6 +44,15 @@ class ProductService {
             throw error;
         }
     }
+    async getProducts() {
+        try {
+            return await Product.find();
+        } catch (error) {
+            console.error('Error in getProductsByCondition:', error);
+            throw error;
+        }
+    }
+
 }
 
 module.exports = new ProductService();

@@ -6303,3 +6303,37 @@ background: #fff;
   text-decoration: none;
   color: #000;
 }
+
+
+
+/* Style cho badge */
+.badge {
+  background-color: white; /* Màu nền của vòng tròn */
+  color: white;          /* Màu chữ */
+  border-radius: 50%;    /* Làm tròn góc để thành hình tròn */
+  font-size: 12px;       /* Kích thước chữ nhỏ */
+  width: 18px;           /* Chiều rộng của vòng tròn */
+  height: 18px;          /* Chiều cao của vòng tròn */
+  display: flex;         /* Căn giữa nội dung */
+  justify-content: center;
+  align-items: center;
+  position: absolute;    /* Định vị chính xác */
+  top: -5px;             /* Điều chỉnh vị trí theo chiều dọc */
+  right: -10px;          /* Điều chỉnh vị trí theo chiều ngang */
+  z-index: 10;           /* Đảm bảo nằm trên các phần tử khác */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng */
+}
+
+/* Style cho biểu tượng giỏ hàng */
+.fa-shopping-cart {
+  color: black;          /* Màu biểu tượng */
+}
+
+/* Style cho liên kết */
+.cart {
+  position: relative;    /* Định vị để badge nằm trong */
+  text-decoration: none; /* Xóa gạch chân */
+  color: inherit;        /* Giữ màu chữ mặc định */
+}
+
+
