@@ -6386,3 +6386,10 @@ background: #fff;
 .search-history div:hover {
   background-color: #f1f1f1; /* Màu khi hover */
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Khoảng cách giữa các nút */
+  margin-top: 20px;
+}

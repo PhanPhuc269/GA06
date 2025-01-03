@@ -23,11 +23,12 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Mã đơn hàng</th>
-                            <th>Ngày đặt</th>
-                            <th>Tổng tiền</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
+                          <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+
                         </tr>
                     </thead>
                   <tbody>
@@ -41,10 +42,10 @@
                                     {{#if (eq this.status "pending")}}
                                     <form action="/transaction/create/" method="POST">
                                         <input type="hidden" name="orderId" value="{{this._id}}">
-                                        <button type="submit" class="btn btn-primary">Thanh toán</button>
+                                        <button type="submit" class="btn btn-primary">Pay</button>
                                     </form>
                                     {{else}}
-                                    <span>Đã thanh toán</span>
+                                    <span>paid</span>
                                     {{/if}}
                                 </td>
                                 <td>

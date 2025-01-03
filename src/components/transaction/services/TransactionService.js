@@ -40,7 +40,7 @@ class TransactionService {
                 amount,
                 paymentMethod: "bank",
                 orderId,
-                description: `OrderID-${orderId}`,
+                description: `Order Id: ${orderId}`,
                 status: "pending",
             });
 
@@ -76,7 +76,7 @@ class TransactionService {
 
                     const order = await Order.findById(transaction.orderId);
                     if (order) {
-                        order.status = "completed";
+                        order.status = "paid";
                         await order.save();
                     }
 

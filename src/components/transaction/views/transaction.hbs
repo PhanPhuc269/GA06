@@ -1,47 +1,50 @@
- <!-- Start Banner Area -->
- <body>
-    
+<body>
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Payment QR Code</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/home">Home<span class="lnr lnr-arrow-right"></span></a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
 
-<!-- Start Banner Area -->
-<section class="banner-area organic-breadcrumb">
     <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-            <div class="col-first">
-                <h1>Payment QR Code</h1>
-                <nav class="d-flex align-items-center">
-                    <a href="/home">Home<span class="lnr lnr-arrow-right"></span></a>
-                   
-                </nav>
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-8 text-center">
+                <h2>Scan this QR Code to Make Payment</h2>
+                
+                <!-- Hiển thị amount và description -->
+                <p class="mt-4">
+                    Amount: <strong>{{ amount }} VND</strong><br>
+                    Description: <strong>{{ description }}</strong>
+                </p>
+
+                <!-- QR Code Area (ẩn ban đầu) -->
+                <div class="qr-code mt-4" id="qr-code-container" style="display: none;">
+                    <img src="{{ qrCode }}" alt="QR Code" class="img-fluid" id="qr-code-img" style="max-width: 500px;">
+                </div>
+
+                <!-- Nút thanh toán -->
+                <button id="btn-pay" class="btn btn-success mt-4" data-transaction-id="{{transactionId}}">Proceed to Payment</button>
+
+                <!-- Khu vực đếm ngược -->
+                <div id="countdown-timer" class="mt-3" style="display: none;">
+                    <h4>Time remaining: <span id="time-left">05:00</span></h4>
+                </div>
+
+                <!-- Thông báo -->
+                <div id="payment-status" class="mt-3" style="display: none;"></div>
+                <!-- Nút hủy thanh toán -->
+                <button id="btn-cancel" class="btn btn-danger mt-4" style="display: none; ">Cancel Payment</button>
+
             </div>
         </div>
     </div>
-</section>
-<!-- End Banner Area -->
 
-<div class="container">
-    <div class="row justify-content-center mt-5">
-        <div class="col-lg-8 text-center">
-            <h2>Scan this QR Code to Make Payment</h2>
-            <div class="qr-code mt-4">
-                <img src="{{ qrCode }}" alt="QR Code" class="img-fluid" id="qr-code-img" style="max-width: 300px;">
-            </div>
-            <p class="mt-4">Amount: <strong>{{ amount }} VND</strong></p>
-            <p>Description: <strong>{{description}}  </strong></p>
-
-            <!-- Nút thanh toán -->
-            <button id="btn-pay" class="btn btn-success mt-4" data-transaction-id="{{transactionId}}">Proceed to Payment</button>
-
-            <!-- Khu vực đếm ngược -->
-            <div id="countdown-timer" class="mt-3" style="display: none;">
-                <h4>Time remaining: <span id="time-left">05:00</span></h4>
-            </div>
-
-            <!-- Thông báo -->
-            <div id="payment-status" class="mt-3" style="display: none;"></div>
-        </div>
-    </div>
-</div>
-
-    <script src="/js/paymentOrder.js"></script> 
- </body>
-  
+    <script src="/js/paymentOrder.js"></script>
+</body>
