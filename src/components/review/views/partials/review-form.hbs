@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="col-md-12 text-right">
-            <button type="submit" class="primary-btn" {{#unless user}}disabled onclick="alert('Please log in to add a review.')"{{/unless}}>
+            <button type="submit" class="primary-btn" {{#unless user}}disabled onclick="showToast('Please log in to add a review.', 'warning', 'warning')"{{/unless}}>
                 Add Review
             </button>
             {{#unless user}}
@@ -56,12 +56,13 @@
     document.getElementById('reviewForm').addEventListener('submit', function(event) {
         var rating = document.querySelector('input[name="rating"]').value;
         if (rating === "0") { 
-            alert("Vui lòng chọn đánh giá trước khi thêm.");
+            //alert("Vui lòng chọn đánh giá trước khi thêm.");
+            showToast('Vui lòng chọn đánh giá trước khi thêm.', 'warning', 'warning');
             event.preventDefault(); 
         } else {
             // Nếu form được submit thành công (bạn cần xử lý logic này ở phía server)
             // Hiển thị thông báo cho người dùng
-            alert("Cảm ơn bạn đã đánh giá!"); 
+            showToast('Cảm ơn bạn đã đánh giá!', 'success', 'success');
         }
     });
 </script>

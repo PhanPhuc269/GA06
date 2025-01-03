@@ -186,7 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Lưu lại giỏ hàng vào localStorage
         localStorage.setItem("cart", JSON.stringify(cart));
 
-        alert(`${productName} đã được thêm vào giỏ hàng!`);
+        //alert(`${productName} đã được thêm vào giỏ hàng!`);
+        showToast(`${productName} đã được thêm vào giỏ hàng!`, 'success', 'Success');
     });
 });
 
@@ -277,6 +278,7 @@ function updateProductList(products) {
 
             // Cập nhật lại giao diện giỏ hàng
             //alert(`${productName} đã được thêm vào giỏ hàng!`);
+            showToast(`${productName} đã được thêm vào giỏ hàng!`, 'success', 'Success');
         });
     });
 }

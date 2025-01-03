@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const quantity = parseInt(quantityInput.value) || 1;
 
             addToCart(slug, name, price, image, quantity);
-            alert(`Added ${quantity} x ${name} to cart.`);
+            showToast(`${quantity} x ${name} added to cart!`, 'success', 'Success');
         });
     });
 
