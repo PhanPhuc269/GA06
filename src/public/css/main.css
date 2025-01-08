@@ -1033,9 +1033,7 @@ h6 {
     border-radius: 0px; }
     @media (max-width: 991px) {
       .header_area .navbar .navbar-collapse {
-        margin: 8px 0; 
-
-      }
+        margin-top: 8px; }
         .header_area .navbar .navbar-collapse .nav-item {
           padding: 10px; } }
     .header_area .navbar .navbar-toggler .icon-bar {
@@ -1212,17 +1210,27 @@ h6 {
   .navbar-expand-lg > .container-fluid {
     padding: 0px 15px; } }
 
+.avatar {
+  width: 44px;
+  height: 44px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  /* Đảm bảo ảnh giữ đúng tỉ lệ và vừa với khung hình */ }
+
+.avatar-dropdown {
+  margin-top: -18px !important;
+  /* Điều chỉnh giá trị này để thay đổi khoảng cách phía trên */ }
+
 /* banner area css
 ============================================================================================ */
 .banner-area {
   background: url(../img/banner/banner-bg.jpg) center no-repeat;
   background-size: cover;
-  position: relative; 
-}
+  position: relative; }
   @media (max-width: 768px) {
     .banner-area .fullscreen {
-      height: 650px !important; }
-     }
+      height: 650px !important; } }
   .banner-area .active-banner-slider .owl-nav {
     position: absolute;
     right: 0;
@@ -4920,7 +4928,7 @@ label {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.07);
   height: 100%;
   text-align: center;
-  padding-top: 90px !important; }
+  padding-top: 70px; }
   .login_form_inner h3 {
     color: #222222;
     text-transform: uppercase;
@@ -6075,321 +6083,19 @@ textarea {
 
 .animate__fadeInUp {
   animation: fadeInUp 1s ease-out; }
-  .text-normal-case {
-    text-transform: none !important;
-}
 
-.order-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center; /* Đảm bảo mọi thứ căn giữa theo chiều dọc */
-  padding: 5px 0;
-  border-bottom: 1px solid #ddd; /* (Tuỳ chọn) Ngăn cách giữa các dòng */
-}
+.error {
+  border-color: red; }
 
-.order-name {
-  flex: 2; /* Chiếm nhiều không gian hơn để tên sản phẩm không bị cắt */
-  text-align: left;
-}
+.error-messages {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px; }
 
-.order-quantity {
-  flex: 1; /* Giữ phần số lượng ngắn hơn */
-  text-align: center;
-}
-
-.order-total {
-  flex: 1; /* Giữ phần giá ngắn hơn */
-  text-align: right;
-}
-
-.quantity-controls {
-display: flex;
-align-items: center;
-gap: 5px;
-}
-
-.quantity-controls button {
-width: 30px;
-height: 30px;
-border: 1px solid #ccc;
-background: #f9f9f9;
-cursor: pointer;
-}
-
-.quantity-controls button:hover {
-background: #e0e0e0;
-}
-
-.quantity-controls .qty-input {
-width: 40px;
-text-align: center;
-border: 1px solid #ccc;
-background: #fff;
-}
-.avatar {
-  width: 20px;
-  height: 20px;
-  margin-right: 0.5rem;
-  border-radius: 50%;
-  object-fit: cover; /* Đảm bảo ảnh giữ đúng tỉ lệ và vừa với khung hình */
-}
-.avatar-dropdown {
-  margin-top: -18px !important; /* Điều chỉnh giá trị này để thay đổi khoảng cách phía trên */
-}
-@media (max-width: 991px) {
-  .avatar-dropdown {
-    margin-top: 0 !important; /* Điều chỉnh giá trị này để thay đổi khoảng cách phía trên */
-  }
-}
-
-.table th {
-  white-space: nowrap; /* Ngăn xuống dòng */
-  text-align: center;  /* Căn giữa văn bản */
-  vertical-align: middle; /* Căn giữa theo chiều dọc */
-  padding: 8px; /* Khoảng cách trong ô */
-}
-
-.container-error {
-  margin-bottom: 50px; /* Thêm khoảng cách chỉ cho container này */
-}
-
-/* Container chung */
-.toast-container {
-  z-index: 1050;
-}
-
-.custom-toast {
-  display: flex;
-  flex-direction: row;
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 5px;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  border-left: 5px solid;
-  min-width: 300px;
-}
-
-/* Các loại Toast */
-.custom-toast.success {
-  border-left-color: #28a745;
-}
-
-.custom-toast.error {
-  border-left-color: #dc3545;
-}
-
-.custom-toast.info {
-  border-left-color: #007bff;
-}
-
-.custom-toast.warning {
-  border-left-color: #ffc107;
-}
-
-/* Header */
-.toast-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  border-bottom: 0px;
-}
-
-/* Icon */
-.icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 31px;
-  height: 31px;
-  border-radius: 50%;
-  background-color: #f0f0f0;
-}
-
-.icon {
-  font-size: 20px;
-  color: #ffffff;
-}
-
-.custom-toast.success .icon-wrapper {
-  background-color: #28a745;
-}
-
-.custom-toast.error .icon-wrapper {
-  background-color: #dc3545;
-}
-
-.custom-toast.info .icon-wrapper {
-  background-color: #007bff;
-}
-
-.custom-toast.warning .icon-wrapper {
-  background-color: #ffc107;
-}
-
-/* Nội dung */
-.content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 10px;
-}
-
-.toast-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.toast-subtitle {
-  font-size: 14px;
-  margin: 0;
-  color: #6c757d;
-}
-
-/* Close button */
-.btn-close {
-  margin-left: auto;
-  background: none;
-  border: none;
-  opacity: 0.7;
-}
-
-.btn-close:hover {
-  opacity: 1;
-}
-.relative-position {
-  position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  right: 76px; /* Điều chỉnh khoảng cách từ bên phải */
-  top: 50%; /* Điều chỉnh khoảng cách từ trên */
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #000; /* Điều chỉnh màu sắc biểu tượng */
-}
-.top_nav {
-  font-size: 12px;
-  background-color: #f0dfcf !important;
-  padding: 5px 0;
-  
-}
-#search_input {
-
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  padding: 13px 19px;
-  font-size: 14px;
-  line-height: 1;
-  letter-spacing: 0;
-  color: #212121;
-  border: none;
-  outline: none;
-  background: #eff0f5;
-  box-shadow: none;
-  border-radius: 2px;
-}
-.main_menu{
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-.cart {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #000;
-}
-
-
-
-/* Style cho badge */
-.badge {
-  background-color: white; /* Màu nền của vòng tròn */
-  color: white;          /* Màu chữ */
-  border-radius: 50%;    /* Làm tròn góc để thành hình tròn */
-  font-size: 12px;       /* Kích thước chữ nhỏ */
-  width: 18px;           /* Chiều rộng của vòng tròn */
-  height: 18px;          /* Chiều cao của vòng tròn */
-  display: flex;         /* Căn giữa nội dung */
-  justify-content: center;
-  align-items: center;
-  position: absolute;    /* Định vị chính xác */
-  top: -5px;             /* Điều chỉnh vị trí theo chiều dọc */
-  right: -10px;          /* Điều chỉnh vị trí theo chiều ngang */
-  z-index: 10;           /* Đảm bảo nằm trên các phần tử khác */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng */
-}
-
-/* Style cho biểu tượng giỏ hàng */
-.fa-shopping-cart {
-  color: black;          /* Màu biểu tượng */
-}
-
-/* Style cho liên kết */
-.cart {
-  position: relative;    /* Định vị để badge nằm trong */
-  text-decoration: none; /* Xóa gạch chân */
-  color: inherit;        /* Giữ màu chữ mặc định */
-}
-
-
-.search-history {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: white;
-  border: 1px solid #ddd;
-  z-index: 10;
-  max-height: 200px;
-  overflow-y: auto;
-  display: none; /* Ẩn mặc định */
-}
-
-.search-history ul {
-  list-style: none;
-  margin: 0;
+.error-messages ul {
+  list-style-type: none;
   padding: 0;
-}
-
-.search-history li {
-  padding: 8px 10px;
-  cursor: pointer;
-}
-
-.search-history li:hover {
-  background: #f4f4f4;
-}
-
-.search-history {
-  position: absolute;
-  top: 100%; /* Đặt ngay bên dưới thanh tìm kiếm */
-  left: 0;
-  width: 100%; /* Bằng với chiều rộng của thanh tìm kiếm */
-  background-color: white; /* Màu nền */
-  border: 1px solid #ddd; /* Viền */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
-  z-index: 1000; /* Hiển thị trên các thành phần khác */
-}
-
-.search-history div {
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.search-history div:hover {
-  background-color: #f1f1f1; /* Màu khi hover */
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Khoảng cách giữa các nút */
-  margin-top: 20px;
-}
+  margin: 0; }
