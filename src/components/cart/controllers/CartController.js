@@ -12,6 +12,8 @@ class CartController {
             const { items } = req.body;
             const userId = req.user._id;
 
+            console.log('item gio: '.items);
+
             const cartItems = [];
             for (const item of items) {
                 const product = await ProductService.getProductBySlug(item.slug);
@@ -25,7 +27,7 @@ class CartController {
                 cartItems.push({
                     productId: product._id,
                     quantity: item.quantity,
-                    price: product.price,
+                    price: product.salePrice,
                 });
             }
 

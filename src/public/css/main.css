@@ -6138,3 +6138,113 @@ textarea {
 }
 
 
+/* Đặt toàn bộ bảng */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* Căn chỉnh ô bảng */
+td {
+  vertical-align: middle;
+  padding: 10px;
+}
+
+/* Media alignment */
+.media {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa ảnh và văn bản */
+}
+
+.media img {
+  border-radius: 5px; /* Làm góc ảnh bo tròn nhẹ */
+}
+
+/* Quantity controls */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Khoảng cách giữa các nút */
+}
+
+.qty-input {
+  text-align: center;
+  width: 50px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.decrease-qty,
+.increase-qty {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.decrease-qty:hover,
+.increase-qty:hover {
+  background-color: #e2e6ea;
+}
+
+/* Remove button */
+.remove-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-code {
+  max-width: 350px;
+  margin: 0 auto;
+  background: #fff;
+  border: 2px solid #e6e6e6;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Nút thanh toán */
+#btn-pay {
+  font-size: 1.2rem;
+  transition: transform 0.2s ease-in-out;
+}
+#btn-pay:hover {
+  transform: scale(1.05);
+}
+
+/* Nút hủy thanh toán */
+#btn-cancel {
+  font-size: 1.2rem;
+  transition: background-color 0.2s ease-in-out;
+}
+#btn-cancel:hover {
+  background-color: #ffcccc;
+}
+
+/* Đếm ngược */
+#countdown-timer h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ff9800;
+}
+
+/* Thông báo */
+#payment-status {
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+

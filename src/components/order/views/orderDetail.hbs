@@ -48,9 +48,9 @@
                         </tr>
                         <tr>
                             <th class="text-left">Total Amount:</th>
-                            <td>${{order.totalAmount}}</td>
+                            <td>VND {{order.totalAmount}}</td>
                             <th class="text-left">Shipping Fee:</th>
-                            <td>${{order.shippingFee}}</td>
+                            <td>VND {{order.shippingFee}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Status:</th>
@@ -82,7 +82,8 @@
                         <tr>
                             <td class="text-left">
                                 <a href="/product/product-details/{{this.productId.slug}}">
-                                    <img src="/{{this.productId.image}}" alt="{{this.productId.name}}" class="img-fluid" style="width: 100px; height: auto;">
+                                	
+                                    <img src="{{getFirstImage this.productId.images}}" alt="{{this.productId.name}}" class="img-fluid" style="width: 100px; height: auto;">
                                 </a>
                             </td>
                             <td>
@@ -94,9 +95,9 @@
                             <td>{{this.productId.category}}</td>
                             <td>{{this.productId.color}}</td>
                             <td>{{this.productId.description}}</td>
-                            <td>${{this.productId.price}}</td>
+                            <td>VND {{this.productId.salePrice}}</td>
                             <td class="text-center">{{this.quantity}}</td>
-                            <td>${{ multiply this.quantity this.productId.price }}</td>
+                            <td>VND {{ multiply this.quantity this.productId.salePrice }}</td>
                         </tr>
                         {{/each}}
                     </tbody>

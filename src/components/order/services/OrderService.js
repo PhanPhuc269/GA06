@@ -41,11 +41,11 @@ class OrderService {
             if (!cart || !cart.items || cart.items.length === 0) {
                 throw new Error('Giỏ hàng trống. Không thể tạo đơn hàng.');
             }
-
+console.log('gio hang: ',cart)
             // Tính tổng tiền từ giỏ hàng
             let totalAmount = 0;
             const items = cart.items.map(item => {
-                const price = item.productId.price;
+                const price = item.productId.salePrice;
                 const quantity = item.quantity;
                 totalAmount += price * quantity;
                 return {
