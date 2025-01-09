@@ -1,0 +1,38 @@
+
+    .product_price {
+        margin-bottom: 10px; /* Khoảng cách với các phần tử khác */
+    }
+
+    .sale_price {
+        color: #ffba00; /* Màu đỏ cho giá sale */
+        font-size: 1.5em; /* Kích thước giá sale */
+        font-weight: bold; /* In đậm */
+        margin-right: 10px;
+    }
+
+    .original_price {
+        color: #6c757d; /* Màu xám cho giá gốc */
+        font-size: 1.2em; /* Kích thước giá gốc */
+        text-decoration: line-through; /* Gạch ngang */
+        margin-right: 10px;
+    }
+     del {
+        text-decoration: line-through; /* Đảm bảo có gạch ngang */
+        color: #000; /* Đổi màu gạch ngang sang đỏ cho dễ thấy */
+        /* hoặc */
+        /* color: #000;  Màu đen */
+        font-weight: bold; /* In đậm */
+        /* Thêm padding nếu cần */
+        /* padding-left: 5px;
+        padding-right: 5px; */
+        /* Có thể chỉnh font-size to hơn một chút */
+        font-size: 1.1em;
+    }
+
+    .discount_percentage {
+        background-color: #dc3545; /* Màu nền đỏ */
+        color: #fff; /* Chữ trắng */
+        padding: 5px 10px; /* Padding */
+        border-radius: 5px; /* Bo góc */
+        font-size: 1em; /* Kích thước */
+    }

@@ -79,5 +79,47 @@ module.exports={
     // Helper mới: getFirstImage
     getFirstImage: (images) => {
       return images && images.length > 0 ? images[0] : '/path/to/default-image.jpg';
-  },
+    },
+
+    
+    // Helper mới: uniqueColors
+    uniqueColors: function (stock) {
+      const unique = [];
+      if (stock && Array.isArray(stock)) {
+          stock.forEach(item => {
+              if (!unique.includes(item.color)) {
+                  unique.push(item.color);
+              }
+          });
+      }
+      return unique;
+    },
+
+    // Helper mới: uniqueSizes
+    uniqueSizes: function (stock) {
+      const unique = [];
+      if (stock && Array.isArray(stock)) {
+          stock.forEach(item => {
+              if (!unique.includes(item.size)) {
+                  unique.push(item.size);
+              }
+          });
+      }
+      return unique;
+    },
+
+     // Helper mới: formatCurrency
+     formatCurrency: function (amount) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    },
+
+    // Helper mới: calculateDiscountPercentage
+    calculateDiscountPercentage: function (originalPrice, salePrice) {
+      if (originalPrice > salePrice) {
+          const discount = Math.round((1 - (salePrice / originalPrice)) * 100);
+          return discount;
+      } else {
+          return 0; // Hoặc trả về giá trị phù hợp nếu không giảm giá
+      }
+    },
 }
