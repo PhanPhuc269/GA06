@@ -25,29 +25,25 @@ document.addEventListener("DOMContentLoaded", () => {
             const itemTotal = item.price * item.quantity;
             totalPrice += itemTotal;
             totalQuantity += item.quantity; // Cộng dồn số lượng
-    
+            console.log(item)
             row.innerHTML = `
                 <td>
                     <div class="media">
                         <div class="d-flex">
                           <a href="/product/product-details/${item.slug}"  
-                            data-slug="${item.slug}" 
-                            data-name="${item.name}" 
-                            data-category="${item.category}">
-                                     <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
+                           >
+                                     <img class="img-fluid" src="${ item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
                                 </a>
                          
                         </div>
                         <div class="media-body">
                           <a href="/product/product-details/${item.slug}"  
-                            data-slug="${item.slug}" 
-                            data-name="${item.name}" 
-                            data-category="${item.category}">
+                           >
                             <p>${item.name}</p>
                         </div>
                     </div>
                 </td>
-                <td><h5>$${item.price.toFixed(2)}</h5></td>
+              
                 <td>
                     <div class="quantity-controls">
                         <button class="decrease-qty" data-slug="${item.slug}">-</button>
