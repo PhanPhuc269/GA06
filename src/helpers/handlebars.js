@@ -76,5 +76,8 @@ module.exports={
     not : (value) => {
       return !value;
     },
-    
+    // Helper mới: getFirstImage
+    getFirstImage: (images) => {
+      return images && images.length > 0 ? images[0] : '/path/to/default-image.jpg';
+  },
 }
