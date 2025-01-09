@@ -81,7 +81,6 @@ module.exports={
       return images && images.length > 0 ? images[0] : '/path/to/default-image.jpg';
     },
 
-    
     // Helper mới: uniqueColors
     uniqueColors: function (stock) {
       const unique = [];
@@ -121,5 +120,10 @@ module.exports={
       } else {
           return 0; // Hoặc trả về giá trị phù hợp nếu không giảm giá
       }
+    },
+
+    // Helper mới: json
+    json: function (context) {
+      return JSON.stringify(context);
     },
 }

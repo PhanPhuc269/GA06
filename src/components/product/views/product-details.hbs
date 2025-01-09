@@ -65,22 +65,24 @@
                     </ul>
                     <p>{{product.description}}</p>
                    {{!-- Display Colors and Sizes --}}
-                    <div class="p-2">
-                        <span class="me-3">Màu sắc:</span>
-                        {{!-- Iterate through unique colors --}}
-                        {{#each (uniqueColors product.stock)}}
-                        <input type="radio" class="btn-check" name="colorOptions" id="color{{this}}" value="{{this}}" autocomplete="off" {{#if @first}}checked{{/if}}>
-                        <label class="btn btn-outline-secondary me-2" for="color{{this}}">{{this}}</label>
-                        {{/each}}
-                    </div>
-                    <div class="p-2">
-                        <span class="me-3">Size:</span>
-                        {{!-- Iterate through unique sizes --}}
-                        {{#each (uniqueSizes product.stock)}}
-                        <input type="radio" class="btn-check" name="sizeOptions" id="size{{this}}" value="{{this}}" autocomplete="off" {{#if @first}}checked{{/if}}>
-                        <label class="btn btn-outline-secondary me-2" for="size{{this}}">{{this}}</label>
-                        {{/each}}
-                    </div>
+                    <div class="p-2 color-options-container">
+						<span class="me-3">Màu sắc:</span>
+						{{#each (uniqueColors product.stock)}}
+						<input type="radio" class="btn-check" name="colorOptions" id="color{{this}}" value="{{this}}"
+							autocomplete="off">
+						<label class="btn btn-outline-secondary me-2" for="color{{this}}">
+							{{this}}
+						</label>
+						{{/each}}
+					</div>
+					<div class="p-2 size-options-container">
+						<span class="me-3">Size:</span>
+						{{#each (uniqueSizes product.stock)}}
+						<input type="radio" class="btn-check" name="sizeOptions" id="size{{this}}" value="{{this}}"
+							autocomplete="off">
+						<label class="btn btn-outline-secondary me-2" for="size{{this}}">{{this}}</label>
+						{{/each}}
+					</div>
 
                     <div class="product_count">
                         <label for="qty">Quantity:</label>
@@ -89,7 +91,9 @@
                             class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
                         <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
                             class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+						<span id="stock-quantity" class="stock-quantity"></span>	
                     </div>
+
                     <div class="card_area d-flex align-items-center">
                         <a href="javascript:void(0)"
                             class="primary-btn add-to-cart"
@@ -339,4 +343,92 @@
     </section>
     <script src="/js/cart/addToCart.js"></script>
     <script src="/js/review.js"></script>
+	
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const colorOptions = document.querySelectorAll('input[name="colorOptions"]');
+			const sizeOptions = document.querySelectorAll('input[name="sizeOptions"]');
+			const stockQuantitySpan = document.getElementById('stock-quantity');
+			const productStock = JSON.parse('{{{json product.stock}}}');
+
+			function getSizesForColor(stock, color) {
+				return [...new Set(stock.filter(item => item.color === color).map(item => item.size))];
+			}
+
+			function getColorsForSize(stock, size) {
+				return [...new Set(stock.filter(item => item.size === size).map(item => item.color))];
+			}
+
+			function updateOptions() {
+				const selectedColor = document.querySelector('input[name="colorOptions"]:checked')?.value;
+				const selectedSize = parseInt(document.querySelector('input[name="sizeOptions"]:checked')?.value);
+
+				// Enable/disable options based on selection
+				colorOptions.forEach(option => {
+					// Reset disabled state
+					option.disabled = false;
+					// Nếu có size được chọn, disable các màu không hợp lệ
+					if (selectedSize) {
+						option.disabled = !getColorsForSize(productStock, selectedSize).includes(option.value);
+					}
+					option.nextElementSibling.style.display = 'inline-block'; // Luôn hiển thị label
+				});
+
+				sizeOptions.forEach(option => {
+					const sizeValue = parseInt(option.value);
+					// Reset disabled state
+					option.disabled = false;
+					// Nếu có màu được chọn, disable các size không hợp lệ
+					if (selectedColor) {
+						option.disabled = !getSizesForColor(productStock, selectedColor).includes(sizeValue);
+					}
+					option.nextElementSibling.style.display = 'inline-block'; // Luôn hiển thị label
+				});
+
+				// Update stock quantity display
+				updateStockQuantity(selectedColor, selectedSize);
+			}
+
+			function updateStockQuantity(selectedColor, selectedSize) {
+				let totalStock = 0;
+
+				if (selectedColor && !isNaN(selectedSize)) {
+					// Cả màu và size đều được chọn
+					const item = productStock.find(item => item.color === selectedColor && item.size === selectedSize);
+					totalStock = item ? item.quantity : 0;
+				} else if (selectedColor) {
+					// Chỉ có màu được chọn
+					totalStock = productStock.filter(item => item.color === selectedColor).reduce((sum, item) => sum + item.quantity, 0);
+				} else if (!isNaN(selectedSize)) {
+					// Chỉ có size được chọn
+					totalStock = productStock.filter(item => item.size === selectedSize).reduce((sum, item) => sum + item.quantity, 0);
+				} else {
+					// Không có màu và size nào được chọn (mặc định)
+					totalStock = productStock.reduce((sum, item) => sum + item.quantity, 0);
+				}
+
+				stockQuantitySpan.textContent = `${totalStock} sản phẩm có sẵn`;
+			}
+
+			function handleOptionDoubleClick(event) {
+				const label = event.target; // Lấy label được double click
+				const input = label.previousElementSibling; // Lấy input radio
+
+				// Bỏ chọn input
+				input.checked = false;
+				// Cập nhật lại options
+				updateOptions();
+			}
+
+			// Initial update and attach event listeners
+			updateOptions();
+			// Gắn sự kiện 'change' cho các input radio để khi chọn bằng cách click thông thường
+			colorOptions.forEach(option => option.addEventListener('change', updateOptions));
+			sizeOptions.forEach(option => option.addEventListener('change', updateOptions));
+
+			// Gắn sự kiện 'dblclick' cho các label
+			colorOptions.forEach(option => option.nextElementSibling.addEventListener('dblclick', handleOptionDoubleClick));
+			sizeOptions.forEach(option => option.nextElementSibling.addEventListener('dblclick', handleOptionDoubleClick));
+		});
+	</script>
     
