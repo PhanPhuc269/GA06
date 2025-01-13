@@ -186,7 +186,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Lưu lại giỏ hàng vào localStorage
         localStorage.setItem("cart", JSON.stringify(cart));
 
-        alert(`${productName} đã được thêm vào giỏ hàng!`);
+        //alert(`${productName} đã được thêm vào giỏ hàng!`);
+        showToast(`${productName} đã được thêm vào giỏ hàng!`, 'success', 'Success');
+        
         gtag('event', 'add_to_cart', {
             'currency': 'VND', // Hoặc USD nếu cần
             'value': productPrice , // Tổng giá trị của sản phẩm trong giỏ
@@ -287,6 +289,7 @@ function updateProductList(products) {
 
             // Cập nhật lại giao diện giỏ hàng
             //alert(`${productName} đã được thêm vào giỏ hàng!`);
+            showToast(`${productName} đã được thêm vào giỏ hàng!`, 'success', 'Success');
         });
     });
 }
