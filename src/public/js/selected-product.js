@@ -1,7 +1,9 @@
+//selected-product.js
 document.addEventListener('DOMContentLoaded', function () {
     const colorOptions = document.querySelectorAll('input[name="colorOptions"]');
     const sizeOptions = document.querySelectorAll('input[name="sizeOptions"]');
     const stockQuantitySpan = document.getElementById('stock-quantity');
+    const quantityInput = document.getElementById('sst'); // Added reference to quantity input
     const productStock = JSON.parse(document.getElementById('product-stock-data').textContent);
 
     function getSizesForColor(stock, color) {
@@ -38,29 +40,28 @@ document.addEventListener('DOMContentLoaded', function () {
             option.nextElementSibling.style.display = 'inline-block'; // Luôn hiển thị label
         });
 
-        // Update stock quantity display
-        updateStockQuantity(selectedColor, selectedSize);
+        // Update stock quantity display and set max for quantity input
+        const totalStock = getTotalStock(selectedColor, selectedSize);
+        stockQuantitySpan.textContent = `${totalStock} sản phẩm có sẵn`;
+        quantityInput.max = totalStock; // Set max attribute
+        if (parseInt(quantityInput.value) > totalStock) {
+            quantityInput.value = totalStock;
+        }
     }
 
-    function updateStockQuantity(selectedColor, selectedSize) {
+    function getTotalStock(selectedColor, selectedSize) {
         let totalStock = 0;
-
         if (selectedColor && !isNaN(selectedSize)) {
-            // Cả màu và size đều được chọn
             const item = productStock.find(item => item.color === selectedColor && item.size === selectedSize);
             totalStock = item ? item.quantity : 0;
         } else if (selectedColor) {
-            // Chỉ có màu được chọn
             totalStock = productStock.filter(item => item.color === selectedColor).reduce((sum, item) => sum + item.quantity, 0);
         } else if (!isNaN(selectedSize)) {
-            // Chỉ có size được chọn
             totalStock = productStock.filter(item => item.size === selectedSize).reduce((sum, item) => sum + item.quantity, 0);
         } else {
-            // Không có màu và size nào được chọn (mặc định)
             totalStock = productStock.reduce((sum, item) => sum + item.quantity, 0);
         }
-
-        stockQuantitySpan.textContent = `${totalStock} sản phẩm có sẵn`;
+        return totalStock;
     }
 
     function handleOptionDoubleClick(event) {
@@ -72,6 +73,37 @@ document.addEventListener('DOMContentLoaded', function () {
         // Cập nhật lại options
         updateOptions();
     }
+
+    // Handle quantity increase
+    document.querySelector('.increase.items-count').addEventListener('click', function (e) {
+        e.preventDefault();
+        let current = parseInt(quantityInput.value);
+        const max = parseInt(quantityInput.max);
+        if (!isNaN(current) && current < max) {
+            quantityInput.value = current + 1;
+        }
+    });
+
+    // Handle quantity decrease
+    document.querySelector('.reduced.items-count').addEventListener('click', function (e) {
+        e.preventDefault();
+        let current = parseInt(quantityInput.value);
+        if (!isNaN(current) && current >= 1) {
+            quantityInput.value = current - 1;
+        }
+    });
+
+    // Validate manual input
+    quantityInput.addEventListener('input', function () {
+        let value = parseInt(this.value);
+        const max = parseInt(this.max);
+        if (isNaN(value) || value < 1) {
+            this.value = 1;
+        } else if (value > max) {
+            this.value = max;
+        }
+    });
+
 
     // Initial update and attach event listeners
     updateOptions();
