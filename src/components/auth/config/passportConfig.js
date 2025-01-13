@@ -21,6 +21,10 @@ passport.use(new LocalStrategy({
         if (!isMatch) {
             return done(null, false, { message: 'Incorrect password.' });
         }
+
+        if(user.status='banned'){
+            return done(null, false, { message: 'Your account has been banned.' });
+        }
         return done(null, user);
     } catch (error) {
         return done(error);
