@@ -6098,44 +6098,88 @@ textarea {
 .error-messages ul {
   list-style-type: none;
   padding: 0;
+  margin: 0; }
 
-}
+.product_price {
+  margin-bottom: 10px;
+  /* Khoảng cách với các phần tử khác */ }
 
-.search-history li {
-  padding: 8px 10px;
-  cursor: pointer;
-}
+.sale_price {
+  color: #ffba00;
+  /* Màu đỏ cho giá sale */
+  font-size: 1.5em;
+  /* Kích thước giá sale */
+  font-weight: bold;
+  /* In đậm */
+  margin-right: 10px; }
 
-.search-history li:hover {
-  background: #f4f4f4;
-}
+.original_price {
+  color: #6c757d;
+  /* Màu xám cho giá gốc */
+  font-size: 1.2em;
+  /* Kích thước giá gốc */
+  text-decoration: line-through;
+  /* Gạch ngang */
+  margin-right: 10px; }
 
-.search-history {
-  position: absolute;
-  top: 100%; /* Đặt ngay bên dưới thanh tìm kiếm */
-  left: 0;
-  width: 100%; /* Bằng với chiều rộng của thanh tìm kiếm */
-  background-color: white; /* Màu nền */
-  border: 1px solid #ddd; /* Viền */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
-  z-index: 1000; /* Hiển thị trên các thành phần khác */
-}
+del {
+  text-decoration: line-through;
+  /* Đảm bảo có gạch ngang */
+  color: #000;
+  /* Đổi màu gạch ngang sang đỏ cho dễ thấy */
+  /* hoặc */
+  /* color: #000;  Màu đen */
+  font-weight: bold;
+  /* In đậm */
+  /* Thêm padding nếu cần */
+  /* padding-left: 5px;
+        padding-right: 5px; */
+  /* Có thể chỉnh font-size to hơn một chút */
+  font-size: 1.1em; }
 
-.search-history div {
-  padding: 8px 12px;
-  cursor: pointer;
-}
+.discount_percentage {
+  background-color: #dc3545;
+  /* Màu nền đỏ */
+  color: #fff;
+  /* Chữ trắng */
+  padding: 5px 10px;
+  /* Padding */
+  border-radius: 5px;
+  /* Bo góc */
+  font-size: 1em;
+  /* Kích thước */ }
 
-.search-history div:hover {
-  background-color: #f1f1f1; /* Màu khi hover */
-}
-
-.button-container {
+/* CSS cho phần chọn màu và size */
+.color-options-container,
+.size-options-container {
   display: flex;
-  justify-content: center;
-  gap: 20px; /* Khoảng cách giữa các nút */
-  margin-top: 20px;
-}
+  align-items: center;
+  margin-bottom: 10px; }
+
+.color-options-container label,
+.size-options-container label {
+  margin-right: 5px;
+  /* Khoảng cách giữa các ô */
+  border: 2px solid #ced4da;
+  /* Viền xám nhạt */
+  transition: all 0.2s ease-in-out;
+  /* Hiệu ứng chuyển màu */
+  cursor: pointer;
+  /* Con trỏ chuột hình bàn tay */
+  text-align: center;
+  /* Căn giữa nội dung trong label */
+  display: flex;
+  align-items: center;
+  padding: 5px 10px; }
+
+.size-options-container label {
+  min-width: 60px;
+  /* Chiều rộng tối thiểu của ô size */ }
+
+/* CSS cho ô màu */
+.color-options-container .btn-outline-secondary {
+  padding: 5px 10px;
+  /* Padding cho label */ }
 
 
 /* Đặt toàn bộ bảng */
@@ -6247,4 +6291,47 @@ td {
   border-radius: 5px;
 }
 
+
+
+.color-options-container .btn-outline-secondary .color-preview {
+  width: 20px;
+  /* Kích thước ô màu */
+  height: 20px;
+  /* Kích thước ô màu */
+  border-radius: 50%;
+  /* Hình tròn */
+  margin-right: 8px;
+  /* Khoảng cách giữa ô màu và chữ */
+  border: 1px solid #ced4da;
+  /* Viền xám nhạt */
+  flex-shrink: 0;
+  /* Không bị co lại khi không đủ không gian */ }
+
+/* Bỏ style cho màu sắc cụ thể */
+.btn-check:checked + .btn-outline-secondary {
+  background-color: #FFA500;
+  /* Màu nền cam khi được chọn */
+  color: #fff;
+  /* Màu chữ trắng khi được chọn */
+  border-color: #FFA500;
+  /* Viền cam */
+  /* Bỏ đổ bóng nếu thấy không cần thiết */
+  /* box-shadow: 0 0 0 2px #FFA500; */ }
+
+/* Hiệu ứng hover */
+.color-options-container label:hover,
+.size-options-container label:hover {
+  border-color: #FFA500;
+  /* Viền cam khi hover */ }
+
+/* Ẩn các input radio */
+.btn-check {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none; }
+
+.stock-quantity {
+  margin-left: 10px;
+  font-size: 0.9em;
+  color: #555; }
 
