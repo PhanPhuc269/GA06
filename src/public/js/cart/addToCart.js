@@ -1,4 +1,3 @@
-// Lắng nghe sự kiện "add-to-cart" cho các sản phẩm mới
 document.querySelectorAll(".add-to-cart").forEach((button) => {
     button.addEventListener("click", (event) => {
         event.preventDefault();
@@ -39,6 +38,9 @@ document.querySelectorAll(".add-to-cart").forEach((button) => {
         // Cập nhật lại giao diện giỏ hàng hoặc hiển thị thông báo
         showToast(`${quantity} x ${productName} đã được thêm vào giỏ hàng!`, 'success', 'Success');
 
+        // Cập nhật số lượng hiển thị trên biểu tượng giỏ hàng
+        updateCartCount();
+
         // Gửi sự kiện "add_to_cart" đến Google Analytics
         gtag('event', 'add_to_cart', {
             'currency': 'VND', // Hoặc USD nếu cần
@@ -51,4 +53,20 @@ document.querySelectorAll(".add-to-cart").forEach((button) => {
             }]
         });
     });
+});
+
+// Hàm cập nhật số lượng trên biểu tượng giỏ hàng
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    const cartCountElement = document.getElementById("cart-count");
+    if (cartCountElement) {
+        cartCountElement.innerText = totalItems;
+    }
+}
+
+// Khởi tạo cập nhật số lượng giỏ hàng khi tải trang
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartCount();
 });

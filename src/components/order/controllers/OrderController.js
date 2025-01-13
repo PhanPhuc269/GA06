@@ -4,6 +4,7 @@ const Cart = require("@components/cart/models/Cart");
 const Product = require("@components/product/models/Product");
 const Order = require("@components/order/models/Order");
 
+
 const OrderService = require('../services/OrderService');
 
 class OrderController {
@@ -42,70 +43,7 @@ class OrderController {
         }
     }
 
-    
-
     async addOrder(req, res, next) {
-
-        // Inline validation
-        const errors = [];
-        const {
-            firstName, lastName, phoneNumber, email,
-            addressLine1, city, district, zip, orderNotes
-        } = req.body;
-
-        // Validate First Name
-        if (!firstName || !firstName.trim()) {
-            errors.push({ msg: 'First name is required.' });
-        }
-
-        // Validate Last Name
-        if (!lastName || !lastName.trim()) {
-            errors.push({ msg: 'Last name is required.' });
-        }
-
-        // Validate Phone Number
-        const phoneRegex = /^\d{10,15}$/;
-        if (!phoneNumber || !phoneRegex.test(phoneNumber)) {
-            errors.push({ msg: 'Phone number must be between 10 to 15 digits.' });
-        }
-
-        // Validate Email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!email || !emailRegex.test(email)) {
-            errors.push({ msg: 'Invalid email address.' });
-        }
-
-        // Validate Address Line 1
-        if (!addressLine1 || !addressLine1.trim()) {
-            errors.push({ msg: 'Address line 1 is required.' });
-        }
-
-        // Validate City
-        if (!city || !city.trim()) {
-            errors.push({ msg: 'City is required.' });
-        }
-
-        // Validate District
-        if (!district || !district.trim()) {
-            errors.push({ msg: 'District is required.' });
-        }
-
-        // Validate Zip Code
-        const zipRegex = /^\d{5,10}$/;
-        if (!zip || !zipRegex.test(zip)) {
-            errors.push({ msg: 'Zip code must be between 5 to 10 digits.' });
-        }
-
-        // If there are validation errors, render the checkout page with errors
-        if (errors.length > 0) {
-            return res.status(400).render('checkout', {
-                errors,
-                oldInput: req.body
-            });
-        }
-
-        
-        
         try {
             const userId = req.user._id;
             const {
