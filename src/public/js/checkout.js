@@ -7,26 +7,37 @@ document.addEventListener("DOMContentLoaded", () => {
     let subtotal = 0;
 
     // Xóa dữ liệu cũ trong danh sách sản phẩm
-    orderItemsContainer.innerHTML = '';
+    orderItemsContainer.innerHTML = "";
 
     // Hiển thị danh sách sản phẩm từ giỏ hàng
-    cart.forEach(item => {
+    cart.forEach((item) => {
         const productTotal = item.price * item.quantity;
         subtotal += productTotal;
 
-        const productItem = document.createElement('li');
+        const productItem = document.createElement("li");
+        productItem.classList.add("order-item");
         productItem.innerHTML = `
-            <div class="order-item">
-                <span class="order-name">${item.name}</span>
-                <span class="order-quantity">x ${item.quantity}</span>
-                <span class="order-total">VND ${productTotal.toFixed(2)}</span>
+             <div class="order-product d-flex align-items-center">
+                <a href="/product/product-details/${item.slug}" style="text-decoration: none;">
+                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; margin-right: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                </a>
+                <div>
+                    <a href="/product/product-details/${item.slug}" style="text-decoration: none; color: #000;">
+                        <h6>${item.name}</h6>
+                    </a>
+                    <p>Size: ${item.size}, Color: ${item.color}</p>
+                    <p>Quantity: ${item.quantity}</p>
+                </div>
+                <div class="ml-auto">
+                    <span>VND ${productTotal.toFixed(2)}</span>
+                </div>
             </div>
         `;
         orderItemsContainer.appendChild(productItem);
     });
 
     // Cập nhật Subtotal và Total
-    const total = subtotal + shippingCost;
+    const total = subtotal + 0;
     subtotalElement.textContent = `VND ${subtotal.toFixed(2)}`;
     totalElement.textContent = `VND ${total.toFixed(2)}`;
 });

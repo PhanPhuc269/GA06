@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hàm tính tổng số lượng sản phẩm trong giỏ
     function updateCartCount() {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        // Tính tổng số lượng từ tất cả các sản phẩm (bao gồm cả size và color)
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCountElement.textContent = totalItems;
     }
@@ -17,5 +18,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cập nhật số lượng khi trang được tải
     updateCartCount();
 
-    // Nếu có thao tác thêm hoặc xóa giỏ hàng ở các file khác, bạn có thể gọi lại hàm `updateCartCount` để cập nhật.
+    // Để sử dụng lại hàm này trong các file khác, đảm bảo bạn gọi đúng `updateCartCount` sau mỗi thao tác thay đổi giỏ hàng.
 });

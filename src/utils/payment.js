@@ -9,8 +9,9 @@ function removeVietnameseTones(str) {
 }
 
 function removeWhitespaceAndHyphen(str) {
-    return str.replace(/[\s-]+/g, ""); // Loại bỏ tất cả khoảng trắng và ký tự '-'
+    return str.replace(/[\s\-:]+/g, ""); // Loại bỏ khoảng trắng, dấu '-' và dấu ':'
 }
+
 
 
 
@@ -19,13 +20,15 @@ async function checkPaid(price, description) {
         const response = await fetch(process.env.PAYMENT_API);
         const data = await response.json();
         const lastPaid = data.data[data.data.length - 1];
-        const lastPrice = parseInt(lastPaid["Giá trị"], 10);
+        const lastPrice = parseInt(lastPaid["Giá trị"]);
         const lastContent = removeVietnameseTones(lastPaid["Mô tả"]);
-        //const mainContent=removeWhitespace(lastContent);
+      
+       
         const normalizedDescription = removeWhitespaceAndHyphen(description);
-       // console.log(normalizedDescription);
+        console.log('nd',normalizedDescription);
+       
 
-        if (lastPrice >= price && lastContent.includes(normalizedDescription)) {
+        if (lastPrice >= price && removeWhitespaceAndHyphen(lastContent).includes(normalizedDescription)) {
             return { success: true };
         } else {
             return { success: false, reason: "Payment details do not match" };

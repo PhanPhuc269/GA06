@@ -9,7 +9,7 @@ document.getElementById("searchForm").addEventListener("submit", (event) => {
         searchHistory = searchHistory.filter((keyword) => keyword !== searchInput);
         searchHistory.unshift(searchInput);
 
-        // Giới hạn lịch sử tìm kiếm (ví dụ: chỉ lưu 10 từ khóa gần nhất)
+        // Giới hạn lịch sử tìm kiếm (chỉ lưu 10 từ khóa gần nhất)
         if (searchHistory.length > 10) {
             searchHistory.pop();
         }
@@ -22,16 +22,17 @@ document.getElementById("searchForm").addEventListener("submit", (event) => {
 const searchInput = document.getElementById("search_input");
 const searchHistoryContainer = document.getElementById("search-history-container");
 
-// Hiển thị lịch sử tìm kiếm
+// Hiển thị lịch sử tìm kiếm khi focus vào ô tìm kiếm
 searchInput.addEventListener("focus", () => {
     const searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
     if (searchHistory.length > 0) {
-        searchHistoryContainer.innerHTML = `
-            <ul>
-                ${searchHistory.map((keyword) => `<li>${keyword}</li>`).join("")}
-            </ul>
-        `;
+        searchHistoryContainer.innerHTML = searchHistory
+            .map((keyword) => `<div class="search-history-item">${keyword}</div>`)
+            .join("");
+        searchHistoryContainer.style.display = "block";
+    } else {
+        searchHistoryContainer.innerHTML = '<div class="search-history-empty">No recent searches</div>';
         searchHistoryContainer.style.display = "block";
     }
 });
@@ -43,10 +44,18 @@ document.addEventListener("click", (event) => {
     }
 });
 
-// Điền từ khóa vào ô tìm kiếm khi chọn lịch sử
+// Điền từ khóa vào ô tìm kiếm khi chọn từ lịch sử
 searchHistoryContainer.addEventListener("click", (event) => {
-    if (event.target.tagName === "LI") {
+    if (event.target.classList.contains("search-history-item")) {
         searchInput.value = event.target.textContent.trim();
         searchHistoryContainer.style.display = "none";
+        document.getElementById("searchForm").submit();
     }
+});
+
+// Ẩn lịch sử sau khi mất focus
+searchInput.addEventListener("blur", () => {
+    setTimeout(() => {
+        searchHistoryContainer.style.display = "none";
+    }, 200);
 });

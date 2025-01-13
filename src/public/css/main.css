@@ -6335,3 +6335,113 @@ td {
   font-size: 0.9em;
   color: #555; }
 
+ /* Định dạng chung cho lịch sử tìm kiếm */
+.search-history {
+  position: absolute;
+  top: 100%; /* Vị trí ngay dưới ô tìm kiếm */
+  left: 0;
+  width: 100%;
+  background-color: #fff; /* Nền trắng */
+  border: 1px solid #ccc; /* Viền nhạt */
+  border-radius: 4px; /* Bo góc */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+  z-index: 1000; /* Đưa lên trên các phần tử khác */
+  display: none; /* Ẩn mặc định, hiển thị khi có dữ liệu */
+  max-height: 250px; /* Giới hạn chiều cao */
+  overflow-y: auto; /* Thêm thanh cuộn nếu nội dung dài */
+  padding: 10px 0;
+}
+
+/* Mỗi mục trong lịch sử tìm kiếm */
+.search-history-item {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Hover: hiệu ứng khi di chuột */
+.search-history-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* Ngăn phần tử con bị tràn */
+.search-history-item span {
+  white-space: nowrap; /* Không cho xuống dòng */
+  overflow: hidden; /* Ẩn nội dung thừa */
+  text-overflow: ellipsis; /* Thêm dấu "..." cho nội dung dài */
+  display: inline-block;
+  max-width: calc(100% - 20px); /* Giới hạn chiều rộng */
+}
+
+/* Lịch sử trống */
+.search-history-empty {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #aaa;
+  text-align: center;
+}
+
+/* Định dạng khi form tìm kiếm có focus */
+#searchForm:focus-within .search-history {
+  display: block; /* Hiển thị lịch sử khi form được focus */
+}
+
+.order-product {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.order-product img {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-product div h6 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.order-product div p {
+  font-size: 14px;
+  margin: 2px 0;
+  color: #777;
+}
+
+.order-product div.ml-auto span {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Khoảng cách giữa các nút */
+}
+
+.button-container .btn {
+  min-width: 200px; /* Đảm bảo các nút có cùng kích thước */
+  text-align: center;
+}
+.container-error {
+  margin-top: 50px;
+}
+
+.error-banner {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.btn-back {
+  margin-top: 20px;
+}

@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    console.log('cc: ',localStorage.getItem("cart"))
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const cartItemsContainer = document.getElementById("cart-items");
-
+   
     // Hàm cập nhật giao diện giỏ hàng
     function updateCart() {
         cartItemsContainer.innerHTML = "";
@@ -11,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = `
                 <tr>
-                    <td colspan="5" class="text-center">Your cart is empty!</td>
+                    <td colspan="6" class="text-center">Your cart is empty!</td>
                 </tr>`;
             updateTotalPrice(0);
             updateCartCount(0);
@@ -34,15 +36,16 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <a href="/product/product-details/${item.slug}">
                                     <p>${item.name}</p>
                                 </a>
+                                <small>Size: ${item.size} | Color: ${item.color}</small>
                             </div>
                         </div>
                     </td>
                     <td>$${item.price.toFixed(2)}</td>
                     <td>
                         <div class="quantity-controls">
-                            <button class="decrease-qty btn btn-sm btn-outline-secondary" data-slug="${item.slug}">-</button>
+                            <button class="decrease-qty btn btn-sm btn-outline-secondary" data-slug="${item.slug}" data-size="${item.size}" data-color="${item.color}">-</button>
                             <input type="text" value="${item.quantity}" class="qty-input text-center" readonly style="width: 40px;">
-                            <button class="increase-qty btn btn-sm btn-outline-secondary" data-slug="${item.slug}">+</button>
+                            <button class="increase-qty btn btn-sm btn-outline-secondary" data-slug="${item.slug}" data-size="${item.size}" data-color="${item.color}">+</button>
                         </div>
                     </td>
                     <td>$${itemTotal.toFixed(2)}</td>
@@ -55,9 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const totalRow = `
             <tr>
-                <td colspan="3" class="text-right"><strong>Total Price:</strong></td>
+                <td colspan="4" class="text-right"><strong>Total Price:</strong></td>
                 <td><h5 id="cart-total">$${totalPrice.toFixed(2)}</h5></td>
-                <td></td>
             </tr>`;
         cartItemsContainer.insertAdjacentHTML("beforeend", totalRow);
 
@@ -77,9 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cartItemsContainer.addEventListener("click", (event) => {
         const slug = event.target.getAttribute("data-slug");
+        const size = event.target.getAttribute("data-size");
+        const color = event.target.getAttribute("data-color");
 
         if (event.target.classList.contains("increase-qty")) {
-            const product = cart.find((item) => item.slug === slug);
+            const product = cart.find((item) => item.slug === slug && item.size === size && item.color === color);
             if (product) {
                 product.quantity++;
                 localStorage.setItem("cart", JSON.stringify(cart));
@@ -88,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (event.target.classList.contains("decrease-qty")) {
-            const product = cart.find((item) => item.slug === slug);
+            const product = cart.find((item) => item.slug === slug && item.size === size && item.color === color);
             if (product && product.quantity > 1) {
                 product.quantity--;
                 localStorage.setItem("cart", JSON.stringify(cart));

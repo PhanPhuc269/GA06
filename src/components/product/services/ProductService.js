@@ -28,6 +28,14 @@ class ProductService {
         }
     }
 
+    async getProductById(_id) {
+        try {
+            return await Product.findOne({ _id });
+        } catch (error) {
+            throw new Error("Error fetching product by id: " + error.message);
+        }
+    }
+
     async getRelevantProducts(category, limit) {
         try {
             return await Product.find({ category }).limit(limit);

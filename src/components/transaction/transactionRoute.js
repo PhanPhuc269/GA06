@@ -11,7 +11,7 @@ router.post('/create', ensureAuthenticated, transactionController.createTransact
 // Xử lý thanh toán
 router.post('/processPayment', ensureAuthenticated, transactionController.processPayment);
 router.get('/processPayment/:_id', ensureAuthenticated, transactionController.getQrTransaction);
-
+router.post('/cancel', ensureAuthenticated, transactionController.cancelPayment);
 
 
 

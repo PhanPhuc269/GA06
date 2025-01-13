@@ -8,15 +8,34 @@ document.querySelectorAll(".add-to-cart").forEach((button) => {
         const productPrice = parseFloat(button.getAttribute("data-price"));
         const productImage = button.getAttribute("data-image");
 
+        // Lấy giá trị size từ radio button
+        const selectedSize = document.querySelector('input[name="sizeOptions"]:checked');
+        const productSize = selectedSize ? selectedSize.value : null;
+
+        // Lấy giá trị color từ radio button
+        const selectedColor = document.querySelector('input[name="colorOptions"]:checked');
+        const productColor = selectedColor ? selectedColor.value : null;
+
+        // Kiểm tra nếu chưa chọn size hoặc color
+        if (!productSize || !productColor) {
+            showToast("Vui lòng chọn size và màu sắc trước khi thêm vào giỏ hàng.", 'error', 'Error');
+            return;
+        }
+
         // Lấy giá trị số lượng từ input
         const quantityInput = document.getElementById("sst");
         const quantity = parseInt(quantityInput.value) || 1; // Mặc định là 1 nếu không hợp lệ
 
         // Lấy giỏ hàng từ localStorage hoặc tạo mới nếu chưa có
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng hay chưa
-        const existingProduct = cart.find((item) => item.slug === productSlug);
+       // const cart =   [];
+        // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng hay chưa (dựa trên slug, size, color)
+        const existingProduct = cart.find(
+            (item) =>
+                item.slug === productSlug &&
+                item.size === productSize &&
+                item.color === productColor
+        );
 
         if (existingProduct) {
             // Nếu sản phẩm đã tồn tại, tăng số lượng
@@ -28,6 +47,8 @@ document.querySelectorAll(".add-to-cart").forEach((button) => {
                 name: productName,
                 price: productPrice,
                 image: productImage,
+                size: productSize,
+                color: productColor,
                 quantity: quantity,
             });
         }
@@ -36,7 +57,7 @@ document.querySelectorAll(".add-to-cart").forEach((button) => {
         localStorage.setItem("cart", JSON.stringify(cart));
 
         // Cập nhật lại giao diện giỏ hàng hoặc hiển thị thông báo
-        showToast(`${quantity} x ${productName} đã được thêm vào giỏ hàng!`, 'success', 'Success');
+        showToast(`${quantity} x ${productName} (Size: ${productSize}, Color: ${productColor}) đã được thêm vào giỏ hàng!`, 'success', 'Success');
 
         // Cập nhật số lượng hiển thị trên biểu tượng giỏ hàng
         updateCartCount();
@@ -49,7 +70,9 @@ document.querySelectorAll(".add-to-cart").forEach((button) => {
                 'item_name': productName,  // Tên sản phẩm
                 'item_id': productSlug,    // ID sản phẩm
                 'quantity': quantity,      // Số lượng
-                'price': productPrice      // Giá sản phẩm
+                'price': productPrice,     // Giá sản phẩm
+                'size': productSize,       // Kích thước
+                'color': productColor      // Màu sắc
             }]
         });
     });

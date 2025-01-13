@@ -40,7 +40,7 @@ class TransactionService {
                 amount,
                 paymentMethod: "bank",
                 orderId,
-                description: `Order Id: ${orderId}`,
+                description: `Order Id ${orderId}`,
                 status: "pending",
             });
 
@@ -52,48 +52,97 @@ class TransactionService {
     }
 
     // Xử lý thanh toán
+    
     async processPayment(transactionId) {
         try {
-            const transaction = await Transaction.findById(transactionId);
+            let transaction = await Transaction.findById(transactionId);
             if (!transaction) {
-                throw new Error("Transaction not found");
+                return {
+                    success: false,
+                    message: "Transaction not found",
+                };
             }
-
-            if (transaction.status !== "pending") {
-                throw new Error("Transaction is not pending");
+    
+            if (transaction.status === "completed") {
+                return {
+                    success: false,
+                    message: "Transaction has already been completed.",
+                };
             }
-
+    
+            if (transaction.status === "failed") {
+                return {
+                    success: false,
+                    message: "Transaction has already failed.",
+                };
+            }
+    
+            // Nếu giao dịch bị hủy, chuyển lại trạng thái thành pending
+            if (transaction.status === "canceled") {
+                transaction.status = "pending";
+                await transaction.save();
+            }
+    
             const timeout = 5 * 60 * 1000; // 5 phút
-            const checkInterval = 10 * 1000; // Kiểm tra mỗi 10 giây
+            const checkInterval = 3 * 1000; // Kiểm tra mỗi 3 giây
             let elapsed = 0;
-
+    
             while (elapsed < timeout) {
-                const isPaid = await checkPaid(transaction.amount, transaction.description);
+                // Lấy trạng thái mới nhất từ cơ sở dữ liệu
+            transaction = await Transaction.findById(transactionId);
+            if (!transaction) {
+                throw new Error("Transaction not found during processing.");
+            }
 
+            if (transaction.status === "canceled") {
+                throw new Error("Transaction was canceled by the user.");
+            }
+                if (transaction.status === "canceled") {
+                    return {
+                        success: false,
+                        message: "Transaction was canceled by the user.",
+                    };
+                }
+    
+                const isPaid = await checkPaid(transaction.amount, transaction.description);
                 if (isPaid.success) {
                     transaction.status = "completed";
                     await transaction.save();
-
+    
                     const order = await Order.findById(transaction.orderId);
                     if (order) {
                         order.status = "paid";
                         await order.save();
                     }
-
-                    return transaction;
+    
+                    return {
+                        success: true,
+                        message: "Transaction completed successfully.",
+                        transaction,
+                    };
                 }
-
-                await new Promise(resolve => setTimeout(resolve, checkInterval));
+    
+                await new Promise((resolve) => setTimeout(resolve, checkInterval));
                 elapsed += checkInterval;
             }
-
+    
             transaction.status = "failed";
             await transaction.save();
-            throw new Error("Payment timeout exceeded");
+            return {
+                success: false,
+                message: "Payment timeout exceeded.",
+            };
         } catch (error) {
-            throw new Error(`Error processing payment: ${error.message}`);
+            console.error("Error processing payment:", error);
+            return {
+                success: false,
+                message: `Error processing payment: ${error.message}`,
+            };
         }
     }
+    
+    
+
 
     async getAllTransactions() {
         try {
@@ -102,6 +151,32 @@ class TransactionService {
             throw new Error(`Error retrieving all transactions: ${error.message}`);
         }
     }
+
+    
+  
+    async cancelPayment(transactionId) {
+        try {
+            const transaction = await Transaction.findById(transactionId);
+            if (!transaction) {
+                throw new Error("Transaction not found.");
+            }
+    
+            // Chỉ cho phép hủy giao dịch nếu trạng thái đang là "pending"
+            if (transaction.status !== "pending") {
+                throw new Error("Transaction cannot be canceled because it is not pending.");
+            }
+    
+            transaction.status = "canceled";
+            await transaction.save();
+            return { success: true, message: "Transaction canceled successfully." };
+        } catch (error) {
+            console.error("Error canceling transaction:", error);
+            return { success: false, message: error.message };
+        }
+    }
+    
+    
+
 }
 
 module.exports = new TransactionService();

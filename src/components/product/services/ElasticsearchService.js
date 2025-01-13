@@ -14,7 +14,7 @@ class ElasticsearchService {
                     { 
                         multi_match: { 
                             query: keyword, 
-                            fields: ['name', 'description'], 
+                            fields: ['name', 'description','tags'], 
                             fuzziness: 'AUTO' 
                         } 
                     }

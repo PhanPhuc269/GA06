@@ -48,33 +48,37 @@ class OrderController {
             const userId = req.user._id;
             const {
                 firstName, lastName, phoneNumber, email,
-                addressLine1,  city, district, zip, orderNotes
+                addressLine1, city, district, zip, orderNotes
             } = req.body;
-
+    
             const orderData = {
                 firstName,
                 lastName,
                 phoneNumber,
                 email,
-                addressLine1,              
+                addressLine1,
                 city,
                 district,
                 zip,
                 orderNotes
             };
-
+    
             const newOrder = await OrderService.createOrder(userId, orderData);
-
+    
+            // Điều hướng về danh sách đơn hàng nếu thành công
             res.redirect(`/order/list`);
         } catch (error) {
-            console.error(error);
-            res.status(500).render('errorOrder', {
-                message: 'Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại sau.',
-                errorCode: 500,
-                errorDetails: error.message
+            console.error("Lỗi khi tạo đơn hàng:", error);
+    
+            // Trả về trang lỗi với chi tiết lỗi
+            res.status(400).render('errorOrder', {
+                message: 'Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng kiểm tra giỏ hàng hoặc thông tin giao hàng.',
+                errorCode: 400,
+                errorDetails: error.message, // Hiển thị chi tiết lỗi cho người dùng
             });
         }
     }
+    
 }
 
 module.exports = new OrderController();
