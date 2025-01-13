@@ -43,6 +43,12 @@ class ElasticsearchService {
         return response.hits.hits.map(hit => hit._source);
     }
     
+    async countProducts(filters){
+            return ProductService.countProducts(filters);
+   }
+   async  searchProducts(filters, sortCriteria, skip, limit){
+            return ProductService.getProductList(filters, sortCriteria, skip, limit);
+    }
 }    
 
 module.exports = new ElasticsearchService();

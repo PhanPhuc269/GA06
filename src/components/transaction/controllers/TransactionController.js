@@ -19,7 +19,7 @@ async getQrTransaction(req, res, next) {
     try {
         const { _id: transactionId } = req.params; // Lấy transactionId từ URL params
 
-        console.log('giao dịch: ',transactionId);
+      //  console.log('giao dịch: ',transactionId);
         // Tìm giao dịch dựa trên transactionId
         const transaction = await TransactionService.getTransactionById(transactionId);
         if (!transaction) {

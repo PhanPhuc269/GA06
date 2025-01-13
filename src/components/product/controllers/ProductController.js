@@ -163,78 +163,62 @@ class ProductController {
 
    
     
-    async  SearchProduct(req, res, next) {
-        try {
-            const {
-                type: productType,
-                brand: productBrand,
-                color: productColor,
-                minPrice,
-                maxPrice,
-                page = 1,
-                limit = 12,
-                keyword,
-                sort,
-            } = req.query;
-    
-            // Khởi tạo bộ lọc cho các trường tìm kiếm
-            const filters = {};
-            if (productType) filters.type = productType;
-            if (productBrand) filters.brand = productBrand;
-            if (productColor) filters.color = productColor;
-            if (minPrice || maxPrice) filters.price = { minPrice, maxPrice };
-    
-            // Định nghĩa các điều kiện sắp xếp (sort)
-            let sortCriteria = [];
-            switch (sort) {
-                case 'price_asc': sortCriteria = [{ price: { order: 'asc' } }]; break;
-                case 'price_desc': sortCriteria = [{ price: { order: 'desc' } }]; break;
-                case 'creation_time_desc': sortCriteria = [{ createdAt: { order: 'desc' } }]; break;
-                case 'rate_desc': sortCriteria = [{ rate: { order: 'desc' } }]; break;
-                default: sortCriteria = [];
-            }
-//<<<<<<< features/complexityPassword
 
-            const total = await ProductService.countProducts(filters);
-            const products = await ProductService.getProductList(filters, sortCriteria, skip, parseInt(limit));
+async SearchProduct(req, res, next) {
+    try {
+        const {
+            type: productType,
+            brand: productBrand,
+            color: productColor,
+            minPrice,
+            maxPrice,
+            page = 1,
+            limit = 12,
+            keyword,
+            sort,
+        } = req.query;
 
-            if (req.xhr) {
-                return res.json({
-                    products: mutipleMongooseToObject(products),
-                    total,
-                    currentPage: parseInt(page),
-                    totalPages: Math.ceil(total / limit),
-                });
-            }
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+        const filters = {};
 
-//=======
-    
-            // Thực hiện tìm kiếm qua Elasticsearch
-          //  const products = await ElasticsearchService.searchProducts(keyword, filters, page, limit);
-    
-            // // Lấy tổng số sản phẩm (cho phép phân trang)
-            // const totalResponse = await elasticClient.count({
-            //     index: 'products',
-            //     body: { query: { bool: { must: [{ multi_match: { query: keyword, fields: ['name', 'description'] } }] } } },
-            // });
-//     console.log("sanp: ",products);
-//             const total = products.length;
-//             console.log("tol: ",total);
-//             const totalPages = Math.ceil(total / limit);
-    
-//             // Render kết quả trên giao diện
-// >>>>>>> main
-            res.render('category', {
-                products: products,
+        if (keyword) filters.name = { $regex: keyword, $options: 'i' };
+        if (productType) filters.type = { $in: productType.split(',') };
+        if (productBrand) filters.brand = { $in: productBrand.split(',') };
+        if (productColor) filters.color = { $in: productColor.split(',') };
+        if (minPrice || maxPrice) filters.price = { ...(minPrice && { $gte: minPrice }), ...(maxPrice && { $lte: maxPrice }) };
+
+        let sortCriteria = {};
+        switch (sort) {
+            case 'price_asc': sortCriteria = { price: 1 }; break;
+            case 'price_desc': sortCriteria = { price: -1 }; break;
+            case 'creation_time_desc': sortCriteria = { createdAt: -1 }; break;
+            case 'rate_desc': sortCriteria = { rate: -1 }; break;
+            default: sortCriteria = {};
+        }
+
+        const total = await ElasticsearchService.countProducts(filters);
+        const products = await ElasticsearchService.searchProducts(filters, sortCriteria, skip, parseInt(limit));
+
+        if (req.xhr) {
+            return res.json({
+                products: mutipleMongooseToObject(products),
                 total,
                 currentPage: parseInt(page),
-                totalPages,
+                totalPages: Math.ceil(total / limit),
             });
-        } catch (error) {
-            next(error);
         }
+
+        res.render('category', {
+            products: mutipleMongooseToObject(products),
+            total,
+            currentPage: parseInt(page),
+            totalPages: Math.ceil(total / limit),
+        });
+    } catch (error) {
+        next(error);
     }
-    
+}
+
 }
 
 module.exports = new ProductController();

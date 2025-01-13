@@ -6337,3 +6337,57 @@ background: #fff;
 }
 
 
+.search-history {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none; /* Ẩn mặc định */
+}
+
+.search-history ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-history li {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.search-history li:hover {
+  background: #f4f4f4;
+}
+
+.search-history {
+  position: absolute;
+  top: 100%; /* Đặt ngay bên dưới thanh tìm kiếm */
+  left: 0;
+  width: 100%; /* Bằng với chiều rộng của thanh tìm kiếm */
+  background-color: white; /* Màu nền */
+  border: 1px solid #ddd; /* Viền */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  z-index: 1000; /* Hiển thị trên các thành phần khác */
+}
+
+.search-history div {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.search-history div:hover {
+  background-color: #f1f1f1; /* Màu khi hover */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Khoảng cách giữa các nút */
+  margin-top: 20px;
+}

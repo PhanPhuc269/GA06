@@ -13,8 +13,14 @@ module.exports = {
         }
         return next();
     }
-    res.redirect('/login'); // Redirect nếu chưa đăng nhập
-  },  
+     // Lưu URL hiện tại vào session
+     req.session.returnTo = req.originalUrl;
+
+    req.session.save(() => {
+        console.log('URL được lưu:', req.session.returnTo);
+        res.redirect('/login');
+  });
+},  
 
   ensureRole: (role) => {
     return (req, res, next) => {

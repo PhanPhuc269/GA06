@@ -42,33 +42,34 @@
 					</button>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<div class="d-flex align-items-center justify-content-between w-100">
+							<form class="d-flex align-items-center w-100" action="/product/search" method="get" id="searchForm">
+								<input type="text" class="form-control w-100" id="search_input" name="keyword" placeholder="Search in Dimillav">
+								    <div id="search-history-container" class="search-history"></div> <!-- Lịch sử tìm kiếm -->
 
-						<div class="w-100">
-							<form class="d-flex relative-position justify-content-between w-100" action="/product/search" method="get" id="searchForm">
-								<input type="text" class="form-control w-100" id="search_input" name="keyword" placeholder="Search in Dimmillav">
-								<button type="submit" class="btn"><span class="lnr lnr-magnifier" id="search"></span></button>
-								<span class="lnr lnr-cross  close-btn" id="delete_search" title="Delete Search"></span>
-								
-								<a href="/cart" class="cart align-item-center"><span class="fa fa-shopping-cart fs-4"></span></a>
+								<button type="submit" class="btn">
+									<span class="lnr lnr-magnifier" id="search"></span>
+								</button>
+								<span class="lnr lnr-cross close-btn" id="delete_search" title="Delete Search"></span>
 							</form>
-
+							<div class="cart-container position-relative ml-3">
+								<a href="/cart" class="cart-link">
+									<span class="fa fa-shopping-cart" style="font-size: 24px;"></span>
+								</a>
+								<span id="cart-count" class="badge badge-danger position-absolute">0</span>
+							</div>
 						</div>
-
 					</div>
+
 				</div>
 			</nav>
 		</div>
-		{{!-- <div class="search_input" id="search_input_box">
-			<div class="container">
-				<form class="d-flex justify-content-between" action="/product/search" method="get">
-					<input type="text" class="form-control" id="search_input" name="keyword" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
-					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-				</form>
-			</div>
-		</div> --}}
+		
 
 
 	</header>
-	  <script src="/js/cart/cart.js"></script>
+	  <script src="/js/cart/cart.js" defer></script>
+	    <script src="/js/cart/cart-counter.js" defer></script>
+			    <script src="/js/searchHistory.js" defer></script>
+
 	<!-- End Header Area -->

@@ -36,6 +36,12 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
+  // Bật chế độ đồng ý (Consent Mode)
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied'
+  });
+
   gtag('config', 'G-MWHM2CVEW0');
 </script>
     </head>

@@ -233,11 +233,17 @@
                         {{#each products}}
                         <div class="col-lg-4 col-md-6">
                             <div class="single-product">
-                                <a href="/product/product-details/{{this.slug}}">
+                                <a href="/product/product-details/{{this.slug}}"
+                                data-slug="{{this.slug}}" 
+                            data-name="{{this.name}}" 
+                            data-category="{{this.category}}">
                                     <img class="img-fluid" src="\\{{this.image}}" alt="{{this.name}}">
                                 </a>
                                 <div class="product-details">
-                                    <a href="/product/product-details/{{this.slug}}">
+                                    <a href="/product/product-details/{{this.slug}}"
+                                    data-slug="{{this.slug}}" 
+                                    data-name="{{this.name}}" 
+                                    data-category="{{this.category}}">
                                         <h6>{{this.name}}</h6>
                                     </a>
                                     <div class="price">
@@ -259,7 +265,10 @@
                                             <span class="lnr lnr-sync"></span>
                                             <p class="hover-text">compare</p>
                                         </a>
-                                        <a href="/product/product-details/{{this.slug}}" class="social-info">
+                                        <a href="/product/product-details/{{this.slug}}" class="social-info"
+                                        data-slug="{{this.slug}}" 
+                                        data-name="{{this.name}}" 
+                                        data-category="{{this.category}}">
                                             <span class="lnr lnr-move"></span>
                                             <p class="hover-text">view more</p>
                                         </a>
@@ -348,6 +357,8 @@
     </section>
     <!-- End related-product Area -->
 <script src="/js/filter.js"></script>
+<script src="/js/productDetailClick.js"></script>
+
 
 </body>
 
