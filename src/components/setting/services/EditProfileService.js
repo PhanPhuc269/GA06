@@ -27,7 +27,10 @@ class EditProfileService {
           // Nếu có mật khẩu cũ và mật khẩu mới, xử lý mật khẩu
           if (updateFields.currentPassword && updateFields.newPassword) {
             const user = await User.findById(userId);
-    
+            
+            if (!user) {
+              throw new Error('User not found'); 
+            }
             // Kiểm tra mật khẩu cũ
             const isMatch = await user.comparePassword(updateFields.currentPassword);
             if (!isMatch) {
@@ -51,7 +54,7 @@ class EditProfileService {
           return profile;
         } catch (error) {
           console.error('Error updating profile:', error);
-          throw new Error('Update failed');
+          throw new Error( error.message ||'Update failed');
         }
     }
     

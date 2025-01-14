@@ -126,11 +126,11 @@ border-color: rgba(24,28,33,0.03) !important;
     {{errorMessage}}
   </h4>
 
-  <div class="card edit-profile overflow-hidden">
+  <div class="card edit-profile overflow-hidden mb-5">
     <div class="row no-gutters row-bordered row-border-light">
       <div class="col-md-3 pt-0">
         <div class="list-group list-group-flush account-settings-links">
-          <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
+          <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-general">General</a>
           <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
           <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>
         </div>
@@ -144,9 +144,10 @@ border-color: rgba(24,28,33,0.03) !important;
               <div class="media-body ml-4">
                 <label class="btn btn-outline-primary">
                   Upload new photo
-                  <input type="file" name="avatar" class="account-settings-fileinput">
+                  <input type="file" name="avatar" class="account-settings-fileinput " id="file-input">
                 </label> &nbsp;
-                <button type="button" class="btn btn-default md-btn-flat">Reset</button>
+                <span id="file-name" class="file-name" id="file-name">No file chosen</span>
+                {{!-- <button type="button" class="btn btn-default md-btn-flat">Reset</button> --}}
 
                 <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
               </div>
@@ -179,27 +180,25 @@ border-color: rgba(24,28,33,0.03) !important;
             </div>
           </form>
           <div class="tab-pane fade" id="account-change-password">
-            <form class="card-body pb-2" action="/setting/update-profile/password" method="post">
-
-              <div class="form-group">
-                <label class="form-label">Current password</label>
-                <input type="password" class="form-control" name="currentPassword">
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">New password</label>
-                <input type="password" class="form-control" name="newPassword">
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Repeat new password</label>
-                <input type="password" class="form-control" name="repeatNewPassword">
-              </div>
-              <div class="form-group text-right mt-3">
-                  <button type="submit" class="btn btn-primary">Save changes</button>&nbsp;
-                  <button type="button" class="btn btn-default">Cancel</button>
-              </div>
-            </form>
+              <form class="card-body pb-2" id="edit-profile-form" action="/setting/update-profile/password" method="post">
+                  <div class="form-group">
+                      <label class="form-label">Current password</label>
+                      <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                  </div>
+                  <div class="form-group">
+                      <label class="form-label">New password</label>
+                      <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                  </div>
+                  <div class="form-group">
+                      <label class="form-label">Confirm new password</label>
+                      <input type="password" class="form-control" id="confirmPassword" name="repeatNewPassword" required>
+                  </div>
+                  <small id="password-error" class="form-text text-danger" style="display: none;">Passwords do not match or do not meet the requirements.</small>
+                  <div class="form-group text-right mt-3">
+                      <button type="submit" class="btn btn-primary">Save changes</button>&nbsp;
+                      <button type="button" class="btn btn-default">Cancel</button>
+                  </div>
+              </form>
           </div>
           <div class="tab-pane fade" id="account-info">
             <form action="/setting/update-profile/info" method="post">
@@ -249,10 +248,6 @@ border-color: rgba(24,28,33,0.03) !important;
 <script type="text/javascript">
 
 </script>
-<script>
-  document.getElementById('resend-confirmation-button').addEventListener('click', function() {
-    document.getElementById('resend-email-form').submit();
-  });
-
+<script src="/js/edit-profile.js">
 </script>
 

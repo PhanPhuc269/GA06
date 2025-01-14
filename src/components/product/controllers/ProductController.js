@@ -185,12 +185,12 @@ async SearchProduct(req, res, next) {
         if (productType) filters.type = { $in: productType.split(',') };
         if (productBrand) filters.brand = { $in: productBrand.split(',') };
         if (productColor) filters.color = { $in: productColor.split(',') };
-        if (minPrice || maxPrice) filters.price = { ...(minPrice && { $gte: minPrice }), ...(maxPrice && { $lte: maxPrice }) };
+        if (minPrice || maxPrice) filters.salePrice = { ...(minPrice && { $gte: minPrice }), ...(maxPrice && { $lte: maxPrice }) };
 
         let sortCriteria = {};
         switch (sort) {
-            case 'price_asc': sortCriteria = { price: 1 }; break;
-            case 'price_desc': sortCriteria = { price: -1 }; break;
+            case 'price_asc': sortCriteria = { salePrice: 1 }; break;
+            case 'price_desc': sortCriteria = { salePrice: -1 }; break;
             case 'creation_time_desc': sortCriteria = { createdAt: -1 }; break;
             case 'rate_desc': sortCriteria = { rate: -1 }; break;
             default: sortCriteria = {};
