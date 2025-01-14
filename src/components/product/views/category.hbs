@@ -14,6 +14,11 @@
                 <div class="sidebar-categories">
                     <div class="head">Categories</div>
                     <ul class="main-categories">
+                            <li class="main-nav-list ">
+                                <a href="javascript:void(0);" id="all" onclick="setTypeFilter('')">
+                                    <span class="lnr lnr-arrow-right"></span>All<span class="number">({{totalAll}})</span>
+                                </a>
+                            </li>
                         {{#each categories}}
                         <li class="main-nav-list">
                             <a data-toggle="collapse" href="#{{slug}}" aria-expanded="false" aria-controls="{{slug}}">
@@ -31,6 +36,9 @@
                         </li>
                         {{/each}}
                     </ul>
+                    <div class="filter-actions">
+                        <button class="btn btn-primary" id="reset-filter" onclick="resetFilters()">Reset Filters</button>
+                    </div>
                 </div>
 
                     

@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+    else{
+        const categoryItem = document.getElementById('all');
+        categoryItem.classList.add('active');
+    }
     const typeInput = document.querySelector(`input[name="type"][value="${filters.type}"]`);
     if (typeInput) typeInput.checked = true;
 
@@ -102,12 +106,17 @@ function setTypeFilter(type) {
 
 function setActiveCategory(type) {
     const categoryLinks = document.querySelectorAll('.main-nav-list.child a');
+    const categoryItem = document.getElementById('all');
+    categoryItem.classList.remove('active');
     categoryLinks.forEach(link => {
         link.classList.remove('active');
     });
     const activeLink = document.getElementById(`${type}`);
     if (activeLink) {
         activeLink.classList.add('active');
+    }
+    if (!type) {
+        categoryItem.classList.add('active');
     }
 }
 
@@ -371,5 +380,43 @@ document.addEventListener('DOMContentLoaded', function () {
             applyFilters();
         });
     });
-    
+
 });
+function resetFilters() {
+    // Reset filters object
+    filters = {
+        keyword: '',
+        type: '',
+        brand: [],
+        color: [],
+        minPrice: '',
+        maxPrice: '',
+        sort: 'default',
+        page: 1,
+        limit: 12
+    };
+
+    // Reset UI elements
+    document.getElementById('search_input').value = '';
+    document.querySelectorAll('input[name="brand"]').forEach(input => input.checked = false);
+    document.querySelectorAll('input[name="color"]').forEach(input => input.checked = false);
+
+    const lowerValueElement = document.getElementById('lower-value');
+    const upperValueElement = document.getElementById('upper-value');
+    if (lowerValueElement) lowerValueElement.textContent = '';
+    if (upperValueElement) upperValueElement.textContent = '';
+
+    const sortSelect = document.getElementById('sort-criteria');
+    if (sortSelect) sortSelect.value = 'default';
+
+    const selectLimitTop = document.querySelector('#items-per-page');
+    const selectLimitBottom = document.querySelector('#items-per-page-bottom');
+    if (selectLimitTop) selectLimitTop.value = 12;
+    if (selectLimitBottom) selectLimitBottom.value = 12;
+
+    // Clear active category
+    setActiveCategory('');
+
+    // Apply filters
+    applyFilters();
+}

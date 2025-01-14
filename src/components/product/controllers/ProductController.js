@@ -210,9 +210,13 @@ async SearchProduct(req, res, next) {
 
         //Lấy danh mục
         const categories = await CategoryService.getCategories();
+
+        //Tổng sản phẩm cho danh mục All
+        const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
         res.render('category', {
             products: mutipleMongooseToObject(products),
             categories: mutipleMongooseToObject(categories),
+            totalAll,
             total,
             currentPage: parseInt(page),
             totalPages: Math.ceil(total / limit),
