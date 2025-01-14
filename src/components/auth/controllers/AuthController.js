@@ -165,7 +165,12 @@ class AuthController{
                 return next(err);
             }
             if (!user) {
-                return res.status(400).json({ message: info.message || 'Incorrect email or password' });
+                req.flash('error_msg', info.message || 'Sai email hoặc mật khẩu');
+                req.flash('email', req.body.email);
+                return res.status(400).json({ message: info.message === 'Your account has been banned.' 
+                    ? 'Your account has been banned.' 
+                    : 'Incorrect email or password' 
+                });
             }
             req.logIn(user, (err) => {
                 if (err) {
