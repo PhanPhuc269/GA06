@@ -6451,7 +6451,7 @@ td {
   width: 200px; /* Đặt chiều rộng cố định */
   height: 200px; /* Đặt chiều cao cố định */
   object-fit: cover; /* Đảm bảo ảnh không bị méo, giữ tỉ lệ */
-
+}
 .gg-button{
   margin-top: -7px !important;
 }
@@ -6604,4 +6604,12 @@ td {
   padding: 0;
   margin-right: auto;
   cursor: pointer;
+}
+.pagination-info {
+  font-size: 14px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: white;
 }

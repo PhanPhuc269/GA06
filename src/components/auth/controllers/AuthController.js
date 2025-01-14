@@ -175,12 +175,12 @@ class AuthController{
                     return res.redirect('/verify'); // Redirect đến trang xác thực email
                 }
                // Chuyển hướng về trang trước đó hoặc về home
-       
-            if(!returnTo){
-                returnTo='/';
-            }
-            
-            return res.redirect(returnTo);
+        
+                if(!returnTo){
+                    returnTo='/';
+                }
+                
+                return res.redirect(returnTo);
             });
         })(req, res, next);
     }
