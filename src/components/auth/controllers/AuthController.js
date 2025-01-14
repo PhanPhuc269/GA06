@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const Product = require("@components/product/models/Product");
 const passport = require('passport');
 const UserService = require('../services/UserService');
-
+const ProductService = require('../../product/services/ProductService');
 
 class AuthController{
     viewRegistration(req,res,next){
@@ -91,12 +91,15 @@ class AuthController{
 
     async home(req, res, next) {
         try {
-            const onSaleProducts = await Product.find({ availibility: 'On Sale' });
-            const notOnSaleProducts = await Product.find({ availibility: { $ne: 'On Sale' } });
-    
+           
+
+            // Gọi service để lấy dữ liệu
+            const onSaleProducts = await ProductService.getProducts();
+            const notOnSaleProducts = await ProductService.getProducts();
+            console.log(onSaleProducts,'not',notOnSaleProducts)
             res.render('home', {
                 onSaleProducts: mutipleMongooseToObject(onSaleProducts),
-                notOnSaleProducts: mutipleMongooseToObject(notOnSaleProducts)
+                notOnSaleProducts: mutipleMongooseToObject(notOnSaleProducts),
             });
         } catch (error) {
             next(error);
