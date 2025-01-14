@@ -6584,13 +6584,16 @@ td {
   color: #0056b3; /* Màu xanh khi hover */
 }
 
-.filter-actions {
-  margin-top: 20px;
-  text-align: center;
+.filter-container {
+  display: flex;
+  align-items: center;
+
 }
 
-#reset-filter {
-  padding: 10px 20px;
-  font-size: 14px;
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: auto;
   cursor: pointer;
 }

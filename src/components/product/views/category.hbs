@@ -36,14 +36,16 @@
                         </li>
                         {{/each}}
                     </ul>
-                    <div class="filter-actions">
-                        <button class="btn btn-primary" id="reset-filter" onclick="resetFilters()">Reset Filters</button>
-                    </div>
                 </div>
 
                     
 				<div class="sidebar-filter mt-50">
-					<div class="top-filter-head">Product Filters</div>
+					<div class="top-filter-head">Product Filters
+                        
+                        <button class="btn btn-icon text-white" id="reset-filter" onclick="resetFilters()" title="Reset Filters">
+                            <span class="lnr lnr-sync"></span>
+                        </button>
+                    </div>
 					<div class="common-filter">
 						 <div class="head">Brands</div>
                         <ul>
