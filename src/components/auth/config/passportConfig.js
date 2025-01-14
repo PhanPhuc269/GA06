@@ -22,7 +22,7 @@ passport.use(new LocalStrategy({
             return done(null, false, { message: 'Incorrect password.' });
         }
 
-        if(user.status='banned'){
+        if(user.status == 'banned'){
             return done(null, false, { message: 'Your account has been banned.' });
         }
         return done(null, user);
