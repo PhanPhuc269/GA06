@@ -44,6 +44,15 @@ class ProductService {
         }
     }
 
+    async getRelevantProductsByBrand(brand, limit, slug) {
+        try {
+            return await Product.find({ brand, slug: { $ne: slug } }).limit(limit);
+        } catch (error) {
+            throw new Error("Error fetching relevant products by brand: " + error.message);
+        }
+    }
+    
+
     async getProductsByCondition(condition) {
         try {
             return await Product.find(condition);

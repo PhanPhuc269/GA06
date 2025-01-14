@@ -14,7 +14,20 @@ class ElasticsearchService {
                     { 
                         multi_match: { 
                             query: keyword, 
-                            fields: ['name', 'description','tags'], 
+                            fields: ['name', 'description','tags', ,
+                                
+                               
+                               
+                                'material',
+                                'style',
+                                'gender',
+                               
+                               
+                                
+                                'category',
+                                'availability',
+                                'brand',
+                                'type'], 
                             fuzziness: 'AUTO' 
                         } 
                     }
@@ -29,7 +42,7 @@ class ElasticsearchService {
         if (filters.color) query.bool.filter.push({ term: { color: filters.color } });
         if (filters.minPrice || filters.maxPrice) {
             query.bool.filter.push({
-                range: { price: { gte: filters.minPrice || 0, lte: filters.maxPrice || Infinity } },
+                range: { salePrice: { gte: filters.minPrice || 0, lte: filters.maxPrice || Infinity } },
             });
         }
     
