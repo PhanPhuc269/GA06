@@ -47,6 +47,9 @@ Product.pre('save', async function (next) {
         }
 
         this.slug = slug;
+
+        // Tạo từ khóa từ tên sản phẩm và nối thành một chuỗi
+        this.tags = this.name.split(' ').map(word => word.toLowerCase()).join(', ');
     }
     next();
 });

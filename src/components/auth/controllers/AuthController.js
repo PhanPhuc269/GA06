@@ -174,9 +174,11 @@ class AuthController{
                 if (!user.isConfirmed) {
                     return res.status(200).json({ redirectTo: '/verify' }); // Chuyển hướng đến xác thực email
                 }
+
                 req.session.returnTo = null; // Xóa returnTo sau khi sử dụng
                 console.log('Redirecting to:', returnTo);
                 return res.status(200).json({ redirectTo: returnTo }); // Trả về URL chuyển hướng
+
             });
         })(req, res, next);
     }
