@@ -1,3 +1,6 @@
+
+
+
 <body id="category">
     <!-- Start Banner Area -->
     <section class="banner-area organic-breadcrumb">
@@ -10,15 +13,16 @@
     <!-- End Banner Area -->
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-lg-4 col-md-5">
+            <!-- Sidebar Filters -->
+            <aside class="col-xl-3 col-lg-4 col-md-5">
                 <div class="sidebar-categories">
                     <div class="head">Categories</div>
                     <ul class="main-categories">
-                            <li class="main-nav-list ">
-                                <a href="javascript:void(0);" id="all" onclick="setTypeFilter('')">
-                                    <span class="lnr lnr-arrow-right"></span>All<span class="number">({{totalAll}})</span>
-                                </a>
-                            </li>
+                        <li class="main-nav-list ">
+                            <a href="javascript:void(0);" id="all" onclick="setTypeFilter('')">
+                                <span class="lnr lnr-arrow-right"></span>All<span class="number">({{totalAll}})</span>
+                            </a>
+                        </li>
                         {{#each categories}}
                         <li class="main-nav-list">
                             <a data-toggle="collapse" href="#{{slug}}" aria-expanded="false" aria-controls="{{slug}}">
@@ -37,110 +41,70 @@
                         {{/each}}
                     </ul>
                 </div>
-
-
-						</li>
-					</ul>
-						</div>
                 <div class="sidebar-filter mt-50">
-                    <div class="top-filter-head">Product Filters</div>
-                    <div class="common-filter">
-                        <div class="head">Brands</div>
-                        
-
-                    
-				<div class="sidebar-filter mt-50">
-					<div class="top-filter-head">Product Filters
-                        
+                    <div class="top-filter-head">Product Filters
                         <button class="btn btn-icon text-white" id="reset-filter" onclick="resetFilters()" title="Reset Filters">
                             <span class="lnr lnr-sync"></span>
                         </button>
                     </div>
-					<div class="common-filter">
-						 <div class="head">Brands</div>
-
+                    <div class="common-filter">
+                        <div class="head">Brands</div>
                         <ul>
                             {{#each brands}}
-                                <li class="filter-list">
-                                    <input 
-                                        class="pixel-checkbox" 
-                                        type="checkbox" 
-                                        id="{{this}}" 
-                                        name="brand" 
-                                        value="{{this}}" 
-                                        {{#if (includes ../selectedBrands this)}}checked{{/if}}>
-                                    <label for="{{this}}">{{this}}</label>
-                                </li>
+                            <li class="filter-list">
+                                <input 
+                                    class="pixel-checkbox" 
+                                    type="checkbox" 
+                                    id="{{this}}" 
+                                    name="brand" 
+                                    value="{{this}}" 
+                                    {{#if (includes ../selectedBrands this)}}checked{{/if}}>
+                                <label for="{{this}}">{{this}}</label>
+                            </li>
                             {{/each}}
                         </ul>
                     </div>
                     <div class="common-filter">
                         <div class="head">Color</div>
                         <form action="#">
-                          <ul>
-                        {{#each colors}}
-                            <li class="filter-list">
-                                <input 
-                                    class="pixel-checkbox" 
-                                    type="checkbox" 
-                                    id="{{this}}" 
-                                    name="color" 
-                                    value="{{this}}" 
-                                    {{#if (includes ../selectedColors this)}}checked{{/if}}>
-                                <label for="{{this}}">{{this}}</label>
-                            </li>
-                        {{/each}}
-                    </ul>
-
-
+                            <ul>
+                                {{#each colors}}
+                                <li class="filter-list">
+                                    <input 
+                                        class="pixel-checkbox" 
+                                        type="checkbox" 
+                                        id="{{this}}" 
+                                        name="color" 
+                                        value="{{this}}" 
+                                        {{#if (includes ../selectedColors this)}}checked{{/if}}>
+                                    <label for="{{this}}">{{this}}</label>
+                                </li>
+                                {{/each}}
+                            </ul>
                         </form>
                     </div>
-    <div class="common-filter">
-        <div class="head">Price</div>
-        <div class="price-range-area">
-            <div id="price-range"></div>
-            <div class="value-wrapper d-flex">
-                <div class="price">Price:</div>
-                <span>$</span>
-                <div id="lower-value"></div>
-                <div class="to">to</div>
-                <span>$</span>
-                <div id="upper-value"></div>
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class="common-filter">
+                        <div class="head">Price</div>
+                        <div class="price-range-area">
+                            <div id="price-range"></div>
+                            <div class="value-wrapper d-flex">
+                                <div class="price">Price:</div>
+                                <span>$</span>
+                                <div id="lower-value"></div>
+                                <div class="to">to</div>
+                                <span>$</span>
+                                <div id="upper-value"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
 
-
-
-						</form>
-					</div>
-					<div class="common-filter">
-						<div class="head">Price</div>
-						<div class="price-range-area">
-							<div id="price-range"></div>
-							<div class="value-wrapper d-flex">
-								<div class="price">Price:</div>
-								<span></span>
-								<div id="lower-value"></div>
-								<div class="to">to</div>
-								<span></span>
-								<div id="upper-value"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			
-
-               
-                <!-- Additional filters go here -->
-            </div>
-
-            <div class="col-xl-9 col-lg-8 col-md-7">
+            <!-- Product List -->
+            <main class="col-xl-9 col-lg-8 col-md-7">
                 <!-- Start Filter Bar -->
                 <div class="filter-bar d-flex flex-wrap align-items-center">
-                   <div class="sorting">
+                    <div class="sorting">
                         <select id="sort-criteria" onchange="applySort(this.value)">
                             <option value="default">Default sorting</option>
                             <option value="price_asc">Price: Low to High</option>
@@ -149,8 +113,7 @@
                             <option value="rate_desc">Best Rated</option>
                         </select>
                     </div>
-
-                    <div class="sorting mr-auto" >
+                    <div class="sorting mr-auto">
                         <select id="items-per-page" onchange="updateItemsPerPage(this.value)">
                             <option value="12">Show 12</option>
                             <option value="24">Show 24</option>
@@ -162,11 +125,9 @@
                             {{#if (gt currentPage 1)}}
                                 <a href="#" onclick="changePage({{sub currentPage 1}})" class="prev-arrow">Previous</a>
                             {{/if}}
-
                             {{#each (createPagination currentPage totalPages)}}
-                                <a href="#" class="{{#ifEquals this ../currentPage}}active{{/ifEquals}}" onclick="changePage({{this}})" >{{this}}</a>
+                                <a href="#" class="{{#ifEquals this ../currentPage}}active{{/ifEquals}}" onclick="changePage({{this}})">{{this}}</a>
                             {{/each}}
-
                             {{#if (lt currentPage totalPages)}}
                                 <a href="#" class="next-arrow" onclick="changePage({{add currentPage 1}})">Next</a>
                             {{/if}}
@@ -181,48 +142,14 @@
                         {{#each products}}
                         <div class="col-lg-4 col-md-6">
                             <div class="single-product">
-                                <a href="/product/product-details/{{this.slug}}"
-                                data-slug="{{this.slug}}" 
-                            data-name="{{this.name}}" 
-                            data-category="{{this.category}}"
-                            data-price="{{this.salePrice}}">
-                                  	<img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}">
-
+                                <a href="/product/product-details/{{this.slug}}">
+                                    <img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}">
                                 </a>
                                 <div class="product-details">
-                                    <a href="/product/product-details/{{this.slug}}"
-                                    data-slug="{{this.slug}}" 
-                                    data-name="{{this.name}}" 
-                                    data-category="{{this.category}}"
-                                    data-price="{{this.salePrice}}">
-                                        <h6>{{this.name}}</h6>
-                                    </a>
+                                    <h6>{{this.name}}</h6>
                                     <div class="price">
                                         <h6>VND {{this.salePrice}}</h6>
                                         <h6 class="l-through">VND {{this.originalPrice}}</h6>
-                                       
-                                    </div>
-                                    <div class="prd-bottom">
-                                       <a href="javascript:void(0)" class="social-info add-to-cart" data-slug="{{this.slug}}" data-name="{{this.name}}" data-price="{{this.salePrice}}" data-image="{{getFirstImage this.images}}">
-                                        <span class="ti-bag"></span>
-                                        <p class="hover-text">add to bag</p>
-                                        </a>
-
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-heart"></span>
-                                            <p class="hover-text">Wishlist</p>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-sync"></span>
-                                            <p class="hover-text">compare</p>
-                                        </a>
-                                        <a href="/product/product-details/{{this.slug}}" class="social-info"
-                                        data-slug="{{this.slug}}" 
-                                        data-name="{{this.name}}" 
-                                        data-category="{{this.category}}">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -235,7 +162,7 @@
                 <!-- Start Filter Bar -->
                 <div class="filter-bar d-flex flex-wrap align-items-center">
                     <div class="sorting mr-auto">
-                        <select  id="items-per-page-bottom" onchange="updateItemsPerPage(this.value)">
+                        <select id="items-per-page-bottom" onchange="updateItemsPerPage(this.value)">
                             <option value="12">Show 12</option>
                             <option value="24">Show 24</option>
                             <option value="36">Show 36</option>
@@ -246,11 +173,9 @@
                             {{#if (gt currentPage 1)}}
                                 <a href="#" onclick="changePage({{sub currentPage 1}})" class="prev-arrow">Previous</a>
                             {{/if}}
-
                             {{#each (createPagination currentPage totalPages)}}
-                                <a href="#" class="{{#ifEquals this ../currentPage}}active{{/ifEquals}}" onclick="changePage({{this}})" >{{this}}</a>
+                                <a href="#" class="{{#ifEquals this ../currentPage}}active{{/ifEquals}}" onclick="changePage({{this}})">{{this}}</a>
                             {{/each}}
-
                             {{#if (lt currentPage totalPages)}}
                                 <a href="#" class="next-arrow" onclick="changePage({{add currentPage 1}})">Next</a>
                             {{/if}}
@@ -258,9 +183,11 @@
                     </div>
                 </div>
                 <!-- End Filter Bar -->
-            </div>
+            </main>
         </div>
     </div>
+
+
 
     <!-- Start related-product Area -->
     <section class="related-product-area section_gap">

@@ -118,6 +118,7 @@ class ProductController {
                 filters['stock.color'] = { $in: selectedColors };
             }
     
+            // Sắp xếp
             let sortCriteria = {};
             switch (sort) {
                 case 'price_asc': sortCriteria = { salePrice: 1 }; break;
@@ -128,16 +129,17 @@ class ProductController {
             }
     
             // Tìm tổng sản phẩm và danh sách sản phẩm
-            const total = await Product.countDocuments(filters);
-            const products = await Product.find(filters)
-                .sort(sortCriteria)
-                .skip(skip)
-                .limit(limit);
+            const total = await ProductService.countProducts(filters);
+            const products = await ProductService.getProductList(filters, sortCriteria, skip, limit);
     
             // Lấy danh sách màu sắc và nhãn hiệu duy nhất
-            const colors = await Product.distinct('stock.color');
-            const brands = await Product.distinct('brand');
+            const colors = await ProductService.getProductsByCondition({}, 'stock.color');
+            const brands = await ProductService.getProductsByCondition({}, 'brand');
             const dealProducts = await ProductService.getProducts();
+            const categories = await CategoryService.getCategories();
+            console.log('cc',categories)
+            const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
+           
             res.render('category', {
                 products: mutipleMongooseToObject(products),
                 currentPage: page,
@@ -148,11 +150,13 @@ class ProductController {
                 colors,
                 selectedColors,
                 dealProducts: mutipleMongooseToObject(dealProducts),
+                categories: mutipleMongooseToObject(categories),
             });
         } catch (error) {
             next(error);
         }
     }
+    
     
 
     async ViewProductDetails(req, res, next) {
@@ -238,28 +242,20 @@ class ProductController {
             // Sắp xếp
             let sortCriteria = {};
             switch (sort) {
-                case 'price_asc':
-                    sortCriteria = { salePrice: 1 };
-                    break;
-                case 'price_desc':
-                    sortCriteria = { salePrice: -1 };
-                    break;
-                case 'creation_time_desc':
-                    sortCriteria = { createdAt: -1 };
-                    break;
-                case 'rate_desc':
-                    sortCriteria = { rate: -1 };
-                    break;
-                default:
-                    sortCriteria = {};
+                case 'price_asc': sortCriteria = { salePrice: 1 }; break;
+                case 'price_desc': sortCriteria = { salePrice: -1 }; break;
+                case 'creation_time_desc': sortCriteria = { createdAt: -1 }; break;
+                case 'rate_desc': sortCriteria = { rate: -1 }; break;
+                default: sortCriteria = {};
             }
     
-            // Lấy tổng sản phẩm và sản phẩm theo bộ lọc
-            const total = await ElasticsearchService.countProducts(filters);
-            const products = await ElasticsearchService.searchProducts(filters, sortCriteria, skip, parseInt(limit));
+            // Lấy tổng sản phẩm và danh sách sản phẩm theo bộ lọc
+            const total = await ProductService.countProducts(filters);
+            const products = await ProductService.getProductList(filters, sortCriteria, skip, limit);
             const dealProducts = await ProductService.getProducts();
-            const colors = await Product.distinct('stock.color');
-            const brands = await Product.distinct('brand');
+            const colors = await ProductService.getProductsByCondition({}, 'stock.color');
+            const brands = await ProductService.getProductsByCondition({}, 'brand');
+    
             if (req.xhr) {
                 return res.json({
                     products: mutipleMongooseToObject(products),
@@ -268,42 +264,32 @@ class ProductController {
                     totalPages: Math.ceil(total / limit),
                 });
             }
-    
+             //Lấy danh mục
+        const categories = await CategoryService.getCategories();
+            console.log('cc',categories)
+        //Tổng sản phẩm cho danh mục All
+        const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
+      
             // Render view
             res.render('category', {
                 products: mutipleMongooseToObject(products),
                 total,
+                totalAll,
                 currentPage: parseInt(page),
                 totalPages: Math.ceil(total / limit),
                 dealProducts: mutipleMongooseToObject(dealProducts),
                 brands,
                 colors,
+                categories: mutipleMongooseToObject(categories),
             });
         } catch (error) {
             console.error('Error filtering products:', error);
             next(error);
         }
-
-
-        //Lấy danh mục
-        const categories = await CategoryService.getCategories();
-
-        //Tổng sản phẩm cho danh mục All
-        const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
-        res.render('category', {
-            products: mutipleMongooseToObject(products),
-            categories: mutipleMongooseToObject(categories),
-            totalAll,
-            total,
-            currentPage: parseInt(page),
-            totalPages: Math.ceil(total / limit),
-        });
-    } catch (error) {
-        next(error);
-
     }
     
-
+    
+ 
 
 }
 

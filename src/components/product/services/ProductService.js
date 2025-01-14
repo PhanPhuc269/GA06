@@ -70,6 +70,14 @@ class ProductService {
         }
     }
    
+    async getProductsByCondition(condition, field) {
+        try {
+            return await Product.distinct(field, condition);
+        } catch (error) {
+            throw new Error("Error fetching products by condition: " + error.message);
+        }
+    }
+    
 }
 
 module.exports = new ProductService();
