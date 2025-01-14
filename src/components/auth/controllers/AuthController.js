@@ -96,7 +96,7 @@ class AuthController{
             // Gọi service để lấy dữ liệu
             const onSaleProducts = await ProductService.getProducts();
             const notOnSaleProducts = await ProductService.getProducts();
-            console.log(onSaleProducts,'not',notOnSaleProducts)
+           
             res.render('home', {
                 onSaleProducts: mutipleMongooseToObject(onSaleProducts),
                 notOnSaleProducts: mutipleMongooseToObject(notOnSaleProducts),
@@ -157,33 +157,32 @@ class AuthController{
 
     // [POST] /login
     async login(req, res, next) {
-        let returnTo = req.session.returnTo ;
+        let returnTo = req.session.returnTo||'/' ;
+        console.log('ReturnTo received:', returnTo);
+    
         passport.authenticate('local', (err, user, info) => {
             if (err) {
                 return next(err);
             }
             if (!user) {
-                req.flash('error_msg', info.message || 'Sai email hoặc mật khẩu');
-                req.flash('email', req.body.email);
-                return res.status(400).json({ message: 'Incorrect email or password' });
+                return res.status(400).json({ message: info.message || 'Incorrect email or password' });
             }
             req.logIn(user, (err) => {
                 if (err) {
                     return next(err);
                 }
                 if (!user.isConfirmed) {
-                    return res.redirect('/verify'); // Redirect đến trang xác thực email
+                    return res.status(200).json({ redirectTo: '/verify' }); // Chuyển hướng đến xác thực email
                 }
-               // Chuyển hướng về trang trước đó hoặc về home
-        
-                if(!returnTo){
-                    returnTo='/';
-                }
-                
-                return res.redirect(returnTo);
+
+                req.session.returnTo = null; // Xóa returnTo sau khi sử dụng
+                console.log('Redirecting to:', returnTo);
+                return res.status(200).json({ redirectTo: returnTo }); // Trả về URL chuyển hướng
+
             });
         })(req, res, next);
     }
+    
     // [GET] /auth/google
     authenticateGoogle(req, res, next) {
         passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);

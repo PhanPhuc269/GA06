@@ -8,7 +8,7 @@ mongoose.plugin(slug);
 
 const TransactionSchema = new mongoose.Schema({
     _id: { type: String },
-   // customerId: { type: Number, required: true },
+  
      customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     amount: { type: Number, required: true }, // Số tiền thanh toán
     paymentMethod: { type: String, required: true },

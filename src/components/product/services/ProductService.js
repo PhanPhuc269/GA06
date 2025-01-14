@@ -77,7 +77,23 @@ class ProductService {
             throw new Error("Error fetching products by condition: " + error.message);
         }
     }
-    
+    async getStockInfo(slug, size, color) {
+        try {
+            const product = await Product.findOne(
+                { slug, 'stock.size': size, 'stock.color': color },
+                { 'stock.$': 1 } // Lấy phần tử khớp trong mảng stock
+            );
+
+            if (!product || !product.stock.length) {
+                return null; // Trả về null nếu không tìm thấy sản phẩm hoặc stock
+            }
+
+            return product.stock[0].quantity; // Trả về số lượng của stock khớp
+        } catch (error) {
+            console.error('Error in ProductService.getStockInfo:', error);
+            throw new Error('Error fetching stock info');
+        }
+    }    
 }
 
 module.exports = new ProductService();

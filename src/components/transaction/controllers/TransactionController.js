@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 const {  checkPaid } = require('../../../utils/payment');
 const { mongooseToObject } = require('../../../utils/mongoose');
 const TransactionService = require("../services/TransactionService");
-
+const OrderService = require("../../order/services/OrderService");
 
 dotenv.config(); // Load environment variables
 
@@ -15,39 +15,52 @@ require('dotenv').config(); // Load environment variables from .env
 class TransactionController{
 
 
-async getQrTransaction(req, res, next) {
-    try {
-        const { _id: transactionId } = req.params; // Lấy transactionId từ URL params
-
-      //  console.log('giao dịch: ',transactionId);
-        // Tìm giao dịch dựa trên transactionId
-        const transaction = await TransactionService.getTransactionById(transactionId);
-        if (!transaction) {
-            return res.status(404).json({ message: 'Transaction not found' });
+    async getQrTransaction(req, res, next) {
+        try {
+            const { _id: transactionId } = req.params; // Lấy transactionId từ URL params
+    
+            // Tìm giao dịch dựa trên transactionId
+            const transaction = await TransactionService.getTransactionById(transactionId);
+            if (!transaction) {
+                return res.status(404).json({ message: 'Transaction not found' });
+            }
+    
+            // Tìm thông tin đơn hàng dựa trên orderId trong giao dịch
+            const order = await OrderService.getOrderDetails(transaction.orderId);
+            if (!order) {
+                return res.status(404).json({ message: 'Order not found' });
+            }
+    
+            // Tạo thông tin QR Code dựa trên giao dịch
+            const bankInfo = {
+                id: process.env.BANK_ID,
+                accountNo: process.env.ACCOUNT_NO,
+                accountName: process.env.ACCOUNT_NAME,
+                template: process.env.TEMPLATE,
+            };
+    
+            const qrCodeData = `https://img.vietqr.io/image/${bankInfo.id}-${bankInfo.accountNo}-${bankInfo.template}.png?amount=${transaction.amount}&addInfo=${encodeURIComponent(transaction.description)}&accountName=${bankInfo.accountName}`;
+    
+            // Render file transaction.hbs với các thông tin cần thiết
+            res.render('transaction', {
+                qrCode: qrCodeData,
+                amount: transaction.amount,
+                description: transaction.description,
+                transactionId: transaction._id,
+                orderDetails: {
+                    id: order._id,
+                    customerName: `${order.firstName} ${order.lastName}`,
+                    items: order.items, // Danh sách sản phẩm trong đơn hàng
+                    totalAmount: order.totalAmount,
+                    createdAt: order.createdAt,
+                },
+            });
+        } catch (error) {
+            console.error('Error retrieving QR transaction:', error);
+            res.status(500).json({ message: 'Error retrieving QR transaction', error });
         }
-
-        // Tạo thông tin QR Code dựa trên giao dịch
-        const bankInfo = {
-            id: process.env.BANK_ID,
-            accountNo: process.env.ACCOUNT_NO,
-            accountName: process.env.ACCOUNT_NAME,
-            template: process.env.TEMPLATE,
-        };
-
-        const qrCodeData = `https://img.vietqr.io/image/${bankInfo.id}-${bankInfo.accountNo}-${bankInfo.template}.png?amount=${transaction.amount}&addInfo=${encodeURIComponent(transaction.description)}&accountName=${bankInfo.accountName}`;
-
-        // Render file transaction.hbs với các thông tin cần thiết
-        res.render('transaction', {
-            qrCode: qrCodeData,
-            amount: transaction.amount,
-            description: transaction.description,
-            transactionId:transaction._id,
-        });
-    } catch (error) {
-        console.error('Error retrieving QR transaction:', error);
-        res.status(500).json({ message: 'Error retrieving QR transaction', error });
     }
-}
+    
 
 
 

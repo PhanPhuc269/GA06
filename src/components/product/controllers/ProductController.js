@@ -83,7 +83,7 @@ class ProductController {
             // Lấy tổng số sản phẩm và danh sách sản phẩm theo bộ lọc
             const total = await ProductService.countProducts(filters);
             const products = await ProductService.getProductList(filters, sortCriteria, skip, parseInt(limit));
-            console.log('sp',products)
+           // console.log('sp',products)
 
             // Trả về JSON kết quả
             res.json({
@@ -137,7 +137,7 @@ class ProductController {
             const brands = await ProductService.getProductsByCondition({}, 'brand');
             const dealProducts = await ProductService.getProducts();
             const categories = await CategoryService.getCategories();
-            console.log('cc',categories)
+          //  console.log('cc',categories)
             const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
            
             res.render('category', {
@@ -151,6 +151,7 @@ class ProductController {
                 selectedColors,
                 dealProducts: mutipleMongooseToObject(dealProducts),
                 categories: mutipleMongooseToObject(categories),
+                totalAll:totalAll,
             });
         } catch (error) {
             next(error);
@@ -273,12 +274,14 @@ class ProductController {
                     totalPages: Math.ceil(total / limit),
                 });
             }
+
                 //Lấy danh mục
             const categories = await CategoryService.getCategories();
                 console.log('cc',categories)
             //Tổng sản phẩm cho danh mục All
             const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
         
+
             // Render view
             res.render('category', {
                 products: mutipleMongooseToObject(products),
@@ -297,7 +300,25 @@ class ProductController {
         }
     }
     
-    
+    async getStockInfo(req, res) {
+        try {
+            const { slug, size, color } = req.query;
+            if (!slug || !size || !color) {
+                return res.status(400).json({ error: 'Missing parameters' });
+            }
+
+            const quantity = await ProductService.getStockInfo(slug, size, color);
+
+            if (quantity === null) {
+                return res.status(404).json({ error: 'Product not found or out of stock' });
+            }
+
+            res.json({ quantity });
+        } catch (error) {
+            console.error('Error fetching stock info:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
  
 
 }

@@ -6605,6 +6605,7 @@ td {
   margin-right: auto;
   cursor: pointer;
 }
+
 .pagination-info {
   font-size: 14px;
   margin-top: 10px;
@@ -6613,3 +6614,34 @@ td {
   text-align: center;
   color: white;
 }
+
+
+.footer-spacer {
+  height: 100px; /* Tạo khoảng cách giữa nội dung và footer */
+}
+
+.payment-info {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f8f9fa;
+}
+
+.order-details {
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+.text-success {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.text-secondary {
+  font-size: 16px;
+}
+
+.lead {
+  font-size: 16px;
+}
+

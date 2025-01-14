@@ -9,5 +9,6 @@ router.get('/product-details/:slug',productController.ViewProductDetails);
 router.get('/confirmation', ensureAuthenticated,productController.ViewOrderConfirmation);
 router.get('/filter', productController.getFilteredProducts);
 router.get('/search', productController.SearchProduct);
+router.get('/stock', productController.getStockInfo);
 
 module.exports = router;

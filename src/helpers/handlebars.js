@@ -138,10 +138,21 @@ module.exports={
           console.error(`Error including template: ${templatePath}`, err);
           return '';
       }
+
     },
 
     //Định dạng tiền Việt Nam
     formatPrice: function (price) {
       return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
     },
+
+  },
+
+   // Helper mới: formatCurrencyVND
+   formatCurrencyVND: function (value) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+},
+
+
+
 }
