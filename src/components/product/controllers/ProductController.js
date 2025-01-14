@@ -27,74 +27,90 @@ class ProductController {
                 keyword,
                 sort,
             } = req.query;
-
+    
             const skip = (parseInt(page) - 1) * parseInt(limit);
             const filters = {};
-
+    
             // Lọc theo từ khóa
-            if (keyword) {
-                filters.name = { $regex: keyword, $options: 'i' };
-            }
-
+            if (keyword) filters.name = { $regex: keyword, $options: 'i' };
+    
             // Lọc theo loại sản phẩm
-            if (productType) {
-                const typeArray = productType.includes(',') ? productType.split(',') : [productType];
-                filters.type = { $in: typeArray };
-            }
-
+            if (productType) filters.type = { $in: productType.split(',') };
+    
             // Lọc theo thương hiệu
-            if (productBrand) {
-                const brandArray = productBrand.includes(',') ? productBrand.split(',') : [productBrand];
-                filters.brand = { $in: brandArray };
-            }
-
-            // Lọc theo màu sắc (bên trong stock.color)
+            if (productBrand) filters.brand = { $in: productBrand.split(',') };
+    
+            // Lọc theo màu trong stock.color
             if (productColor) {
-                const colorArray = productColor.includes(',') ? productColor.split(',') : [productColor];
-                filters['stock.color'] = { $in: colorArray }; // Sử dụng `stock.color` để lọc
+                const colorArray = productColor.split(',');
+                filters['stock.color'] = { $in: colorArray }; // Lọc các màu bên trong mảng stock.color
             }
-
+    
             // Lọc theo giá
             if (minPrice || maxPrice) {
-                filters.salePrice = {};
-                if (minPrice) filters.salePrice.$gte = parseFloat(minPrice);
-                if (maxPrice) filters.salePrice.$lte = parseFloat(maxPrice);
+                filters.salePrice = {
+                    ...(minPrice && { $gte: parseFloat(minPrice) }),
+                    ...(maxPrice && { $lte: parseFloat(maxPrice) }),
+                };
             }
-
-            // Xác định tiêu chí sắp xếp
+    
+            // Sắp xếp
             let sortCriteria = {};
             switch (sort) {
-                case 'price_asc':
-                    sortCriteria = { salePrice: 1 };
-                    break;
-                case 'price_desc':
-                    sortCriteria = { salePrice: -1 };
-                    break;
-                case 'creation_time_desc':
-                    sortCriteria = { createdAt: -1 };
-                    break;
-                case 'rate_desc':
-                    sortCriteria = { rate: -1 };
-                    break;
-                default:
-                    sortCriteria = {};
+                case 'price_asc': sortCriteria = { salePrice: 1 }; break;
+                case 'price_desc': sortCriteria = { salePrice: -1 }; break;
+                case 'creation_time_desc': sortCriteria = { createdAt: -1 }; break;
+                case 'rate_desc': sortCriteria = { rate: -1 }; break;
+                default: sortCriteria = {};
+            }
+            //Đổi type sang category với tên để lọc theo category
+            //Thêm thuộc tính category vào filters
+            if(filters.type){
+                filters.category = await CategoryService.getSubCategoryName(productType);
+                //Loại bỏ các thuộc tính không cần thiết
+                delete filters.type;
             }
 
-            // Lấy tổng số sản phẩm và danh sách sản phẩm theo bộ lọc
+            
+    
+            // Lấy tổng sản phẩm và danh sách sản phẩm theo bộ lọc
             const total = await ProductService.countProducts(filters);
-            const products = await ProductService.getProductList(filters, sortCriteria, skip, parseInt(limit));
-           // console.log('sp',products)
+            const products = await ProductService.getProductList(filters, sortCriteria, skip, limit);
+            const dealProducts = await ProductService.getProducts();
+            const colors = await ProductService.getProductsByCondition({}, 'stock.color');
+            const brands = await ProductService.getProductsByCondition({}, 'brand');
+    
+            if (req.xhr) {
+                return res.json({
+                    products: mutipleMongooseToObject(products),
+                    total,
+                    currentPage: parseInt(page),
+                    totalPages: Math.ceil(total / limit),
+                });
+            }
 
-            // Trả về JSON kết quả
-            res.json({
+                //Lấy danh mục
+            const categories = await CategoryService.getCategories();
+                console.log('cc',categories)
+            //Tổng sản phẩm cho danh mục All
+            const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
+        
+
+            // Render view
+            res.render('category', {
                 products: mutipleMongooseToObject(products),
                 total,
+                totalAll,
                 currentPage: parseInt(page),
                 totalPages: Math.ceil(total / limit),
+                dealProducts: mutipleMongooseToObject(dealProducts),
+                brands,
+                colors,
+                categories: mutipleMongooseToObject(categories),
             });
         } catch (error) {
             console.error('Error filtering products:', error);
-            res.status(500).json({ message: 'Error filtering products', error });
+            next(error);
         }
     }
 
