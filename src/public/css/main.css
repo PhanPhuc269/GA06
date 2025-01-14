@@ -6591,3 +6591,17 @@ td {
   color: #0056b3; /* Màu xanh khi hover */
 
 }
+
+.filter-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: auto;
+  cursor: pointer;
+}
