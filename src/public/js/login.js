@@ -4,7 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const passwordInput = document.getElementById('Password');
     const errorDisplay = document.getElementById('error_display');
 
-    loginForm.addEventListener('submit',async function (event) {
+    // Lấy URL từ query string (returnTo)
+    const urlParams = new URLSearchParams(window.location.search);
+    const returnTo = urlParams.get('returnTo') || '/'; // Mặc định là '/'
+
+    loginForm.addEventListener('submit', async function (event) {
         event.preventDefault(); // Ngăn form gửi đi theo cách thông thường
 
         const email = emailInput.value.trim();
@@ -22,12 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password, returnTo }) // Gửi thêm returnTo
             });
             if (response.ok) {
-                window.location.href = '/';
-            }
-            else {
+                const responseData = await response.json(); // Lấy URL chuyển hướng từ server
+                window.location.href = responseData.redirectTo;
+            } else {
                 const message = await response.json();
                 errorDisplay.textContent = message.message;
             }

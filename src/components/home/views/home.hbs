@@ -167,126 +167,114 @@
 	<!-- End category Area -->
 
 	<!-- start product Area -->
-	<section class="owl-carousel active-product-area section_gap">
-		<!-- single product slide -->
-		<div class="single-product-slider">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-lg-6 text-center">
-						<div class="section-title">
-							<h1>Latest Products</h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua.</p>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-                    {{#each notOnSaleProducts}}
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<a href="/product/product-details/{{this.slug}}" 
-							>
-							<img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}">
+<section class="owl-carousel active-product-area section_gap">
+    <!-- single product slide -->
+    <div class="single-product-slider">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="section-title">
+                        <h1>Latest Products</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {{#each notOnSaleProducts}}
+                <!-- single product -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-product">
+                        <a href="/product/product-details/{{this.slug}}">
+                            <img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}">
+                        </a>
+                        <div class="product-details">
+                            <a href="/product/product-details/{{this.slug}}">
+                                <h6>{{this.name}}</h6>
+                            </a>
+                            <div class="price">
+                                <h6>{{formatCurrencyVND this.salePrice}}</h6>
+                                <h6 class="l-through">{{formatCurrencyVND this.originalPrice}}</h6>
+                            </div>
+                            <div class="prd-bottom">
+                                <a href="/product/product-details/{{this.slug}}" class="social-info">
+                                    <span class="lnr lnr-move"></span>
+                                    <p class="hover-text">view more</p>
+                                </a>
+                                <a href="javascript:void(0)" class="social-info add-to-cart" data-slug="{{this.slug}}" data-name="{{this.name}}" data-price="{{this.salePrice}}" data-image="{{getFirstImage this.images}}">
+                                    <span class="ti-bag"></span>
+                                    <p class="hover-text">add to bag</p>
+                                </a>
+                                <a href="" class="social-info">
+                                    <span class="lnr lnr-heart"></span>
+                                    <p class="hover-text">Wishlist</p>
+                                </a>
+                                <a href="" class="social-info">
+                                    <span class="lnr lnr-sync"></span>
+                                    <p class="hover-text">compare</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <!-- single product slide -->
+    <div class="single-product-slider">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <div class="section-title">
+                        <h1>Coming Products</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {{#each notOnSaleProducts}}
+                <!-- single product -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-product">
+                        <a href="/product/product-details/{{this.slug}}">
+                            <img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}">
+                        </a>
+                        <div class="product-details">
+                            <h6>{{this.name}}</h6>
+                            <div class="price">
+                                <h6>{{formatCurrencyVND this.salePrice}}</h6>
+                                <h6 class="l-through">{{formatCurrencyVND this.originalPrice}}</h6>
+                            </div>
+                            <div class="prd-bottom">
+                                <a href="javascript:void(0)" class="social-info add-to-cart" data-slug="{{this.slug}}" data-name="{{this.name}}" data-price="{{this.salePrice}}" data-image="{{getFirstImage this.images}}">
+                                    <span class="ti-bag"></span>
+                                    <p class="hover-text">add to bag</p>
+                                </a>
+                                <a href="" class="social-info">
+                                    <span class="lnr lnr-heart"></span>
+                                    <p class="hover-text">Wishlist</p>
+                                </a>
+                                <a href="" class="social-info">
+                                    <span class="lnr lnr-sync"></span>
+                                    <p class="hover-text">compare</p>
+                                </a>
+                                <a href="" class="social-info">
+                                    <span class="lnr lnr-move"></span>
+                                    <p class="hover-text">view more</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end product Area -->
 
-							</a>
-							<div class="product-details">
-								<a href="/product/product-details/{{this.slug}}">
-									<h6>{{this.name}}</h6>
-								</a>
-								<div class="price">
-									<h6>VND {{this.salePrice}}</h6>
-									<h6 class="l-through">VND {{this.originalPrice}}</h6>
-								</div>
-								<div class="prd-bottom">
-									<a href="/product/product-details/{{this.slug}}" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-                                    <a href="javascript:void(0)" class="social-info add-to-cart" data-slug="{{this.slug}}" data-name="{{this.name}}" data-price="{{this.salePrice}}" data-image="{{getFirstImage this.images}}"  >
-										<span class="ti-bag"></span>
-										
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-                    {{/each}}
-					
-				</div>
-			</div>
-		</div>
-		<!-- single product slide -->
-		<div class="single-product-slider">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-lg-6 text-center">
-						<div class="section-title">
-							<h1>Coming Products</h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua.</p>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					{{#each notOnSaleProducts}}
-						
-							<!-- single product -->
-							<div class="col-lg-3 col-md-6">
-							<div class="single-product">
-							<a href="/product/product-details/{{this.slug}}" 
-							>
-							<img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}">
-
-							</a>
-
-								<div class="product-details">
-								<h6>{{this.name}}</h6>
-								<div class="price">
-									<h6>VND {{this.salePrice}}</h6>
-									<h6 class="l-through">VND {{this.originalPrice}}</h6>
-								</div>
-								<div class="prd-bottom">
-                                    <a href="javascript:void(0)" class="social-info add-to-cart" data-slug="{{this.slug}}" data-name="{{this.name}}" data-price="{{this.salePrice}}" data-image="{{getFirstImage this.images}}">
-									<span class="ti-bag"></span>
-									<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-									<span class="lnr lnr-heart"></span>
-									<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-									<span class="lnr lnr-sync"></span>
-									<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-									<span class="lnr lnr-move"></span>
-									<p class="hover-text">view more</p>
-									</a>
-								</div>
-								</div>
-							</div>
-							</div>
-						
-					{{/each}}
-					
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- end product Area -->
 
 	<!-- Start exclusive deal Area -->
 	<section class="exclusive-deal-area">
@@ -387,48 +375,48 @@
 	<!-- End brand Area -->
 
 	<!-- Start related-product Area -->
-	<section class="related-product-area section_gap_bottom">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-6 text-center">
-					<div class="section-title">
-						<h1>Deals of the Week</h1>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-							magna aliqua.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-9">
-					<div class="row">
-						{{#each onSaleProducts}}
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">  
-
-								<a href="/product/product-details/{{this.slug}}"><img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}" style="max-width: 100px; height: auto;"></a>
-								<div class="desc">
-									<a href="/product/product-details/{{this.slug}}" class="title">{{this.name}}</a>
-									<div class="price">
-										<h6>{{this.salePrice}}</h6>
-										<h6 class="l-through">{{this.originalPrice}}</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						{{/each}}
-						
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="ctg-right">
-						<a href="#" target="_blank">
-							<img class="img-fluid d-block mx-auto" src="/img/category/c5.jpg" alt="">
-						</a>
-					</div>
+<section class="related-product-area section_gap_bottom">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-6 text-center">
+				<div class="section-title">
+					<h1>Deals of the Week</h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+						magna aliqua.</p>
 				</div>
 			</div>
 		</div>
-	</section>
+		<div class="row">
+			<div class="col-lg-9">
+				<div class="row">
+					{{#each onSaleProducts}}
+					<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+						<div class="single-related-product d-flex">  
+
+							<a href="/product/product-details/{{this.slug}}"><img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}" style="max-width: 100px; height: auto;"></a>
+							<div class="desc">
+								<a href="/product/product-details/{{this.slug}}" class="title">{{this.name}}</a>
+								<div class="price">
+									<h6>{{formatCurrencyVND this.salePrice}}</h6>
+									<h6 class="l-through">{{formatCurrencyVND this.originalPrice}}</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="ctg-right">
+					<a href="#" target="_blank">
+						<img class="img-fluid d-block mx-auto" src="/img/category/c5.jpg" alt="">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
 	<script src="/js/filter.js"></script>
    <script src="/js/cart/cart.js" ></script>
 		

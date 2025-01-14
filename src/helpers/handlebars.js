@@ -139,4 +139,11 @@ module.exports={
           return '';
       }
   },
+
+   // Helper mới: formatCurrencyVND
+   formatCurrencyVND: function (value) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+},
+
+
 }

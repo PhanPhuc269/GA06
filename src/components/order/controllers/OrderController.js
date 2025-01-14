@@ -65,19 +65,23 @@ class OrderController {
     
             const newOrder = await OrderService.createOrder(userId, orderData);
     
-            // Điều hướng về danh sách đơn hàng nếu thành công
-            res.redirect(`/order/list`);
+            // Trả phản hồi JSON khi thành công
+            res.status(201).json({
+                message: "Order created successfully.",
+                orderId: newOrder._id,
+            });
         } catch (error) {
-            console.error("Lỗi khi tạo đơn hàng:", error);
+            console.error("Error while creating order:", error);
     
-            // Trả về trang lỗi với chi tiết lỗi
-            res.status(400).render('errorOrder', {
-                message: 'Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng kiểm tra giỏ hàng hoặc thông tin giao hàng.',
+            // Trả phản hồi JSON khi gặp lỗi
+            res.status(400).json({
+                message: "Failed to create order. Please check your cart or shipping information.",
                 errorCode: 400,
-                errorDetails: error.message, // Hiển thị chi tiết lỗi cho người dùng
+                errorDetails: error.message, // Gửi chi tiết lỗi trong phản hồi
             });
         }
     }
+    
     
 }
 

@@ -34,8 +34,8 @@
                             <p><strong>Status:</strong> <span class="badge bg-success">{{order.status}}</span></p>
                         </div>
                         <div class="col-md-6">
-                            <p><strong>Total Amount:</strong> VND {{order.totalAmount}}</p>
-                            <p><strong>Shipping Fee:</strong> VND {{order.shippingFee}}</p>
+                            <p><strong>Total Amount:</strong> {{formatCurrency order.totalAmount}}</p>
+                            <p><strong>Shipping Fee:</strong> {{formatCurrency order.shippingFee}}</p>
                         </div>
                     </div>
                 </div>
@@ -101,9 +101,9 @@
                                     <td>{{this.color}}</td>
                                     <td>{{this.size}}</td>
                                     <td>{{this.productId.description}}</td>
-                                    <td>VND {{this.productId.salePrice}}</td>
+                                    <td>{{formatCurrency this.productId.salePrice}}</td>
                                     <td class="text-center">{{this.quantity}}</td>
-                                    <td>VND {{multiply this.quantity this.productId.salePrice}}</td>
+                                    <td>{{formatCurrency (multiply this.quantity this.productId.salePrice)}}</td>
                                 </tr>
                                 {{/each}}
                             </tbody>
