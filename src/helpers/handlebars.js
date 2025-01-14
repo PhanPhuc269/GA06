@@ -126,4 +126,17 @@ module.exports={
     json: function (context) {
       return JSON.stringify(context);
     },
+
+    // Helper mới: include
+    includes: function (templatePath, options) {
+      try {
+          const filePath = path.join(__dirname, '..', 'views', `${templatePath}.hbs`);
+          const templateContent = fs.readFileSync(filePath, 'utf-8');
+          const compiledTemplate = Handlebars.compile(templateContent);
+          return compiledTemplate(options.hash);
+      } catch (err) {
+          console.error(`Error including template: ${templatePath}`, err);
+          return '';
+      }
+  },
 }
