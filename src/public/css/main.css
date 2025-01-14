@@ -6445,6 +6445,13 @@ td {
 .btn-back {
   margin-top: 20px;
 }
+
+
+.single-product img {
+  width: 200px; /* Đặt chiều rộng cố định */
+  height: 200px; /* Đặt chiều cao cố định */
+  object-fit: cover; /* Đảm bảo ảnh không bị méo, giữ tỉ lệ */
+
 .gg-button{
   margin-top: -7px !important;
 }
@@ -6582,4 +6589,5 @@ td {
 }
 .file-name:hover {
   color: #0056b3; /* Màu xanh khi hover */
+
 }

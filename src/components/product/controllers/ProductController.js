@@ -129,7 +129,7 @@ class ProductController {
             const product = await ProductService.getProductBySlug(req.params.slug);
             if (!product) return res.status(404).send('Product not found');
 
-            const relevantProducts = await ProductService.getRelevantProducts(product.category, 9);
+            const relevantProducts = await ProductService.getRelevantProductsByBrand(product.brand, 9,req.params.slug);
 
             const page = parseInt(req.query.reviewPage) || 1;
             const limit = 5;
