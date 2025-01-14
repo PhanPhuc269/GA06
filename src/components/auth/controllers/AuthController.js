@@ -163,9 +163,9 @@ class AuthController{
                 return next(err);
             }
             if (!user) {
-                req.flash('error_msg', 'Sai email hoặc mật khẩu');
+                req.flash('error_msg', info.message || 'Sai email hoặc mật khẩu');
                 req.flash('email', req.body.email);
-                return res.redirect('/login');
+                return res.status(400).json({ message: 'Incorrect email or password' });
             }
             req.logIn(user, (err) => {
                 if (err) {

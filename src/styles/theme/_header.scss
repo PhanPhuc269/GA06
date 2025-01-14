@@ -94,6 +94,7 @@
 						box-shadow: none;
 						margin: 0px;
 						background: #fff;
+						display: none;
 						@media (min-width: 992px) {
 							position: absolute;
 							top: 140%;
@@ -103,7 +104,6 @@
 							opacity: 0;
 							@include transition(visibility 0.5s ease);
 							visibility: hidden;
-							display: block;
 						}
 						&:before {
 							content: "";
@@ -153,6 +153,7 @@
 					&:hover {
 						ul {
 							@media (min-width: 992px) {
+								display: block;
 								visibility: visible;
 								opacity: 1;
 							}

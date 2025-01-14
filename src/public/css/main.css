@@ -1211,8 +1211,8 @@ h6 {
     padding: 0px 15px; } }
 
 .avatar {
-  width: 44px;
-  height: 44px;
+  width: 24px;
+  height: 24px;
   margin-right: 0.5rem;
   border-radius: 50%;
   object-fit: cover;
@@ -4928,7 +4928,7 @@ label {
   box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.07);
   height: 100%;
   text-align: center;
-  padding-top: 70px; }
+  padding-top: 50px; }
   .login_form_inner h3 {
     color: #222222;
     text-transform: uppercase;
@@ -6446,8 +6446,148 @@ td {
   margin-top: 20px;
 }
 
+
 .single-product img {
   width: 200px; /* Đặt chiều rộng cố định */
   height: 200px; /* Đặt chiều cao cố định */
   object-fit: cover; /* Đảm bảo ảnh không bị méo, giữ tỉ lệ */
+
+.gg-button{
+  margin-top: -7px !important;
+}
+
+.search-btn:hover {
+  background-color: #0056b3; /* Màu nền khi hover */
+}
+
+.search-input {
+  padding: 10px; /* Khoảng cách bên trong */
+  border-radius: 10rem; /* Bo góc */
+  border: 1px solid #ccc; /* Viền */
+  font-size: 16px; /* Kích thước chữ */
+  width: calc(100% - 50px); /* Đảm bảo ô input không tràn ra ngoài */
+}
+.close-btn{
+  position: relative;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  left: -74px;
+  transition: background-color 0.2s;
+}
+
+/* Container chung */
+.toast-container {
+  z-index: 1050;
+}
+
+.custom-toast {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 5px;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid;
+  min-width: 300px;
+}
+
+/* Các loại Toast */
+.custom-toast.success {
+  border-left-color: #28a745;
+}
+
+.custom-toast.error {
+  border-left-color: #dc3545;
+}
+
+.custom-toast.info {
+  border-left-color: #007bff;
+}
+
+.custom-toast.warning {
+  border-left-color: #ffc107;
+}
+
+/* Header */
+.toast-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 0px;
+}
+
+/* Icon */
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.icon {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.custom-toast.success .icon-wrapper {
+  background-color: #28a745;
+}
+
+.custom-toast.error .icon-wrapper {
+  background-color: #dc3545;
+}
+
+.custom-toast.info .icon-wrapper {
+  background-color: #007bff;
+}
+
+.custom-toast.warning .icon-wrapper {
+  background-color: #ffc107;
+}
+
+/* Nội dung */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.toast-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.toast-subtitle {
+  font-size: 14px;
+  margin: 0;
+  color: #6c757d;
+}
+.file-name {
+  color: #007bff; /* Màu xanh giống link */
+  text-decoration: underline;
+  cursor: pointer;
+}
+.top_nav {
+  font-size: 12px;
+  background-color: #f0dfcf !important;
+  padding: 5px 0;
+  
+}
+.file-name{
+  text-decoration: none;
+}
+.file-name:hover {
+  color: #0056b3; /* Màu xanh khi hover */
+
 }

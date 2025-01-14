@@ -57,11 +57,10 @@ class SettingController {
             // Logic cập nhật mật khẩu vào database
             const profile = await editProfileService.updateProfile(req.user._id,{ currentPassword, newPassword});
             
-            res.render('edit-profile', { profile : mongooseToObject(profile), successMessage: "Cập nhật thành công" });
+            res.status(200).json( { profile : mongooseToObject(profile), successMessage: "Cập nhật thành công" });
 
         } catch (error) {
-            const profile = await editProfileService.getProfile(req.user._id);
-            res.render('edit-profile', { profile : mongooseToObject(profile), errorMessage: error });
+            res.status(400).json({ message: error.message });
         };
     }
   
