@@ -33,59 +33,75 @@
                     </ul>
                 </div>
 
+
+						</li>
+					</ul>
+						</div>
+                <div class="sidebar-filter mt-50">
+                    <div class="top-filter-head">Product Filters</div>
+                    <div class="common-filter">
+                        <div class="head">Brands</div>
+                        
+
                     
 				<div class="sidebar-filter mt-50">
 					<div class="top-filter-head">Product Filters</div>
 					<div class="common-filter">
 						 <div class="head">Brands</div>
+
                         <ul>
-                            <li class="filter-list">
-                                <input class="pixel-checkbox" type="checkbox" id="addidas" name="brand" value="Addidas">
-                                <label for="addidas">Addidas<span>(29)</span></label>
-                            </li>
-                            <li class="filter-list">
-                                <input class="pixel-checkbox" type="checkbox" id="ananas" name="brand" value="Ananas">
-                                <label for="ananas">Ananas<span>(29)</span></label>
-                            </li>
-                            <li class="filter-list">
-                                <input class="pixel-checkbox" type="checkbox" id="nike" name="brand" value="Nike">
-                                <label for="nike">Nike<span>(19)</span></label>
-                            </li>
-                            <li class="filter-list">
-                                <input class="pixel-checkbox" type="checkbox" id="convert" name="brand" value="Convert">
-                                <label for="convert">Convert<span>(19)</span></label>
-                            </li>
-                            <li class="filter-list">
-                                <input class="pixel-checkbox" type="checkbox" id="puma" name="brand" value="Puma">
-                                <label for="puma">Puma<span>(19)</span></label>
-                            </li>
+                            {{#each brands}}
+                                <li class="filter-list">
+                                    <input 
+                                        class="pixel-checkbox" 
+                                        type="checkbox" 
+                                        id="{{this}}" 
+                                        name="brand" 
+                                        value="{{this}}" 
+                                        {{#if (includes ../selectedBrands this)}}checked{{/if}}>
+                                    <label for="{{this}}">{{this}}</label>
+                                </li>
+                            {{/each}}
                         </ul>
-                </div>
-					<div class="common-filter">
-						<div class="head">Color</div>
-						<form action="#">
-						    <ul>
-                                <li class="filter-list">
-                                    <input class="pixel-checkbox" type="checkbox" id="black" name="color" value="Black">
-                                    <label for="black">Black<span>(29)</span></label>
-                                </li>
-                                <li class="filter-list">
-                                    <input class="pixel-checkbox" type="checkbox" id="blackleather" name="color" value="Black Leather">
-                                    <label for="blackleather">Black Leather<span>(29)</span></label>
-                                </li>
-                                <li class="filter-list">
-                                    <input class="pixel-checkbox" type="checkbox" id="blackred" name="color" value="Black with Red">
-                                    <label for="blackred">Black with Red<span>(19)</span></label>
-                                </li>
-                                <li class="filter-list">
-                                    <input class="pixel-checkbox" type="checkbox" id="gold" name="color" value="Gold">
-                                    <label for="gold">Gold<span>(19)</span></label>
-                                </li>
-                                <li class="filter-list">
-                                    <input class="pixel-checkbox" type="checkbox" id="spacegrey" name="color" value="Spacegrey">
-                                    <label for="spacegrey">Spacegrey<span>(19)</span></label>
-                                </li>
-                            </ul>
+                    </div>
+                    <div class="common-filter">
+                        <div class="head">Color</div>
+                        <form action="#">
+                          <ul>
+                        {{#each colors}}
+                            <li class="filter-list">
+                                <input 
+                                    class="pixel-checkbox" 
+                                    type="checkbox" 
+                                    id="{{this}}" 
+                                    name="color" 
+                                    value="{{this}}" 
+                                    {{#if (includes ../selectedColors this)}}checked{{/if}}>
+                                <label for="{{this}}">{{this}}</label>
+                            </li>
+                        {{/each}}
+                    </ul>
+
+
+                        </form>
+                    </div>
+    <div class="common-filter">
+        <div class="head">Price</div>
+        <div class="price-range-area">
+            <div id="price-range"></div>
+            <div class="value-wrapper d-flex">
+                <div class="price">Price:</div>
+                <span>$</span>
+                <div id="lower-value"></div>
+                <div class="to">to</div>
+                <span>$</span>
+                <div id="upper-value"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 						</form>
 					</div>
@@ -104,6 +120,7 @@
 						</div>
 					</div>
 				</div>
+
 			
 
                
