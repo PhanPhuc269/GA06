@@ -150,6 +150,12 @@ module.exports={
     formatCurrencyVND: function (value) {
      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
     },
+  
+
+   // Helper mới: formatCurrencyVND
+   formatCurrencyVND: function (value) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+    },
 
 
 

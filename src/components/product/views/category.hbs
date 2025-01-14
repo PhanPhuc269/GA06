@@ -89,10 +89,10 @@
                             <div id="price-range"></div>
                             <div class="value-wrapper d-flex">
                                 <div class="price">Price:</div>
-                                <span>$</span>
+                                <span>đ</span>
                                 <div id="lower-value"></div>
                                 <div class="to">to</div>
-                                <span>$</span>
+                                <span>đ</span>
                                 <div id="upper-value"></div>
                             </div>
                         </div>
@@ -221,28 +221,29 @@
                 </div>
             </div>
             <!-- Additional content here -->
-            <div class="row">
-				<div class="col-lg-9">
-					  <div class="row">	
-                    {{#each dealProducts}}
-                    <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-                        <div class="single-related-product d-flex">
-                            <a href="/product/product-details/{{this.slug}}">
-                        		<img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}" style="max-width: 100px; height: auto;">
-                    		</a>
-                            <div class="desc">
-                                <a href="/product/product-details/{{this.slug}}" class="title">{{this.name}}</a>
-                                <div class="price">
-                                    <h6>VND {{this.salePrice}}</h6>
-                                    <h6 class="l-through">VND {{this.originalPrice}}</h6>
-                                    
+           <div class="row">
+                        <div class="col-lg-9">
+                            <div class="row">
+                                {{#each dealProducts}}
+                                <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+                                    <div class="single-related-product d-flex">
+                                        <a href="/product/product-details/{{this.slug}}">
+                                            <img class="img-fluid" src="{{getFirstImage this.images}}" alt="{{this.name}}" style="max-width: 100px; height: auto;">
+                                        </a>
+                                        <div class="desc">
+                                            <a href="/product/product-details/{{this.slug}}" class="title">{{this.name}}</a>
+                                            <div class="price">
+                                                <h6>{{formatCurrency this.salePrice}}</h6>
+                                                <h6 class="l-through">{{formatCurrency this.originalPrice}}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                    {{/each}}
-                </div>
-				</div>
+                  
+             
 				<div class="col-lg-3">
 					<div class="ctg-right">
 						<a href="#" target="_blank">

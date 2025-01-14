@@ -90,7 +90,7 @@ console.log('form',orderData)
           
             if (response.ok) {
                 // Xóa giỏ hàng trong localStorage
-                localStorage.removeItem("cart");
+                //localStorage.removeItem("cart");
 
                 // Xóa giỏ hàng trong database
                 // await fetch("/cart/clear", {
@@ -98,16 +98,16 @@ console.log('form',orderData)
                 // });
 
                 // Hiển thị thông báo thành công và chuyển hướng
-                showToast('Your order has been placed successfully!', 'success', 'Success');
+                showToast('Your order has been placed successfully!', 'success', 'Create order completed',3000);
               
                 window.location.href = "/order/list"; // Điều hướng đến trang xác nhận
             } else {
-                showToast(result.message || "Failed to place the order. Please try again.", 'error', 'Error');
+                showToast(result.message || "Failed to place the order. Please try again.", 'error', 'Error',3000);
                
             }
         } catch (error) {
             console.error("Error placing the order:", error);
-            showToast("An error occurred while placing your order. Please try again.", 'error', 'Error');
+            showToast("An error occurred while placing your order. Please try again.", 'error', 'Error',3000);
            
         }
     });
