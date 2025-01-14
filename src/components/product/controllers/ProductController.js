@@ -249,15 +249,6 @@ class ProductController {
                 case 'rate_desc': sortCriteria = { rate: -1 }; break;
                 default: sortCriteria = {};
             }
-            //Đổi type sang category với tên để lọc theo category
-            //Thêm thuộc tính category vào filters
-            if(filters.type){
-                filters.category = await CategoryService.getSubCategoryName(productType);
-                //Loại bỏ các thuộc tính không cần thiết
-                delete filters.type;
-            }
-
-            
     
             // Lấy tổng sản phẩm và danh sách sản phẩm theo bộ lọc
             const total = await ProductService.countProducts(filters);
@@ -274,14 +265,12 @@ class ProductController {
                     totalPages: Math.ceil(total / limit),
                 });
             }
-
-                //Lấy danh mục
-            const categories = await CategoryService.getCategories();
-                console.log('cc',categories)
-            //Tổng sản phẩm cho danh mục All
-            const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
-        
-
+             //Lấy danh mục
+        const categories = await CategoryService.getCategories();
+          //  console.log('cc',categories)
+        //Tổng sản phẩm cho danh mục All
+        const totalAll = categories.reduce((total, category) => total + category.productCount, 0);
+      
             // Render view
             res.render('category', {
                 products: mutipleMongooseToObject(products),

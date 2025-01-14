@@ -59,8 +59,8 @@ btnPay.addEventListener('click', async (event) => {
             body: JSON.stringify({ transactionId }),
         });
         const result = await response.json();
-
-        if (result.message === 'Transaction completed successfully' && result.transaction.status === 'completed') {
+        console.log('re',result)
+        if (result.message === 'Transaction completed successfully' && result.transaction.transaction.status === 'completed') {
             clearInterval(timer);
             statusElement.innerHTML = "<span class='text-success'>Payment successful! Redirecting...</span>";
             statusElement.style.display = 'block';
