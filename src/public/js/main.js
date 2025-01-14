@@ -252,8 +252,8 @@ $(document).ready(function(){
         
         // Lấy giá trị từ URL
         const urlParams = new URLSearchParams(window.location.search);
-        const minPrice = parseFloat(urlParams.get('minPrice')) || 0; // Giá trị mặc định là 0
-        const maxPrice = parseFloat(urlParams.get('maxPrice')) || 1000; // Giá trị mặc định là 1000
+        const minPrice = parseFloat(urlParams.get('minPrice')) || 1000; // Giá trị mặc định là 0
+        const maxPrice = parseFloat(urlParams.get('maxPrice')) || 10000000; // Giá trị mặc định là 1000
 
 
         var nonLinearSlider = document.getElementById('price-range');
@@ -265,7 +265,7 @@ $(document).ready(function(){
             range: {
                 // Starting at 500, step the value by 500,
                 // until 4000 is reached. From there, step by 1000.
-                'min': [0],
+                'min': [1000],
                 '10%': [500000, 500000], // 500,000 VND
                 '20%': [1000000, 500000], // 1,000,000 VND
                 '30%': [2000000, 1000000], // 2,000,000 VND
@@ -284,13 +284,15 @@ $(document).ready(function(){
         // Display the slider value and how far the handle moved
         // from the left edge of the slider.
         nonLinearSlider.noUiSlider.on('update', function ( values, handle, unencoded, isTap, positions ) {
-            nodes[handle].innerHTML = values[handle];
+            nodes[handle].innerHTML = formatCurrencyVND(parseFloat(values[handle]));
         });
         // Gọi hàm lọc sản phẩm khi người dùng dừng kéo slider
             nonLinearSlider.noUiSlider.on('change', applyFilters);
 
         }
-
+        function formatCurrencyVND(amount) {
+            return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }
     });
 
     
