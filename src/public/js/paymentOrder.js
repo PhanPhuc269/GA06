@@ -64,6 +64,7 @@ btnPay.addEventListener('click', async (event) => {
             clearInterval(timer);
             statusElement.innerHTML = "<span class='text-success'>Payment successful! Redirecting...</span>";
             statusElement.style.display = 'block';
+            showToast('Your payment was successful!', 'success', 'Payment Completed', 3000);
 
             // Chuyển hướng sau 2 giây
             setTimeout(() => {
@@ -71,6 +72,8 @@ btnPay.addEventListener('click', async (event) => {
             }, 2000);
         }
     } catch (error) {
+        showToast('An error occurred during payment. Please try again!', 'error', 'Payment Failed', 3000);
+
         clearInterval(timer);
         statusElement.innerHTML = "<span class='text-danger'>An error occurred during payment. Please try again!</span>";
         statusElement.style.display = 'block';
