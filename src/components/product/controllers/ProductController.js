@@ -2,10 +2,10 @@ const { MAX } = require('uuid');
 const { mutipleMongooseToObject } = require('../../../utils/mongoose');
 const { mongooseToObject } = require('../../../utils/mongoose');
 const ReviewController = require('../../review/controllers/ReviewController');
-const Product = require("../models/Product");
 const ProductService = require("../services/ProductService");
 const ElasticsearchService = require("../services/ElasticsearchService");
 const elasticClient=require("../../../config/elasticsearch/elasticsearch");
+const CategoryService = require('../../product/services/CategoryService');
 class ProductController {
 
     ViewOrderConfirmation(req, res, next) {
@@ -208,8 +208,11 @@ async SearchProduct(req, res, next) {
             });
         }
 
+        //Lấy danh mục
+        const categories = await CategoryService.getCategories();
         res.render('category', {
             products: mutipleMongooseToObject(products),
+            categories: mutipleMongooseToObject(categories),
             total,
             currentPage: parseInt(page),
             totalPages: Math.ceil(total / limit),

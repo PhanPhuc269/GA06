@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (subcategoryItem) {
             // Tô màu danh mục con
-            subcategoryItem.classList.add('active');
+            const categoryItem = document.getElementById(filters.type);
+            categoryItem.classList.add('active');
             const collapseElement = subcategoryItem.closest('ul.collapse');
             if (collapseElement) {
                 collapseElement.classList.add('show'); // Bootstrap class để mở danh mục
@@ -104,7 +105,7 @@ function setActiveCategory(type) {
     categoryLinks.forEach(link => {
         link.classList.remove('active');
     });
-    const activeLink = document.getElementById(`${type}-link`);
+    const activeLink = document.getElementById(`${type}`);
     if (activeLink) {
         activeLink.classList.add('active');
     }
@@ -207,7 +208,9 @@ function changePage(page) {
 //         });
 //     });
 // });
-
+function formatCurrencyVND(amount) {
+    return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+}
 function updateProductList(products) {
     const productList = document.getElementById('product-list');
     productList.innerHTML = ''; // Xóa danh sách sản phẩm cũ
@@ -225,8 +228,8 @@ function updateProductList(products) {
                         <h6>${product.name}</h6>
                     </a>
                     <div class="price">
-                        <h6>VND ${product.salePrice}</h6>
-                          <h6 class="l-through">VND ${product.originalPrice}</h6>
+                        <h6>${formatCurrencyVND(product.salePrice)}</h6>
+                          <h6 class="l-through">${formatCurrencyVND(product.originalPrice)}</h6>
                     </div>
                     <div class="prd-bottom">
                         <a href="#" class="social-info add-to-cart" data-slug="${product.slug}" data-name="${product.name}" data-price="${product.salePrice}" data-image="${product.image}">
@@ -329,8 +332,9 @@ function applyFilters() {
     filters.brand = getCheckedValues('brand');
     filters.color = getCheckedValues('color');
 
-    const minPrice = document.getElementById('lower-value')?.textContent;
-    const maxPrice = document.getElementById('upper-value')?.textContent;
+
+    const minPrice = parseCurrencyVND(document.getElementById('lower-value')?.textContent);
+    const maxPrice = parseCurrencyVND(document.getElementById('upper-value')?.textContent);
 
     if (minPrice) filters.minPrice = minPrice;
     if (maxPrice) filters.maxPrice = maxPrice;
@@ -341,6 +345,10 @@ function applyFilters() {
     filterProducts(filters);
 }
 
+function parseCurrencyVND(currencyStr) {
+    // Loại bỏ các ký tự không phải số và chuyển đổi về số nguyên
+    return parseInt(currencyStr.replace(/[^\d]/g, ''), 10);
+}
 document.addEventListener('DOMContentLoaded', function () {
     const sortSelect = document.querySelector('#sort-criteria');
     if (sortSelect) {
