@@ -195,23 +195,7 @@ function updateProductList(products) {
                         <h6>${formatCurrencyVND(product.salePrice)}</h6>
                           <h6 class="l-through">${formatCurrencyVND(product.originalPrice)}</h6>
                     </div>
-                    <div class="prd-bottom">
-                        <a href="#" class="social-info add-to-cart" data-slug="${product.slug}" data-name="${product.name}" data-price="${product.salePrice}" data-image="${product.image}">
-                            <span class="ti-bag"></span>
-                        </a>
-                        <a href="#" class="social-info">
-                            <span class="lnr lnr-heart"></span>
-                            <p class="hover-text">Wishlist</p>
-                        </a>
-                        <a href="#" class="social-info">
-                            <span class="lnr lnr-sync"></span>
-                            <p class="hover-text">compare</p>
-                        </a>
-                        <a href="/product/product-details/${product.slug}" class="social-info">
-                            <span class="lnr lnr-move"></span>
-                            <p class="hover-text">view more</p>
-                        </a>
-                    </div>
+                   
                 </div>
             </div>
         `;
