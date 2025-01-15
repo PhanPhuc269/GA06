@@ -50,14 +50,12 @@ async function handleRegister(event) {
         return;
     }
     if (!regex.test(password)) {
-        passwordHelp.style.color = 'red';
-        passwordHelp.textContent = 'Password does not meet the complexity requirements.';
+        //Loại bỏ class name text-info và thêm class name text-danger
+        passwordHelp.removeAttribute('class');
+        passwordHelp.classList.add('text-danger');
+        passwordHelp.textContent = 'Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.';
         return;
-    } else if (regex.test(password)) {
-        passwordHelp.style.color = 'green';
-        passwordHelp.textContent = 'Password meets the complexity requirements.';
-    }
-    if (password !== rePassword) {
+    } else if (password !== rePassword) {
         errorMessage.textContent = 'Passwords do not match!';
         return;
     } else {
