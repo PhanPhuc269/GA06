@@ -17,14 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault();
                 passwordHelp.style.color = 'red';
                 passwordHelp.textContent = 'Password does not meet the complexity requirements.';
-            } else if (regex.test(password)) {
-                passwordHelp.style.color = 'green';
-                passwordHelp.textContent = 'Password meets the complexity requirements.';
-            }else if (password !== rePassword) {
+            } else if (password !== rePassword) {
                 event.preventDefault(); // Ngăn chặn form gửi đi
                 errorMessage.textContent = 'Passwords do not match!';
-            } else {
+            }else {
                 errorMessage.textContent = ''; // Xóa thông báo lỗi nếu tất cả các trường đều hợp lệ
+                passwordHelp.style.color = 'green';
+                passwordHelp.textContent = 'Password meets the complexity requirements.';
             }
         });
     }
@@ -41,7 +40,7 @@ async function handleRegister(event) {
     const errorMessage = document.getElementById('error-message');
     const passwordHelp = document.getElementById('passwordHelp');
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
+    passwordHelp.textContent = '';
     if (password !== rePassword) {
         errorMessage.textContent = 'Passwords do not match';
         return;
@@ -51,17 +50,16 @@ async function handleRegister(event) {
         return;
     }
     if (!regex.test(password)) {
-        passwordHelp.style.color = 'red';
-        passwordHelp.textContent = 'Password does not meet the complexity requirements.';
+        //Loại bỏ class name text-info và thêm class name text-danger
+        passwordHelp.removeAttribute('class');
+        passwordHelp.classList.add('text-danger');
+        passwordHelp.textContent = 'Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.';
         return;
-    } else if (regex.test(password)) {
-        passwordHelp.style.color = 'green';
-        passwordHelp.textContent = 'Password meets the complexity requirements.';
-    }
-    if (password !== rePassword) {
+    } else if (password !== rePassword) {
         errorMessage.textContent = 'Passwords do not match!';
         return;
     } else {
+        passwordHelp.textContent = '';
         errorMessage.textContent = ''; // Xóa thông báo lỗi nếu tất cả các trường đều hợp lệ
     }
 

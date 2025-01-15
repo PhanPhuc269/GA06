@@ -129,7 +129,7 @@ function filterProducts(filters) {
     const query = new URLSearchParams(filters).toString();
     history.pushState(null, '', `?${query}`);
 
-    fetch(`/product/search?${query}`, {
+    fetch(`/product/filter?${query}`, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'

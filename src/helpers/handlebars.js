@@ -146,12 +146,16 @@ module.exports={
       return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
     },
 
+    // Helper mới: formatCurrencyVND
+    formatCurrencyVND: function (value) {
+     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+    },
   
 
    // Helper mới: formatCurrencyVND
    formatCurrencyVND: function (value) {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
-},
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+    },
 
 
 

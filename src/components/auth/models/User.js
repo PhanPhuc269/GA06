@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema({
     avatar: { type: String, default: '/img/default-avatar.png' },
     address: { type: String },
     phone: { type: String },
+    status: { type: String, default: 'active' },
     facebook: { type: String },
     name: { type: String },
 
