@@ -93,9 +93,9 @@ console.log('form',orderData)
                 //localStorage.removeItem("cart");
 
                 // Xóa giỏ hàng trong database
-                // await fetch("/cart/clear", {
-                //     method: "DELETE",
-                // });
+                await fetch("/cart/clear", {
+                    method: "DELETE",
+                });
 
                 // Hiển thị thông báo thành công và chuyển hướng
                 showToast('Your order has been placed successfully!', 'success', 'Create order completed',3000);
