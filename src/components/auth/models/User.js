@@ -17,6 +17,8 @@ const UserSchema = new mongoose.Schema({
     facebook: { type: String },
     name: { type: String },
 
+}, {
+    timestamps: true // Tự động thêm createdAt và updatedAt
 });
 
 UserSchema.pre('save', async function(next) {

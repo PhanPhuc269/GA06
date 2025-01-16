@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (response.ok) {
                 // Nếu cập nhật thành công, hiển thị thông báo và chuyển hướng về trang chủ
                 showToast('Profile updated successfully', 'Success');
-                window.location.href = '/';
+                window.location.href = '/setting/edit-profile';
             } else {
                 // Nếu cập nhật thất bại, hiển thị thông báo lỗi
                 showToast(data.message, 'error', 'Error');
