@@ -17,17 +17,31 @@ async function createIndex() {
                         properties: {
                             name: { type: 'text', analyzer: 'standard' },
                             description: { type: 'text', analyzer: 'standard' },
-                            price: { type: 'float' }, // float cho số thập phân
-                            quantity: { type: 'integer' }, // integer cho số nguyên
-                            image: { type: 'keyword' }, // URL hình ảnh
-                            category: { type: 'keyword' }, // keyword cho trường phân loại
-                            availibility: { type: 'keyword' }, // Sửa chính tả
+                            material: { type: 'text', analyzer: 'standard' },
+                            style: { type: 'text', analyzer: 'standard' },
+                            gender: { type: 'keyword' }, // Men, Women, Unisex
+                            originalPrice: { type: 'float' },
+                            salePrice: { type: 'float' },
+                            saleDuration: { type: 'integer' }, // Thời gian giảm giá
+                            totalPurchased: { type: 'integer' },
+                            images: { type: 'keyword' },
+                            category: { type: 'keyword' },
+                            availability: { type: 'keyword' }, // Sửa chính tả
                             brand: { type: 'keyword' },
                             type: { type: 'keyword' },
-                            color: { type: 'keyword' },
                             rate: { type: 'float' },
-                            slug: { type: 'text' }, // Slug thường là chuỗi text
-                            createdAt: { type: 'date' }, // Ngày tháng tự động
+                            warranty: { type: 'text' },
+                            slug: { type: 'text', analyzer: 'standard' },
+                            tags: { type: 'text', analyzer: 'standard' },
+                            stock: {
+                                type: 'nested',
+                                properties: {
+                                    size: { type: 'integer' },
+                                    color: { type: 'keyword' },
+                                    quantity: { type: 'integer' },
+                                },
+                            },
+                            createdAt: { type: 'date' },
                         },
                     },
                 },
@@ -41,30 +55,35 @@ async function createIndex() {
     }
 }
 
-
-
-//nodemon --inspect src/index.js
-// const db = require('./src/config/db');
-// db.connect();
 async function indexProduct(product) {
-   // db.connect();
     await elasticClient.index({
         index: 'products',
         id: product._id.toString(),
         body: {
             name: product.name,
             description: product.description,
-            price: product.price,
-            quantity: product.quantity,
-            image: product.image,
+            material: product.material,
+            style: product.style,
+            gender: product.gender,
+            originalPrice: product.originalPrice,
+            salePrice: product.salePrice,
+            saleDuration: product.saleDuration,
+            totalPurchased: product.totalPurchased,
+            images: product.images,
             category: product.category,
-            availibility: product.availibility,
+            availability: product.availability,
             brand: product.brand,
             type: product.type,
-            color: product.color,
             rate: product.rate,
+            warranty: product.warranty,
             slug: product.slug,
-            createdAt: product.createdAt || new Date(), // Đảm bảo ngày tạo luôn được thiết lập
+            tags: product.tags,
+            stock: product.stock.map(stockItem => ({
+                size: stockItem.size,
+                color: stockItem.color,
+                quantity: stockItem.quantity,
+            })),
+            createdAt: product.createdAt || new Date(),
         },
     });
     console.log(`Product indexed: ${product.name}`);
@@ -85,5 +104,4 @@ async function syncAllProducts() {
 module.exports = {
     createIndex,
     syncAllProducts,
-    
 };

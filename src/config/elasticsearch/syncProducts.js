@@ -1,6 +1,6 @@
 const Product = require('./src/components/product/models/Product');
 const elasticClient = require('./src/config/elasticsearch/elasticsearch');
-
+ 
 //nodemon --inspect src/index.js
 const db = require('./src/config/db');
 db.connect();
@@ -12,21 +12,33 @@ async function indexProduct(product) {
         body: {
             name: product.name,
             description: product.description,
-            price: product.price,
-            quantity: product.quantity,
-            image: product.image,
+            material: product.material,
+            style: product.style,
+            gender: product.gender,
+            originalPrice: product.originalPrice,
+            salePrice: product.salePrice,
+            saleDuration: product.saleDuration,
+            totalPurchased: product.totalPurchased,
+            images: product.images,
             category: product.category,
-            availibility: product.availibility,
+            availability: product.availability,
             brand: product.brand,
             type: product.type,
-            color: product.color,
             rate: product.rate,
+            warranty: product.warranty,
             slug: product.slug,
+            tags: product.tags,
+            stock: product.stock.map(stockItem => ({
+                size: stockItem.size,
+                color: stockItem.color,
+                quantity: stockItem.quantity,
+            })),
             createdAt: product.createdAt || new Date(), // Đảm bảo ngày tạo luôn được thiết lập
         },
     });
     console.log(`Product indexed: ${product.name}`);
 }
+
 
 async function syncAllProducts() {
     try {
